@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=8 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="3_71dis"]
+[ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="4_s37af"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw6lw"]
 albedo_texture = ExtResource("1_oqjwu")
@@ -33,5 +34,8 @@ TARGET = NodePath("../Player")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
+
+[node name="EnemyType1" parent="." instance=ExtResource("4_s37af")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.13668, -3.19131)
 
 [editable path="CameraController"]

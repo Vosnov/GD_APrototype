@@ -1,0 +1,158 @@
+[gd_scene load_steps=19 format=3 uid="uid://bqfcpdoke7pig"]
+
+[ext_resource type="PackedScene" uid="uid://c35bmpvpe5a66" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
+radius = 0.346272
+height = 1.56695
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q2o8k"]
+animation = &"Attack1"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j00tr"]
+animation = &"Attack2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5bbar"]
+animation = &"Attack3"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2ijr0"]
+animation = &"Hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dnvay"]
+animation = &"Dying"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2qwla"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.003"]
+fadein_time = 0.1
+fadeout_time = 0.1
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_tkex1"]
+fadein_time = 0.1
+fadeout_time = 0.1
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_vxwh5"]
+input_0/name = "attack_type_1"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "attack_type_2"
+input_1/auto_advance = false
+input_1/reset = true
+input_2/name = "attack_type_3"
+input_2/auto_advance = false
+input_2/reset = true
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_o3qgx"]
+xfade_time = 0.3
+input_0/name = "walk"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "dying"
+input_1/auto_advance = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kjjur"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5tlp0"]
+animation = &"WalkBack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l7gyr"]
+animation = &"WalkStrafeLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2vlbn"]
+animation = &"WalkStrafeRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i1g0f"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ffks6"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_kjjur")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_5tlp0")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_l7gyr")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_2vlbn")
+blend_point_3/pos = Vector2(1, 0)
+blend_point_4/node = SubResource("AnimationNodeAnimation_i1g0f")
+blend_point_4/pos = Vector2(0, -1)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
+graph_offset = Vector2(-803.535, -253.987)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
+nodes/Animation/position = Vector2(-60, 240)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
+"nodes/Animation 2/position" = Vector2(-680, 80)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_j00tr")
+"nodes/Animation 3/position" = Vector2(-680, 200)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_5bbar")
+"nodes/Animation 4/position" = Vector2(-680, 320)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_2ijr0")
+"nodes/Animation 5/position" = Vector2(-580, -60)
+nodes/OneShot/node = SubResource("AnimationNodeOneShot_2qwla")
+nodes/OneShot/position = Vector2(-400, -140)
+nodes/attack_shot/node = SubResource("AnimationNodeOneShot_tkex1")
+nodes/attack_shot/position = Vector2(-220, 40)
+nodes/attack_trans/node = SubResource("AnimationNodeTransition_vxwh5")
+nodes/attack_trans/position = Vector2(-400, 100)
+nodes/main_trans/node = SubResource("AnimationNodeTransition_o3qgx")
+nodes/main_trans/position = Vector2(120, 140)
+nodes/walk_iwr/node = SubResource("AnimationNodeBlendSpace2D_ffks6")
+nodes/walk_iwr/position = Vector2(-600, -220)
+node_connections = [&"output", 0, &"main_trans", &"attack_shot", 0, &"OneShot", &"attack_shot", 1, &"attack_trans", &"attack_trans", 0, &"Animation 2", &"attack_trans", 1, &"Animation 3", &"attack_trans", 2, &"Animation 4", &"OneShot", 0, &"walk_iwr", &"OneShot", 1, &"Animation 5", &"main_trans", 0, &"attack_shot", &"main_trans", 1, &"Animation"]
+
+[node name="EnemyType1" type="CharacterBody3D"]
+
+[node name="enemyType1" parent="." instance=ExtResource("1_toxgn")]
+transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
+
+[node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
+bones/0/position = Vector3(-0.019939, -0.422315, -0.0203451)
+bones/0/rotation = Quaternion(0.205991, -0.282165, -0.0053642, 0.936975)
+bones/1/rotation = Quaternion(0.160179, -0.186614, 0.0239483, 0.968991)
+bones/2/rotation = Quaternion(0.230999, -0.135005, 0.00472206, 0.96353)
+bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120115, 0.939912)
+bones/4/rotation = Quaternion(-0.0990147, 0.0990147, 4.23265e-09, 0.990148)
+bones/5/position = Vector3(0.220627, 1.0036, 0.187808)
+bones/5/rotation = Quaternion(0.123776, -0.0228974, -0.815737, 0.56456)
+bones/6/position = Vector3(0.0189714, 0.456808, 0.0756623)
+bones/6/rotation = Quaternion(0.103631, 0.0153543, -0.358009, 0.927822)
+bones/7/rotation = Quaternion(0.27381, 0.00146492, 0.105473, 0.955982)
+bones/11/position = Vector3(-0.273165, 0.989736, 0.233714)
+bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
+bones/12/rotation = Quaternion(-0.0850146, 0.190322, 0.954825, -0.211799)
+bones/12/scale = Vector3(1.00004, 1, 1.00007)
+bones/13/rotation = Quaternion(-0.145708, -0.0138453, -0.247836, 0.957682)
+bones/13/scale = Vector3(0.999985, 0.999996, 1)
+bones/14/rotation = Quaternion(0.312529, 0.242119, 0.899467, 0.18618)
+bones/14/scale = Vector3(1.00003, 1, 1.00006)
+bones/15/rotation = Quaternion(-0.143579, -0.0113527, 0.29115, 0.945774)
+bones/15/scale = Vector3(0.999993, 0.999999, 0.999997)
+bones/16/position = Vector3(-0.0822195, -0.802364, 1.25547)
+bones/17/position = Vector3(-0.428526, -2.115, -0.427326)
+bones/18/position = Vector3(-1.22706, -1.11826, 0.747579)
+bones/19/position = Vector3(0.379684, -2.21607, -0.0333738)
+bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121471, -0.222097)
+shape = SubResource("CapsuleShape3D_5xduw")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_xr4ar")
+anim_player = NodePath("../enemyType1/AnimationPlayer")
+active = true
+parameters/OneShot/active = false
+parameters/OneShot/request = 0
+parameters/attack_shot/active = false
+parameters/attack_shot/request = 0
+parameters/attack_trans/current_state = ""
+parameters/attack_trans/transition_request = ""
+parameters/attack_trans/current_index = -1
+parameters/main_trans/current_state = "walk"
+parameters/main_trans/transition_request = ""
+parameters/main_trans/current_index = 0
+parameters/walk_iwr/blend_position = Vector2(0, -1)
+
+[editable path="enemyType1"]
