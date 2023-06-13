@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhi0m65ovhivy"]
+
+[sub_resource type="GDScript" id="GDScript_f071m"]
+script/source = "extends EnemyState
+
+@onready var attack_timer = $AttackTimer
+@onready var wait_tiemr = $WaitTimer
+
+@export var STEERING_BEHAVIOR: SteeringBehaviorComponent
+
+@export var SPEED = 0.5
+@export var LERP_COLLISION = 1.5
+@export var LERP_NO_COLLISION = 2.0
+@export var LERP_ROTATE = 4.0
+
+@export var ATTACK_TIME = 5.0
+@export var WAIT_TIME = 1.5
+
+
+var wait_direction = Vector3()
+var should_attack = false
+
+func _init():
+	randomize()
+	
+func _ready():
+	wait_tiemr.start(WAIT_TIME)
+	
+func enter():
+	should_attack = false
+	
+	attack_timer.one_shot = true
+	attack_timer.start(ATTACK_TIME)
+
+func exit():
+	should_attack = false
+
+func update(_delta: float) -> StateTypes:
+	var walk_iwr =  Vector2(AGENT.velocity.x, AGENT.velocity.z) * 1.4
+	AGENT.animation_tree.set('parameters/walk_iwr/blend_position', walk_iwr)
+	
+	if STEERING_BEHAVIOR.has_collision:
+		var behavior_velocity = STEERING_BEHAVIOR.velocity
+		var new_velocity = (wait_direction + behavior_velocity).normalized()
+		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * LERP_COLLISION)
+	else:
+		AGENT.velocity = AGENT.velocity.lerp(wait_direction * SPEED, _delta * LERP_NO_COLLISION)
+		
+	#SMOOT LOOK AT
+	var new_t = AGENT.global_transform.looking_at(AGENT.player.global_position)
+	var new_q = AGENT.quaternion.slerp(Quaternion(new_t.basis), _delta * LERP_ROTATE)
+	new_q.x = 0
+	new_q.z = 0
+	AGENT.global_transform.basis = Basis(new_q)
+	
+	if should_attack:
+		return StateTypes.ATTACK
+	
+	if AGENT.global_position.distance_to(AGENT.player.global_position) >= 3:
+		return StateTypes.FOLLOW
+	return StateTypes.NONE
+
+func _on_wait_timer_timeout():
+	wait_direction.x = randf_range(-1, 1)
+	wait_direction.z = randf_range(-1, 1)
+	if (wait_direction.dot(-AGENT.global_transform.basis.z) <= -0.7):
+		wait_direction = Vector3()
+
+
+func _on_attack_timer_timeout():
+	should_attack = true
+"
+
+[node name="WaitState" type="Node"]
+script = SubResource("GDScript_f071m")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="WaitTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

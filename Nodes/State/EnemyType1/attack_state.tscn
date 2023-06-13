@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv0cc8jqq173a"]
+
+[sub_resource type="GDScript" id="GDScript_yjn2f"]
+script/source = "extends EnemyState
+
+@export var ANIMATION_TREE: AnimationTree
+@export var ATTACK_ANIM_NAME: String
+
+var anim_is_finish = false
+
+func enter():
+	anim_is_finish = false
+	ANIMATION_TREE.set(\"parameters/attack_shot/request\", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func exit():
+	anim_is_finish = false
+
+func _ready():
+	ANIMATION_TREE.connect('animation_finished', animation_finished)
+
+func update(_delta: float) -> StateTypes:
+	AGENT.velocity = Vector3.ZERO
+	if anim_is_finish:
+		return StateTypes.WAIT
+	return StateTypes.NONE
+
+func animation_finished(anim_name):
+	if anim_name == ATTACK_ANIM_NAME:
+		anim_is_finish = true
+		attack()
+
+func attack():
+	return
+	if AGENT.player_in_attack_range:
+		Events.emit_signal('player_take_damage', AGENT.ATTACK_DAMGE)
+"
+
+[node name="AttackState" type="Node"]
+script = SubResource("GDScript_yjn2f")

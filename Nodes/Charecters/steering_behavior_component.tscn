@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddst15qy5dpw"]
+
+[ext_resource type="Script" path="res://Scripts/Components/steering_behavior_component.gd" id="1_085u4"]
+
+[sub_resource type="GDScript" id="GDScript_yjd8w"]
+script/source = "extends Control
+
+@export var STEERING: SteeringBehaviorComponent
+@onready var camera = get_viewport().get_camera_3d()
+var width = 1
+
+func _ready():
+	if not STEERING.SHOW_DEBUG_LINES:
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+func _physics_process(_delta):
+	queue_redraw()
+
+func draw_debug_line(s_pos: Vector3, e_pos: Vector3, color: Color):
+	if (camera.is_position_behind(s_pos) || camera.is_position_behind(e_pos)):
+		return
+	var start = camera.unproject_position(s_pos)
+	var end = camera.unproject_position(e_pos)
+	draw_line(start, end, color, width)
+
+func _draw():
+	if not STEERING.SHOW_DEBUG_LINES:
+		return
+	
+	var color = Color.GREEN
+	for i in STEERING.NUM_RAYS:
+		var s_pos = STEERING.global_position
+		var e_pos = STEERING.global_transform.origin + (STEERING.rays[i].get_direction())
+		
+		if STEERING.rays[i].enabled == false:
+			color = Color.RED
+		else:
+			color = Color.GREEN
+		draw_debug_line(s_pos, e_pos, color)
+	
+	draw_debug_line(
+		STEERING.global_position,
+		STEERING.global_transform.origin + STEERING.velocity,
+		Color.WHITE
+	)
+"
+
+[node name="SteeringBehaviorComponent" type="Node3D"]
+script = ExtResource("1_085u4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("STEERING")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_yjd8w")
+STEERING = NodePath("../..")
+
+[node name="UpdateTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="UpdateTimer" to="." method="_on_update_timer_timeout"]

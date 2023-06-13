@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5eqxfng0ap8u"]
+
+[sub_resource type="GDScript" id="GDScript_lh0sa"]
+script/source = "extends EnemyState
+
+@export var PLAYER_DETECT_AREA: Area3D
+@export var NAV_AGENT: NavigationAgent3D
+
+@export var SPEED = 0.5
+@export var LERP_SPEED = 1.5
+@export var REACHED_DISTANCE = 1.5
+@export var LERP_ROTATE = 2.0
+@export var RADIUS = 8.0
+@export var CHANGE_PATH_WAIT_TIME = 10.0
+@export var IWR_MUL = 2.5
+
+@onready var change_path_timer = $ChangePathTimer
+
+var player_is_detect = false
+
+func _init():
+	randomize()
+
+func _ready():
+	Events.connect('player_shot', _on_player_shot)
+	PLAYER_DETECT_AREA.connect('body_entered', _on_player_detect)
+
+func enter():
+	set_random_target_pos()
+	change_path_timer.start(CHANGE_PATH_WAIT_TIME)
+
+func exit():
+	change_path_timer.stop()
+
+func update(_delta) -> StateTypes:
+	var path = (NAV_AGENT.get_next_path_position() - AGENT.global_position).normalized()
+	path.y = AGENT.velocity.y
+	
+	if NAV_AGENT.distance_to_target() <= REACHED_DISTANCE:
+		AGENT.velocity = AGENT.velocity.lerp(Vector3.ZERO, _delta * LERP_SPEED)
+	else:
+		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * LERP_SPEED)
+	
+	var transform_velocity = AGENT.velocity * AGENT.global_transform.basis
+	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) * IWR_MUL
+	AGENT.animation_tree.set('parameters/walk_iwr/blend_position', follow_iwr)
+	
+	#SMOOT LOOK AT
+	if path.length() > 0.1:
+		var new_t = AGENT.global_transform.looking_at(path + AGENT.global_position)
+		var new_q = AGENT.quaternion.slerp(Quaternion(new_t.basis), _delta * LERP_ROTATE)
+		new_q.x = 0
+		new_q.z = 0
+		AGENT.global_transform.basis = Basis(new_q)
+	
+	if player_is_detect:
+		return EnemyState.StateTypes.FOLLOW
+	return EnemyState.StateTypes.NONE
+
+func set_random_target_pos():
+	var x = randi_range(-RADIUS, RADIUS) + AGENT.global_position.x
+	var z = randi_range(-RADIUS, RADIUS) + AGENT.global_position.z
+	NAV_AGENT.target_position = Vector3(x, 0, z)
+
+func _on_change_path_timer_timeout():
+	set_random_target_pos()
+
+func _on_player_detect(_body: Node3D):
+	player_is_detect = true
+
+func _on_player_shot():
+	if AGENT.player:
+		player_is_detect = true
+"
+
+[node name="PatrolState" type="Node"]
+script = SubResource("GDScript_lh0sa")
+
+[node name="ChangePathTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ChangePathTimer" to="." method="_on_change_path_timer_timeout"]

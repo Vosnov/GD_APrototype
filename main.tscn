@@ -1,9 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=12 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="3_71dis"]
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="4_s37af"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_v30gr"]
+vertices = PackedVector3Array(-9.5, 0, -19.25, -19.25, 0, -19.25, -19.25, 0, -9.75, -19.25, 0, 0, -1.75, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -1.75, 0.25, 0, -19.25, -19.25, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -19.25, -9.5, 0, -19.25, -19.25, 0, -9.75, 19.25, 0, -9.75, 19.25, 0, -19.25, 9.75, 0, -19.25, 2, 0, -1.25, 2, 0, 0, 19.25, 0, 0, 0.25, 0, -19.25, 0.25, 0, -1.75, 1.5, 0, -1.75, 1.5, 0, -1.75, 2, 0, -1.25, 19.25, 0, 0, 19.25, 0, -9.75, 9.75, 0, -19.25, 0.25, 0, -19.25, -0.25, 1.5, -0.25, -0.25, 1.5, 0.5, 0.5, 1.5, 0.5, 0.5, 1.5, -0.25, -19.25, 0, 9.5, -19.25, 0, 19.25, -9.75, 0, 19.25, 0, 0, 19.25, 0, 0, 2, -1.25, 0, 2, -1.75, 0, 1.5, -1.75, 0, 0, -19.25, 0, 0, 0, 0, 19.25, -1.25, 0, 2, -1.75, 0, 1.5, -19.25, 0, 0, -19.25, 0, 9.5, -9.75, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 19.25, 19.25, 0, 9.5, 19.25, 0, 0, 2, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 2, 0, 0, 19.25, 19.25, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 9.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(8, 7, 6), PackedInt32Array(10, 9, 11), PackedInt32Array(11, 9, 14), PackedInt32Array(11, 14, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(17, 16, 15), PackedInt32Array(20, 19, 18), PackedInt32Array(23, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(28, 24, 29), PackedInt32Array(33, 32, 30), PackedInt32Array(30, 32, 31), PackedInt32Array(36, 35, 34), PackedInt32Array(39, 38, 37), PackedInt32Array(42, 41, 40), PackedInt32Array(44, 43, 45), PackedInt32Array(45, 43, 48), PackedInt32Array(45, 48, 47), PackedInt32Array(45, 47, 46), PackedInt32Array(51, 50, 49), PackedInt32Array(54, 53, 52), PackedInt32Array(57, 56, 55), PackedInt32Array(59, 58, 60), PackedInt32Array(60, 58, 63), PackedInt32Array(60, 63, 62), PackedInt32Array(60, 62, 61)]
+agent_radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ju2es"]
+albedo_texture = ExtResource("1_oqjwu")
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nf4u3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mr12i"]
+size = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw6lw"]
 albedo_texture = ExtResource("1_oqjwu")
@@ -16,26 +30,43 @@ size = Vector3(40, 0.1, 40)
 
 [node name="Main" type="Node3D"]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_mw6lw")
-mesh = SubResource("PlaneMesh_frnof")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_7dn26")
-
 [node name="Player" parent="." instance=ExtResource("2_v1y33")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09065, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08, 3.5)
 
 [node name="CameraController" parent="." node_paths=PackedStringArray("TARGET") instance=ExtResource("3_71dis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5)
 TARGET = NodePath("../Player")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
-[node name="EnemyType1" parent="." instance=ExtResource("4_s37af")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.13668, -3.19131)
+[node name="EnemyType1" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_s37af")]
+transform = Transform3D(-0.033068, 0, 0.999453, 0, 1, 0, -0.999453, 0, -0.033068, -1.42554, 1.13668, -5.7975)
+player = NodePath("../Player")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.282219, 0)
+navigation_mesh = SubResource("NavigationMesh_v30gr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D2"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ju2es")
+mesh = SubResource("BoxMesh_nf4u3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D2"]
+shape = SubResource("BoxShape3D_mr12i")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.282219, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_mw6lw")
+mesh = SubResource("PlaneMesh_frnof")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_7dn26")
 
 [editable path="CameraController"]
