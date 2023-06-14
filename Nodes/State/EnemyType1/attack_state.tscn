@@ -3,37 +3,101 @@
 [sub_resource type="GDScript" id="GDScript_yjn2f"]
 script/source = "extends EnemyState
 
+@export_group(\"Required Nodes\", \"\")
 @export var ANIMATION_TREE: AnimationTree
-@export var ATTACK_ANIM_NAME: String
+@export var ATTACK_AREA: Area3D
+
+@export_group(\"Params\", \"\")
+@export var ATTACK_ANIM_NAMES: Array[String] = []
+@export var MOVE_TO_PLAYER_WAIT_TIME = 1.0
+@export var SPEED = 1.0
+@export var IWR_MUL = 1.5
+
+@onready var move_to_player_timer = $MoveToPlayerTimer
 
 var anim_is_finish = false
+var player_in_area = false
+var shold_move = false
+var attack_trans_names: Array[String] = []
 
 func enter():
+	ATTACK_AREA.connect('body_entered', _on_player_enter_area)
 	anim_is_finish = false
-	ANIMATION_TREE.set(\"parameters/attack_shot/request\", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	player_in_area = false
+	shold_move = false
+	
+	for body in ATTACK_AREA.get_overlapping_bodies():
+		if body is Player:
+			player_in_area = true
+			play_animation()
+	
+	if !player_in_area:
+		shold_move = true
+		move_to_player_timer.one_shot = true
+		move_to_player_timer.start(MOVE_TO_PLAYER_WAIT_TIME)
 
 func exit():
+	ATTACK_AREA.disconnect('body_entered', _on_player_enter_area)
 	anim_is_finish = false
+	player_in_area = false
+	
+func _init():
+	randomize()
 
 func _ready():
+	var attack_trans_node = ANIMATION_TREE.tree_root.get_node('attack_trans') as AnimationNodeTransition
+	for i in attack_trans_node.get_input_count():
+		var name = attack_trans_node.get_input_name(i)
+		attack_trans_names.append(name)
+	
 	ANIMATION_TREE.connect('animation_finished', animation_finished)
 
 func update(_delta: float) -> StateTypes:
-	AGENT.velocity = Vector3.ZERO
+	if player_in_area:
+		AGENT.velocity = Vector3.ZERO
+	else:
+		AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 10)
+		var follow_iwr = Vector2(0, AGENT.velocity.z) * IWR_MUL
+		ANIMATION_TREE.set('parameters/walk_iwr/blend_position', follow_iwr)
+		
 	if anim_is_finish:
 		return StateTypes.WAIT
 	return StateTypes.NONE
 
 func animation_finished(anim_name):
-	if anim_name == ATTACK_ANIM_NAME:
+	if ATTACK_ANIM_NAMES.has(anim_name):
 		anim_is_finish = true
-		attack()
 
-func attack():
-	return
-	if AGENT.player_in_attack_range:
-		Events.emit_signal('player_take_damage', AGENT.ATTACK_DAMGE)
+func play_animation():
+	var item = attack_trans_names[randi_range(0, attack_trans_names.size() - 1)]
+	ANIMATION_TREE.set(
+		'parameters/attack_trans/transition_request',
+		item
+	)
+	ANIMATION_TREE.set(
+		\"parameters/attack_shot/request\", 
+		AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	)
+
+func _on_player_enter_area(body: Node3D):
+	if body is Player:
+		player_in_area = true
+		play_animation()
+		move_to_player_timer.stop()
+
+#func attack():
+	#if AGENT.player_in_attack_range:
+		#Events.emit_signal('player_take_damage', AGENT.ATTACK_DAMGE)
+
+
+func _on_move_to_player_timer_timeout():
+	shold_move = false
+	anim_is_finish = true
 "
 
 [node name="AttackState" type="Node"]
 script = SubResource("GDScript_yjn2f")
+
+[node name="MoveToPlayerTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="MoveToPlayerTimer" to="." method="_on_move_to_player_timer_timeout"]

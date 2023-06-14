@@ -4,14 +4,20 @@
 script/source = "extends EnemyState
 
 @onready var attack_timer = $AttackTimer
-@onready var wait_tiemr = $WaitTimer
+@onready var wait_timer = $WaitTimer
 
+@export_group(\"Required Nodes\", \"\")
 @export var STEERING_BEHAVIOR: SteeringBehaviorComponent
+@export var ANIMATION_TREE: AnimationTree
+@export var ATTACK_AREA: Area3D
 
+@export_group(\"Params\", \"\")
 @export var SPEED = 0.5
+@export var DISTANCE_TO_FOLLOW = 3.0
 @export var LERP_COLLISION = 1.5
 @export var LERP_NO_COLLISION = 2.0
 @export var LERP_ROTATE = 4.0
+@export var IWR_MUL = 1.4
 
 @export var ATTACK_TIME = 5.0
 @export var WAIT_TIME = 1.5
@@ -19,25 +25,30 @@ script/source = "extends EnemyState
 
 var wait_direction = Vector3()
 var should_attack = false
+var barriers_in_attack_area: Array[Node3D] = []
 
 func _init():
 	randomize()
 	
 func _ready():
-	wait_tiemr.start(WAIT_TIME)
-	
+	ATTACK_AREA.connect('body_entered', _on_attack_area_enter)
+	ATTACK_AREA.connect('body_exited', _on_attack_area_exit)
+
 func enter():
 	should_attack = false
 	
 	attack_timer.one_shot = true
 	attack_timer.start(ATTACK_TIME)
+	wait_timer.start(WAIT_TIME)
 
 func exit():
 	should_attack = false
+	wait_timer.stop()
+	attack_timer.stop()
 
 func update(_delta: float) -> StateTypes:
-	var walk_iwr =  Vector2(AGENT.velocity.x, AGENT.velocity.z) * 1.4
-	AGENT.animation_tree.set('parameters/walk_iwr/blend_position', walk_iwr)
+	var walk_iwr =  Vector2(AGENT.velocity.x, AGENT.velocity.z) * IWR_MUL
+	ANIMATION_TREE.set('parameters/walk_iwr/blend_position', walk_iwr)
 	
 	if STEERING_BEHAVIOR.has_collision:
 		var behavior_velocity = STEERING_BEHAVIOR.velocity
@@ -56,7 +67,7 @@ func update(_delta: float) -> StateTypes:
 	if should_attack:
 		return StateTypes.ATTACK
 	
-	if AGENT.global_position.distance_to(AGENT.player.global_position) >= 3:
+	if AGENT.global_position.distance_to(AGENT.player.global_position) >= DISTANCE_TO_FOLLOW:
 		return StateTypes.FOLLOW
 	return StateTypes.NONE
 
@@ -66,9 +77,21 @@ func _on_wait_timer_timeout():
 	if (wait_direction.dot(-AGENT.global_transform.basis.z) <= -0.7):
 		wait_direction = Vector3()
 
+func set_should_attack():
+	if barriers_in_attack_area.size() == 0:
+		should_attack = true
 
 func _on_attack_timer_timeout():
-	should_attack = true
+	set_should_attack()
+
+func _on_attack_area_enter(body: Node3D):
+	if body is Player:
+		set_should_attack()
+	else:
+		barriers_in_attack_area.append(body)
+
+func _on_attack_area_exit(body: Node3D):
+	barriers_in_attack_area.erase(body)
 "
 
 [node name="WaitState" type="Node"]

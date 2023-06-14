@@ -3,13 +3,17 @@
 [sub_resource type="GDScript" id="GDScript_lh5yh"]
 script/source = "extends EnemyState
 
+@export_group(\"Required Nodes\", \"\")
 @export var NAV_AGENT: NavigationAgent3D
 @export var STEERING_BEHAVIOR: SteeringBehaviorComponent
-
+@export var ANIMATION_TREE: AnimationTree
+@export_group(\"Params\", \"\")
 @export var SPEED = 1.0
+@export var DISTANCE_TO_WAIT = 2.5
 @export var LERP_COLLISION = 0.5
 @export var LERP_NO_COLLISION = 2.0
 @export var LERP_ROTATE = 2.0
+@export var IWR_MUL = 1.0
 @export var PATH_WAIT_TIME = 0.4
 
 @onready var path_timer = $PathTimer
@@ -32,8 +36,8 @@ func update(_delta) -> StateTypes:
 		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * LERP_NO_COLLISION)
 	
 	var transform_velocity = AGENT.velocity * AGENT.global_transform.basis
-	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z)
-	AGENT.animation_tree.set('parameters/walk_iwr/blend_position', follow_iwr)
+	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) * IWR_MUL
+	ANIMATION_TREE.set('parameters/walk_iwr/blend_position', follow_iwr)
 	
 	#SMOOT LOOK AT
 	if path.length() > 0.1:
@@ -43,7 +47,7 @@ func update(_delta) -> StateTypes:
 		new_q.z = 0
 		AGENT.global_transform.basis = Basis(new_q)
 	
-	if NAV_AGENT.distance_to_target() <= 2.5:
+	if NAV_AGENT.distance_to_target() <= DISTANCE_TO_WAIT:
 		return StateTypes.WAIT
 	return StateTypes.NONE
 
