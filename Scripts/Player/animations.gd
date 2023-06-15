@@ -19,12 +19,12 @@ func _physics_process(delta):
 		is_run = true
 	
 	if is_run and not is_aim:
-		ANIMATION_TREE.set("parameters/Transition/transition_request", "run")
+		ANIMATION_TREE.set("parameters/main_trans/transition_request", "run")
 	if is_aim:
-		ANIMATION_TREE.set("parameters/Transition/transition_request", "aim")
+		ANIMATION_TREE.set("parameters/main_trans/transition_request", "aim")
 	
 	if not is_run and not is_aim:
-		ANIMATION_TREE.set("parameters/Transition/transition_request", "not_aim")
+		ANIMATION_TREE.set("parameters/main_trans/transition_request", "not_aim")
 
 	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir)
 	ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)

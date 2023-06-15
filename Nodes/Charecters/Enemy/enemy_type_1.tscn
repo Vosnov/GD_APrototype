@@ -1,13 +1,14 @@
-[gd_scene load_steps=30 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=31 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
-[ext_resource type="PackedScene" uid="uid://ddst15qy5dpw" path="res://Nodes/Charecters/steering_behavior_component.tscn" id="3_jc71t"]
+[ext_resource type="PackedScene" uid="uid://ddst15qy5dpw" path="res://Nodes/Components/steering_behavior_component.tscn" id="3_jc71t"]
 [ext_resource type="PackedScene" uid="uid://c5eqxfng0ap8u" path="res://Nodes/State/EnemyType1/patrol_state.tscn" id="4_ihlw1"]
 [ext_resource type="Script" path="res://Scripts/Enemy/state_machine.gd" id="4_y5l6s"]
 [ext_resource type="PackedScene" uid="uid://b6j0crmquswkj" path="res://Nodes/State/EnemyType1/follow_state.tscn" id="5_g087f"]
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
+[ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="9_sjnhw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
 radius = 0.346272
@@ -92,7 +93,7 @@ blend_point_5/pos = Vector2(0, -1)
 min_space = Vector2(-1, -2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
-graph_offset = Vector2(-753.273, -133.252)
+graph_offset = Vector2(-735.616, -188.794)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -126,6 +127,8 @@ radius = 0.426279
 height = 1.25653
 
 [node name="EnemyType1" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_qr7er")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -217,31 +220,35 @@ text = "State: "
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.136707, -0.522935, 0.0465336)
+bones/0/position = Vector3(0.032412, -0.539811, -0.0165626)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.330024, -0.152123, -0.00924075, 0.931589)
+bones/2/rotation = Quaternion(0.303865, -0.0969689, -0.0109926, 0.947704)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(0.000707494, -0.22363, -9.36122e-09, 0.974674)
+bones/4/rotation = Quaternion(-0.218255, 0.0371499, 1.18033e-08, 0.975184)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.13862, -0.130652, -0.795228, 0.575611)
+bones/5/rotation = Quaternion(0.156586, -0.14502, -0.802222, 0.557575)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.182618, -0.00562173, -0.337623, 0.92338)
-bones/7/rotation = Quaternion(0.32181, 0.00520271, 0.122094, 0.938885)
+bones/6/rotation = Quaternion(0.149635, -0.0171639, -0.293104, 0.944142)
+bones/7/rotation = Quaternion(0.240125, -0.00394178, 0.118591, 0.963463)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.255743, 0.369959, 0.819965, -0.354096)
+bones/12/rotation = Quaternion(-0.171114, 0.393755, 0.837588, -0.337822)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.243162, -0.0126834, -0.413593, 0.877298)
+bones/13/rotation = Quaternion(-0.245852, -0.0126412, -0.418167, 0.874376)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.169342, 0.14573, 0.944278, 0.241712)
+bones/14/rotation = Quaternion(0.282267, 0.183769, 0.912861, 0.230738)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.146928, -0.0113211, 0.297941, 0.943141)
+bones/15/rotation = Quaternion(-0.176109, -0.0110105, 0.357114, 0.917243)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.151233, -1.14139, 1.34344)
+bones/16/position = Vector3(-0.133411, -1.21264, 1.31718)
 bones/17/position = Vector3(-0.399367, -2.11167, -0.641656)
-bones/18/position = Vector3(-1.32743, -1.08711, 0.726539)
-bones/19/position = Vector3(0.53271, -2.1411, 0.479782)
+bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
+bones/19/position = Vector3(0.344362, -2.15402, 0.445128)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
+
+[node name="AimTargetComponent" parent="." node_paths=PackedStringArray("ENEMY") instance=ExtResource("9_sjnhw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
+ENEMY = NodePath("..")
 
 [editable path="enemyType1"]

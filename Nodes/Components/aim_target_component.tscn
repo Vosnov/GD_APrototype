@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://clfn6qajh2mki"]
+
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_gp1uv"]
+[ext_resource type="Script" path="res://Scripts/Components/aim_target_component.gd" id="1_np8ix"]
+
+[sub_resource type="Animation" id="Animation_psy8n"]
+resource_name = "aim_target_anim"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AimIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.4, 0.4, 0.4), Vector3(0.2, 0.2, 0.2)]
+}
+
+[sub_resource type="Animation" id="Animation_qxd1p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AimIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.4, 0.4, 0.4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iibu4"]
+_data = {
+"RESET": SubResource("Animation_qxd1p"),
+"aim_target_anim": SubResource("Animation_psy8n")
+}
+
+[node name="AimTargetComponent" type="Node3D"]
+script = ExtResource("1_np8ix")
+
+[node name="AimIcon" type="Sprite3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("1_gp1uv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iibu4")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdq7nuo5brc0d"]
+
+[ext_resource type="Script" path="res://Scripts/Components/gun_ik_component.gd" id="1_nflmg"]
+
+[node name="GunIKComponent" type="Node3D"]
+script = ExtResource("1_nflmg")

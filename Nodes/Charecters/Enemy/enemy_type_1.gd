@@ -4,9 +4,8 @@ class_name Enemy
 @export var player: Node3D
 
 @onready var state_machine = $StateMachine as StateMachine
-@onready var nav_agent = $NavigationAgent3D as NavigationAgent3D
-@onready var animation_tree = $AnimationTree
 @onready var state_label = $StateLabel
+@onready var aim_target_component = $AimTargetComponent
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -19,3 +18,6 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 	
 	move_and_slide()
+
+func get_aim_target() -> Vector3:
+	return aim_target_component.global_position

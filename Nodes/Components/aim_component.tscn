@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqsd8fu40qpul"]
+
+[ext_resource type="Script" path="res://Scripts/Components/aim_component.gd" id="1_ck0my"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7iq6t"]
+points = PackedVector3Array(1.5, -1.5, -7, -1.5, 1.5, -7, 0, 0, 0, -1.5, -1.5, -7, 1.5, 1.5, -7)
+
+[node name="AimComponent" type="Node3D"]
+script = ExtResource("1_ck0my")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_7iq6t")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
