@@ -55,6 +55,7 @@ func _ready():
 func update(_delta: float) -> StateTypes:
 	if player_in_area:
 		AGENT.velocity = Vector3.ZERO
+		ANIMATION_TREE.set('parameters/walk_iwr/blend_position', Vector2())
 	else:
 		AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 10)
 		var follow_iwr = Vector2(0, AGENT.velocity.z) * IWR_MUL

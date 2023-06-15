@@ -19,8 +19,11 @@ script/source = "extends EnemyState
 @export var LERP_ROTATE = 4.0
 @export var IWR_MUL = 1.4
 
-@export var ATTACK_TIME = 5.0
-@export var WAIT_TIME = 1.5
+@export_group(\"Time\", \"\")
+@export var ATTACK_TIME_MIN = 2.0
+@export var ATTACK_TIME_MAX = 8.0
+@export var WAIT_TIME_MIN = 1.0
+@export var WAIT_TIME_MAX = 3.0
 
 
 var wait_direction = Vector3()
@@ -38,8 +41,8 @@ func enter():
 	should_attack = false
 	
 	attack_timer.one_shot = true
-	attack_timer.start(ATTACK_TIME)
-	wait_timer.start(WAIT_TIME)
+	attack_timer.start(randf_range(ATTACK_TIME_MIN, ATTACK_TIME_MAX))
+	wait_timer.start(randf_range(WAIT_TIME_MIN, WAIT_TIME_MAX))
 
 func exit():
 	should_attack = false
