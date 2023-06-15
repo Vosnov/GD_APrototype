@@ -13,7 +13,7 @@ script/source = "extends EnemyState
 @export var LERP_COLLISION = 0.5
 @export var LERP_NO_COLLISION = 2.0
 @export var LERP_ROTATE = 2.0
-@export var IWR_MUL = 1.0
+@export var IWR_MUL = 2.0
 @export var PATH_WAIT_TIME = 0.4
 
 @onready var path_timer = $PathTimer
