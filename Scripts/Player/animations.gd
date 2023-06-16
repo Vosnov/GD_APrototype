@@ -27,7 +27,11 @@ func _physics_process(delta):
 		ANIMATION_TREE.set("parameters/main_trans/transition_request", "not_aim")
 
 	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir)
-	ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
+	
+	if is_aim:
+		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir * 0.5)
+	else:
+		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
 
 func _input(_event):
 	if Input.is_action_just_pressed("shot"):

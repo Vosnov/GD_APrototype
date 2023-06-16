@@ -41,12 +41,10 @@ TARGET = NodePath("../Player")
 transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
 [node name="EnemyType1" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_s37af")]
-process_mode = 4
 transform = Transform3D(-0.033068, 0, 0.999453, 0, 1, 0, -0.999453, 0, -0.033068, -1.42554, 1.13668, -5.7975)
 player = NodePath("../Player")
 
 [node name="EnemyType2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_s37af")]
-process_mode = 4
 transform = Transform3D(-0.033068, 0, 0.999453, 0, 1, 0, -0.999453, 0, -0.033068, -3.42554, 1.13668, -5.7975)
 player = NodePath("../Player")
 

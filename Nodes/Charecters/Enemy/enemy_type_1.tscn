@@ -93,7 +93,7 @@ blend_point_5/pos = Vector2(0, -1)
 min_space = Vector2(-1, -2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
-graph_offset = Vector2(-735.616, -188.794)
+graph_offset = Vector2(-617.616, -51.794)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -124,12 +124,43 @@ points = PackedVector3Array(0, 0, 0, 3, 2, -6, -3, 2, -6, -3, -2, -6, 3, -2, -6)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b7geb"]
 radius = 0.426279
-height = 1.25653
+height = 1.11209
 
 [node name="EnemyType1" type="CharacterBody3D"]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_qr7er")
+
+[node name="enemyType1" parent="." instance=ExtResource("1_toxgn")]
+transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
+
+[node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
+bones/0/position = Vector3(0.160947, -0.534391, -0.0423981)
+bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
+bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
+bones/2/rotation = Quaternion(0.304084, -0.0974221, -0.0109821, 0.947587)
+bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
+bones/4/rotation = Quaternion(-0.0284909, -0.000876954, 1.60969e-08, 0.999594)
+bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
+bones/5/rotation = Quaternion(0.0985168, -0.112388, -0.760036, 0.632463)
+bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
+bones/6/rotation = Quaternion(0.24099, 0.00323487, -0.352719, 0.904158)
+bones/7/rotation = Quaternion(0.453205, 0.0172269, 0.151038, 0.878348)
+bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
+bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
+bones/12/rotation = Quaternion(-0.273982, 0.368364, 0.800456, -0.385372)
+bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
+bones/13/rotation = Quaternion(-0.23706, -0.012777, -0.403215, 0.883774)
+bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
+bones/14/rotation = Quaternion(0.218228, 0.296937, 0.894965, 0.251481)
+bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
+bones/15/rotation = Quaternion(-0.165867, -0.0111269, 0.336346, 0.92695)
+bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
+bones/16/position = Vector3(-0.298913, -0.97592, 1.43744)
+bones/17/position = Vector3(-0.438749, -2.19834, -0.222749)
+bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
+bones/19/position = Vector3(0.636253, -2.13399, 0.498832)
+bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121471, -0.222097)
@@ -207,7 +238,7 @@ collision_layer = 6
 collision_mask = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.136004, -0.746013)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.136004, -0.645887)
 shape = SubResource("CapsuleShape3D_b7geb")
 
 [node name="StateLabel" type="Label3D" parent="."]
@@ -216,39 +247,10 @@ billboard = 1
 double_sided = false
 text = "State: "
 
-[node name="enemyType1" parent="." instance=ExtResource("1_toxgn")]
-transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
-
-[node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.032412, -0.539811, -0.0165626)
-bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
-bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.303865, -0.0969689, -0.0109926, 0.947704)
-bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.218255, 0.0371499, 1.18033e-08, 0.975184)
-bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.156586, -0.14502, -0.802222, 0.557575)
-bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.149635, -0.0171639, -0.293104, 0.944142)
-bones/7/rotation = Quaternion(0.240125, -0.00394178, 0.118591, 0.963463)
-bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
-bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.171114, 0.393755, 0.837588, -0.337822)
-bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.245852, -0.0126412, -0.418167, 0.874376)
-bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.282267, 0.183769, 0.912861, 0.230738)
-bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.176109, -0.0110105, 0.357114, 0.917243)
-bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.133411, -1.21264, 1.31718)
-bones/17/position = Vector3(-0.399367, -2.11167, -0.641656)
-bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.344362, -2.15402, 0.445128)
-bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
-
 [node name="AimTargetComponent" parent="." node_paths=PackedStringArray("ENEMY") instance=ExtResource("9_sjnhw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
 ENEMY = NodePath("..")
+
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 
 [editable path="enemyType1"]

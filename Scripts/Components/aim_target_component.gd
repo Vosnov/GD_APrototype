@@ -1,7 +1,6 @@
 extends Node3D
 
 @export var ENEMY: Enemy
-@export var HIT_PARTICLE: PackedScene
 
 @onready var aim_icon = $AimIcon
 @onready var anim_player = $AnimationPlayer
@@ -37,17 +36,8 @@ func _on_aim_target_remove():
 func _on_animation_player_animation_finished(_anim_name):
 	is_full_target = true
 
-func spawn_hit_particle():
-	var hit_instance = HIT_PARTICLE.instantiate() as Node3D
-	ENEMY.add_child(hit_instance)
-	hit_instance.global_position = ENEMY.get_aim_target()
-	hit_instance.look_at(ENEMY.player.global_position)
-
 func _on_player_shot():
 	if is_aim_target:
-		
-		spawn_hit_particle()
-		
 		if is_full_target:
 			Events.emit_signal("enemy_take_damage", ENEMY, 1.0)
 		else:
