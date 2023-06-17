@@ -39,7 +39,7 @@ func reload():
 	Events.emit_signal("player_reload")
 	Events.emit_signal("player_reload_data_ui", AMMOUNT_LOADED, AMOUNT_TOTAL)
 	
-func _input(event):
+func _input(_event):
 	aiming = Input.is_action_pressed("aim")
 	is_runing = Input.is_action_pressed("sprint")
 	

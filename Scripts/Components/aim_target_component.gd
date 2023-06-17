@@ -9,29 +9,32 @@ var is_aim_target = false
 var is_full_target = false
 
 func _ready():
-	set_target(false)
+	reset_target()
 	Events.connect('enemy_target', _on_aim_target)
 	Events.connect('enemy_target_remove', _on_aim_target_remove)
 	Events.connect('player_shot', _on_player_shot)
 
-func set_target(value: bool):
+func set_target():
+	is_aim_target = true
+	anim_player.play("aim_target_anim")
+	aim_icon.visible = true
 	is_full_target = false
-	
-	aim_icon.visible = value
-	is_aim_target = value
-	
-	if value and not anim_player.is_playing():
-		anim_player.play("aim_target_anim")
-	if not value:
-		anim_player.stop()
+
+func reset_target():
+	is_aim_target = false
+	anim_player.stop()
+	aim_icon.visible = false
+	is_full_target = false
 
 func _on_aim_target(_enemy: Enemy):
-	if _enemy == ENEMY:
-		set_target(true)
-	else:
-		set_target(false)
+	if _enemy == ENEMY and not is_aim_target:
+		set_target()
+	
+	if _enemy != ENEMY:
+		reset_target()
+		
 func _on_aim_target_remove():
-	set_target(false)
+	reset_target()
 
 func _on_animation_player_animation_finished(_anim_name):
 	is_full_target = true

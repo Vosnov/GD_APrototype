@@ -15,7 +15,10 @@ func _ready():
 	Events.connect("enemy_target_remove", _on_aim_component_enemy_target_remove)
 
 func _process(delta):
-	if target == null or target.is_dead:
+	if target != null and target.is_dead:
+		target = null
+	
+	if target == null:
 		amount = clamp(amount - delta * SPEED, 0, 1)
 	if target != null:
 		amount = clamp(amount + delta * SPEED, 0, 1)

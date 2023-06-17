@@ -41,6 +41,7 @@ func die():
 	animation_tree.set("parameters/main_trans/transition_request", 'dying')
 	aim_target_component.queue_free()
 	stering_behavior.queue_free()
+	Events.emit_signal('enemy_die', self)
 
 func _on_take_damage(enemy: Enemy, damage: float):
 	if enemy == self:

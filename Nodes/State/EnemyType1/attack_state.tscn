@@ -47,8 +47,8 @@ func _init():
 func _ready():
 	var attack_trans_node = ANIMATION_TREE.tree_root.get_node('attack_trans') as AnimationNodeTransition
 	for i in attack_trans_node.get_input_count():
-		var name = attack_trans_node.get_input_name(i)
-		attack_trans_names.append(name)
+		var input_name = attack_trans_node.get_input_name(i)
+		attack_trans_names.append(input_name)
 	
 	ANIMATION_TREE.connect('animation_finished', animation_finished)
 

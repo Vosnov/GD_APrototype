@@ -4,6 +4,7 @@ extends Node
 signal enemy_target(enemy: Enemy)
 signal enemy_target_remove()
 signal enemy_take_damage(enemy: Enemy, damage: float)
+signal enemy_die(enemy: Enemy)
 #PLAYER
 signal player_shot()
 signal player_reload()

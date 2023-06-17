@@ -3,6 +3,9 @@ extends Node3D
 var entered_body: Array = []
 var aiming = false
 
+func _ready():
+	Events.connect('enemy_die', _on_enemy_die)
+
 func _input(_event):
 	if Input.is_action_just_pressed("aim"):
 		aiming = true
@@ -19,13 +22,19 @@ func should_emit_target():
 		var last_entered_body = entered_body.back()
 		if aiming: Events.emit_signal("enemy_target", last_entered_body)
 
+func remove_body(body: Node3D):
+	entered_body.erase(body)
+	if entered_body.size() == 0 and aiming:
+		emit_remove_marker()
+	should_emit_target()
+
 func _on_area_3d_body_entered(body: Node3D):
 	if not entered_body.has(body):
 		if body is Enemy: entered_body.push_front(body)
 		should_emit_target()
 
 func _on_area_3d_body_exited(body: Node3D):
-	entered_body.erase(body)
-	if entered_body.size() == 0 and aiming:
-		emit_remove_marker()
-	should_emit_target()
+	remove_body(body)
+
+func _on_enemy_die(enemy: Enemy):
+	remove_body(enemy)
