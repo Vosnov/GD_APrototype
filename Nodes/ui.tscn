@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=2 format=3 uid="uid://en3g0v7xjkgn"]
+
+[sub_resource type="GDScript" id="GDScript_tkxjl"]
+script/source = "extends CanvasLayer
+
+@onready var reload_label = $ReloadData
+
+func _init():
+	Events.connect(\"player_reload_data_ui\", _on_reload_data)
+	
+func _on_reload_data(amount: int, total_amount: int):
+	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
+"
 
 [node name="UI" type="CanvasLayer"]
+script = SubResource("GDScript_tkxjl")
+
+[node name="ReloadData" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

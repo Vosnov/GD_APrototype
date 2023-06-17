@@ -10,4 +10,5 @@ signal player_reload()
 signal player_take_damage(damage: float)
 #UI
 signal player_hp_ui(hp: float)
+signal player_reload_data_ui(amount: int, total_amount: int)
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=13 format=3 uid="uid://w33jnbedk4n5"]
 
+[ext_resource type="PackedScene" uid="uid://en3g0v7xjkgn" path="res://Nodes/ui.tscn" id="1_hgfpu"]
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="3_71dis"]
@@ -29,6 +30,8 @@ uv1_scale = Vector3(20, 20, 20)
 size = Vector3(40, 0.1, 40)
 
 [node name="Main" type="Node3D"]
+
+[node name="UI" parent="." instance=ExtResource("1_hgfpu")]
 
 [node name="Player" parent="." instance=ExtResource("2_v1y33")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08, 3.5)

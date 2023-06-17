@@ -17,6 +17,7 @@ var is_reloading = false
 
 func _ready():
 	ANIMATION_TREE.connect('animation_finished', _on_anim_finish)
+	Events.emit_signal("player_reload_data_ui", AMMOUNT_LOADED, AMOUNT_TOTAL)
 
 func shot():
 	if not shot_timer.is_stopped(): return
@@ -27,7 +28,7 @@ func shot():
 	shot_timer.one_shot = true
 	shot_timer.start(SHOT_TIMEOUT)
 	Events.emit_signal("player_shot")
-	print_debug(str("GUN AMOUNT LOADED: ", AMMOUNT_LOADED, " GUN AMOUNT TOTAL: ", AMOUNT_TOTAL))
+	Events.emit_signal("player_reload_data_ui", AMMOUNT_LOADED, AMOUNT_TOTAL)
 
 func reload():
 	if AMMOUNT_LOADED == MAX_AMOUNT_LOADED: return
@@ -36,7 +37,7 @@ func reload():
 	AMOUNT_TOTAL -= AMMOUNT_LOADED
 	is_reloading = true
 	Events.emit_signal("player_reload")
-	print_debug(str("GUN AMOUNT LOADED: ", AMMOUNT_LOADED, " GUN AMOUNT TOTAL: ", AMOUNT_TOTAL))
+	Events.emit_signal("player_reload_data_ui", AMMOUNT_LOADED, AMOUNT_TOTAL)
 	
 func _input(event):
 	aiming = Input.is_action_pressed("aim")
