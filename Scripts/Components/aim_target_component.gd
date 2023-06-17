@@ -20,16 +20,16 @@ func set_target(value: bool):
 	aim_icon.visible = value
 	is_aim_target = value
 	
-	if value:
+	if value and not anim_player.is_playing():
 		anim_player.play("aim_target_anim")
-	else:
+	if not value:
 		anim_player.stop()
 
 func _on_aim_target(_enemy: Enemy):
-	set_target(false)
 	if _enemy == ENEMY:
 		set_target(true)
-		
+	else:
+		set_target(false)
 func _on_aim_target_remove():
 	set_target(false)
 

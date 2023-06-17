@@ -1,10 +1,12 @@
 extends Node
 
-signal player_shot()
-
+#ENEMY
 signal enemy_target(enemy: Enemy)
 signal enemy_target_remove()
 signal enemy_take_damage(enemy: Enemy, damage: float)
-
-signal player_hp_ui(hp: float)
+#PLAYER
+signal player_shot()
 signal player_take_damage(damage: float)
+#UI
+signal player_hp_ui(hp: float)
+

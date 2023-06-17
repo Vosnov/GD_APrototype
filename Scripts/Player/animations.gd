@@ -8,6 +8,9 @@ var input_dir = Vector2()
 var is_aim = false
 var is_run = false
 
+func _ready():
+	Events.connect('player_shot', _on_player_shot)
+
 func _physics_process(delta):
 	is_aim = false
 	is_run = false
@@ -34,7 +37,8 @@ func _physics_process(delta):
 		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
 
 func _input(_event):
-	if Input.is_action_just_pressed("shot"):
-		ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	if Input.is_action_just_released("aim"):
 		ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+
+func _on_player_shot():
+	ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

@@ -61,8 +61,8 @@ func _init():
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= deg_to_rad(event.relative.x) * get_rotate_speed()
-	if Input.is_action_just_pressed("shot") and aiming:
-		Events.emit_signal("player_shot")
+	#if Input.is_action_just_pressed("shot") and aiming:
+		#Events.emit_signal("player_shot")
 
 func update_ui():
 	pass
