@@ -10,6 +10,7 @@ var is_run = false
 
 func _ready():
 	Events.connect('player_shot', _on_player_shot)
+	Events.connect('player_reload', _on_player_reload)
 
 func _physics_process(delta):
 	is_aim = false
@@ -22,12 +23,15 @@ func _physics_process(delta):
 		is_run = true
 	
 	if is_run and not is_aim:
-		ANIMATION_TREE.set("parameters/main_trans/transition_request", "run")
-	if is_aim:
-		ANIMATION_TREE.set("parameters/main_trans/transition_request", "aim")
+		ANIMATION_TREE.set('parameters/main_trans/transition_request', 'run')
+		ANIMATION_TREE.set("parameters/reload_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+	else:
+		ANIMATION_TREE.set('parameters/main_trans/transition_request', 'walk')
 	
-	if not is_run and not is_aim:
-		ANIMATION_TREE.set("parameters/main_trans/transition_request", "not_aim")
+	if is_aim:
+		ANIMATION_TREE.set('parameters/aim_trans/transition_request', 'aim')
+	else:
+		ANIMATION_TREE.set('parameters/aim_trans/transition_request', 'not_aim')
 
 	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir)
 	
@@ -39,6 +43,9 @@ func _physics_process(delta):
 func _input(_event):
 	if Input.is_action_just_released("aim"):
 		ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+
+func _on_player_reload():
+	ANIMATION_TREE.set("parameters/reload_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func _on_player_shot():
 	ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
