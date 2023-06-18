@@ -44,7 +44,7 @@ func _input(_event):
 	if Input.is_action_just_released("aim"):
 		ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 
-func _on_player_reload():
+func _on_player_reload(_amount_drop: int):
 	ANIMATION_TREE.set("parameters/reload_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func _on_player_shot():

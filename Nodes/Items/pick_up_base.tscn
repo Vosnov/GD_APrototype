@@ -21,7 +21,7 @@ func _on_area_3d_body_exited(_body):
 
 func _input(_event):
 	if Input.is_action_just_pressed(\"action\") and action_icon.visible:
-		Events.emit_signal('item_pick_up', ITEM_DATA)
+		Events.emit_signal('item_pick_up', ITEM_DATA.duplicate())
 		queue_free()
 "
 

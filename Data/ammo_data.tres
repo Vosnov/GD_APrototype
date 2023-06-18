@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://dhb4hlupm2k4i"]
+[gd_resource type="Resource" script_class="AmmoData" load_steps=3 format=3 uid="uid://cj8h8vjt3jm5j"]
 
+[ext_resource type="Script" path="res://Scripts/Data/ammo_data.gd" id="1_02ruj"]
 [ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_mj6ba"]
-[ext_resource type="Script" path="res://Scripts/Data/item_data.gd" id="2_3ihox"]
 
 [resource]
-script = ExtResource("2_3ihox")
+script = ExtResource("1_02ruj")
+AMMO_AMOUNT = 14
 NAME = "Ammo"
-DESCRIPTION = "Its a ammo"
+DESCRIPTION = "Its AMMO"
 TEXTURE = ExtResource("1_mj6ba")

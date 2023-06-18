@@ -84,4 +84,7 @@ shape = SubResource("BoxShape3D_7dn26")
 [node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)
 
+[node name="Ammo2" parent="." instance=ExtResource("6_iygk2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.767375, 1.372, -0.549004)
+
 [editable path="CameraController"]

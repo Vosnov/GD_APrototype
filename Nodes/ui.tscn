@@ -5,29 +5,37 @@
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
 
+@export var INVENTORY_CONTAINER: PackedScene
+
 @onready var reload_label = $ReloadData
+@onready var inventory_wrapper = $InventoryWrapper
 
 func _init():
 	Events.connect(\"player_reload_data_ui\", _on_reload_data)
 	
 func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
+
+func _input(event):
+	if Input.is_action_just_pressed('menu') and inventory_wrapper.get_child_count() == 0:
+		inventory_wrapper.add_child(INVENTORY_CONTAINER.instantiate())
+	if Input.is_action_just_pressed('ui_cancel'):
+		for child in inventory_wrapper.get_children():
+			child.queue_free()
 "
 
 [node name="UI" type="CanvasLayer"]
 script = SubResource("GDScript_tkxjl")
+INVENTORY_CONTAINER = ExtResource("1_hkedj")
 
 [node name="ReloadData" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Control" type="Control" parent="."]
+[node name="InventoryWrapper" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 10.0
 offset_top = 40.0
 offset_right = 50.0
 offset_bottom = 80.0
-
-[node name="InventoryContainer" parent="Control" instance=ExtResource("1_hkedj")]
-layout_mode = 0
