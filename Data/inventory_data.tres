@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_ccu6t"]
 script = ExtResource("2_y6jn1")
 AMMO_AMOUNT = 14
+MAX_AMMOUNT = 24
 NAME = "1"
 DESCRIPTION = ""
 TEXTURE = ExtResource("2_cfya6")
@@ -15,3 +16,4 @@ TEXTURE = ExtResource("2_cfya6")
 [resource]
 script = ExtResource("1_dx3ca")
 ITEMS = Array[Resource("res://Scripts/Data/item_data.gd")]([ExtResource("2_kwwf0"), SubResource("Resource_ccu6t")])
+MAX_SIZE = 2

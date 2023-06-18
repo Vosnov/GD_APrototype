@@ -12,8 +12,10 @@ func _ready():
 	Events.connect('player_reload', _on_player_reload)
 	Events.connect('inventory_update', _on_inventory_update)
 
-func _on_item_pick_up(item: ItemData):
-	item.calc_items(INVENTORY_DATA.ITEMS, item)
+func _on_item_pick_up(item: ItemData, body: Node3D):
+	var success = item.calc_items(INVENTORY_DATA.ITEMS)
+	if success:
+		body.queue_free()
 	Events.emit_signal('inventory_update', INVENTORY_DATA.ITEMS)
 
 func _on_player_reload(amount_drop: int):
