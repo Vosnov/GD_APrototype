@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=3 format=3 uid="uid://en3g0v7xjkgn"]
+
+[ext_resource type="PackedScene" uid="uid://cvyp86en27tbq" path="res://Nodes/UI/inventory_container.tscn" id="1_hkedj"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
@@ -18,3 +20,14 @@ script = SubResource("GDScript_tkxjl")
 [node name="ReloadData" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 50.0
+offset_bottom = 80.0
+
+[node name="InventoryContainer" parent="Control" instance=ExtResource("1_hkedj")]
+layout_mode = 0

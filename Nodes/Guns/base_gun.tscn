@@ -12,3 +12,7 @@ transform = Transform3D(0.142, 0, 0, 0, 0.193, 0, 0, 0, 0.621, 0, 0, -0.30005)
 mesh = SubResource("BoxMesh_fj03s")
 
 [node name="ShotTimer" type="Timer" parent="."]
+
+[node name="ReloadTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

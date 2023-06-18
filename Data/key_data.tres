@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://c1f5nhddcsns4"]
+
+[ext_resource type="Script" path="res://Scripts/Data/item_data.gd" id="1_44y8d"]
+[ext_resource type="Texture2D" uid="uid://cy7evrudtviol" path="res://key.png" id="1_ywll5"]
+
+[resource]
+script = ExtResource("1_44y8d")
+NAME = "Key"
+DESCRIPTION = "Its my KEY"
+TEXTURE = ExtResource("1_ywll5")

@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvyp86en27tbq"]
+
+[ext_resource type="PackedScene" uid="uid://dqhrjljwrj5b" path="res://Nodes/UI/item_slot.tscn" id="1_2wlpr"]
+[ext_resource type="Resource" uid="uid://bemwgorxb3qbr" path="res://Data/inventory_data.tres" id="2_fr3b1"]
+
+[sub_resource type="GDScript" id="GDScript_gevom"]
+script/source = "extends PanelContainer
+
+@export var SLOT: PackedScene
+@export var INVENTORY_DATA: InventoryData
+@onready var grid_container = $MarginContainer/GridContainer
+
+func _ready():
+	fill_grid(INVENTORY_DATA.ITEMS)
+	Events.connect('item_pick_up', _on_pick_up)
+
+func fill_grid(items: Array[ItemData]):
+	for child in grid_container.get_children():
+		child.queue_free()
+	
+	for item in items:
+		var slot = SLOT.instantiate() as ItemSlot
+		grid_container.add_child(slot)
+		slot.set_item_data(item)
+
+func _on_pick_up(item_data: ItemData):
+	INVENTORY_DATA.ITEMS.push_back(item_data)
+	fill_grid(INVENTORY_DATA.ITEMS)
+"
+
+[node name="InventoryContainer" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_gevom")
+SLOT = ExtResource("1_2wlpr")
+INVENTORY_DATA = ExtResource("2_fr3b1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+columns = 6
