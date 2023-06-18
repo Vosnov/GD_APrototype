@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Button
 class_name ItemSlot
 
 @onready var texture_rect = $MarginContainer/TextureRect

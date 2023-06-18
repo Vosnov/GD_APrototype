@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://en3g0v7xjkgn"]
 
-[ext_resource type="PackedScene" uid="uid://cvyp86en27tbq" path="res://Nodes/UI/inventory_container.tscn" id="1_hkedj"]
+[ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_4fkr4"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
 
-@export var INVENTORY_CONTAINER: PackedScene
+@export var INVENTORY_UI: PackedScene
 
 @onready var reload_label = $ReloadData
 @onready var inventory_wrapper = $InventoryWrapper
@@ -16,17 +16,19 @@ func _init():
 func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
 
-func _input(event):
-	if Input.is_action_just_pressed('menu') and inventory_wrapper.get_child_count() == 0:
-		inventory_wrapper.add_child(INVENTORY_CONTAINER.instantiate())
+func _input(_event):
+	if Input.is_action_just_pressed('ui_menu') and inventory_wrapper.get_child_count() == 0:
+		inventory_wrapper.add_child(INVENTORY_UI.instantiate())
 	if Input.is_action_just_pressed('ui_cancel'):
 		for child in inventory_wrapper.get_children():
 			child.queue_free()
+
+
 "
 
 [node name="UI" type="CanvasLayer"]
 script = SubResource("GDScript_tkxjl")
-INVENTORY_CONTAINER = ExtResource("1_hkedj")
+INVENTORY_UI = ExtResource("1_4fkr4")
 
 [node name="ReloadData" type="Label" parent="."]
 offset_right = 40.0
@@ -34,8 +36,11 @@ offset_bottom = 23.0
 
 [node name="InventoryWrapper" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 10.0
-offset_top = 40.0
-offset_right = 50.0
-offset_bottom = 80.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryUI" parent="InventoryWrapper" instance=ExtResource("1_4fkr4")]
+layout_mode = 1
