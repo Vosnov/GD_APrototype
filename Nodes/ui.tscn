@@ -8,7 +8,8 @@ script/source = "extends CanvasLayer
 @export var INVENTORY_UI: PackedScene
 
 @onready var reload_label = $ReloadData
-@onready var inventory_wrapper = $InventoryWrapper
+
+var inventory_instance: Node
 
 func _init():
 	Events.connect(\"player_reload_data_ui\", _on_reload_data)
@@ -17,11 +18,11 @@ func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
 
 func _input(_event):
-	if Input.is_action_just_pressed('ui_menu') and inventory_wrapper.get_child_count() == 0:
-		inventory_wrapper.add_child(INVENTORY_UI.instantiate())
+	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
+		inventory_instance = INVENTORY_UI.instantiate()
+		add_child(inventory_instance)
 	if Input.is_action_just_pressed('ui_cancel'):
-		for child in inventory_wrapper.get_children():
-			child.queue_free()
+		if inventory_instance != null: inventory_instance.queue_free()
 
 
 "
@@ -33,14 +34,3 @@ INVENTORY_UI = ExtResource("1_4fkr4")
 [node name="ReloadData" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="InventoryWrapper" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InventoryUI" parent="InventoryWrapper" instance=ExtResource("1_4fkr4")]
-layout_mode = 1

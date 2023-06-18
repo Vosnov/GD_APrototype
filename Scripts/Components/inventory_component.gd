@@ -5,13 +5,15 @@ class_name InventoryComponent
 
 func _ready():
 	Inventory.items = INVENTORY_DATA.ITEMS
+	Inventory.max_size = INVENTORY_DATA.MAX_SIZE
+	
 	Events.emit_signal('inventory_update', INVENTORY_DATA.ITEMS)
 	Events.connect('item_pick_up', _on_item_pick_up)
 	Events.connect('player_reload', _on_player_reload)
 	Events.connect('inventory_update', _on_inventory_update)
 
 func _on_item_pick_up(item: ItemData):
-	INVENTORY_DATA.ITEMS.push_back(item)
+	item.calc_items(INVENTORY_DATA.ITEMS, item)
 	Events.emit_signal('inventory_update', INVENTORY_DATA.ITEMS)
 
 func _on_player_reload(amount_drop: int):

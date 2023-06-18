@@ -56,7 +56,6 @@ func _physics_process(delta):
 	movement(delta)
 
 func _init():
-	return
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
