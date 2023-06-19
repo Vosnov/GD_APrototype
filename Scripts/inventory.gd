@@ -1,5 +1,5 @@
 extends Node
 
 var is_open = false
-var items: Array[ItemData] = []
+var slots: Array[SlotData] = []
 var max_size = 0

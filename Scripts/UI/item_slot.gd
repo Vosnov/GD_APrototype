@@ -1,5 +1,5 @@
 extends Button
-class_name ItemSlot
+class_name SlotUI
 
 @onready var texture_rect = $MarginContainer/TextureRect
 @onready var label = $Label
@@ -8,10 +8,10 @@ class_name ItemSlot
 func _ready():
 	amount_label.visible = false
 
-func set_item_data(data: ItemData):
-	label.text = data.NAME
-	texture_rect.texture = data.TEXTURE
+func set_slot_data(slot: SlotData):
+	label.text = slot.ITEM_DATA.NAME
+	texture_rect.texture = slot.ITEM_DATA.TEXTURE
 	
-	if data is AmmoData:
+	if slot.ITEM_DATA is StackableItemData:
 		amount_label.visible = true
-		amount_label.text = str(data.AMMO_AMOUNT)
+		amount_label.text = str(slot.AMOUNT)

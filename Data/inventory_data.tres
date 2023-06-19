@@ -1,19 +1,21 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=6 format=3 uid="uid://bemwgorxb3qbr"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=7 format=3 uid="uid://bemwgorxb3qbr"]
 
+[ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="1_ar5mf"]
 [ext_resource type="Script" path="res://Scripts/Data/inventory_data.gd" id="1_dx3ca"]
-[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="2_cfya6"]
 [ext_resource type="Resource" uid="uid://c1f5nhddcsns4" path="res://Data/key_data.tres" id="2_kwwf0"]
-[ext_resource type="Script" path="res://Scripts/Data/ammo_data.gd" id="2_y6jn1"]
+[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="3_545va"]
 
-[sub_resource type="Resource" id="Resource_ccu6t"]
-script = ExtResource("2_y6jn1")
-AMMO_AMOUNT = 14
-MAX_AMMOUNT = 24
-NAME = "1"
-DESCRIPTION = ""
-TEXTURE = ExtResource("2_cfya6")
+[sub_resource type="Resource" id="Resource_qdcsr"]
+script = ExtResource("3_545va")
+ITEM_DATA = ExtResource("1_ar5mf")
+AMOUNT = 14
+
+[sub_resource type="Resource" id="Resource_aqic2"]
+script = ExtResource("3_545va")
+ITEM_DATA = ExtResource("2_kwwf0")
+AMOUNT = 14
 
 [resource]
 script = ExtResource("1_dx3ca")
-ITEMS = Array[Resource("res://Scripts/Data/item_data.gd")]([ExtResource("2_kwwf0"), SubResource("Resource_ccu6t")])
-MAX_SIZE = 2
+SLOTS = Array[ExtResource("3_545va")]([SubResource("Resource_qdcsr"), SubResource("Resource_aqic2")])
+MAX_SIZE = 3

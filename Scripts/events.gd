@@ -13,5 +13,5 @@ signal player_take_damage(damage: float)
 signal player_hp_ui(hp: float)
 signal player_reload_data_ui(amount: int, total_amount: int)
 #INVENTORY
-signal item_pick_up(item_data: ItemData, body: Node3D)
-signal inventory_update(item_datas: Array[ItemData])
+signal item_pick_up(slot_data: SlotData, body: Node3D)
+signal inventory_update(slot_datas: Array[SlotData])

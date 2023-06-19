@@ -1,5 +1,5 @@
 extends Resource
 class_name InventoryData
 
-@export var ITEMS: Array[ItemData]
+@export var SLOTS: Array[SlotData]
 @export var MAX_SIZE = 6

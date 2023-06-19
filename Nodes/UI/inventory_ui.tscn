@@ -8,23 +8,23 @@ script/source = "extends HBoxContainer
 @export var SLOT: PackedScene
 
 func _ready():
-	fill_grid(Inventory.items)
+	fill_grid(Inventory.slots)
 	Events.connect('inventory_update', _on_inventory_update)
 
-func fill_grid(items: Array[ItemData]):
+func fill_grid(slots: Array[SlotData]):
 	for child in get_children():
 		child.queue_free()
 	
 	var index = 0
-	for item in items:
-		var slot = SLOT.instantiate() as ItemSlot
-		add_child(slot)
+	for slot in slots:
+		var slot_instance = SLOT.instantiate() as SlotUI
+		add_child(slot_instance)
 		if index == 0:
-			slot.grab_focus()
-		slot.set_item_data(item)
+			slot_instance.grab_focus()
+		slot_instance.set_slot_data(slot)
 		index += 1
 
-func _on_inventory_update(datas: Array[ItemData]):
+func _on_inventory_update(datas: Array[SlotData]):
 	fill_grid(datas)
 "
 
