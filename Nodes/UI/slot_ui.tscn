@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3tcd52wyjkjl"]
+
+[ext_resource type="Script" path="res://Scripts/UI/item_slot.gd" id="1_4dknp"]
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_p038w"]
+
+[node name="SlotUI" type="Button"]
+custom_minimum_size = Vector2(128, 128)
+script = ExtResource("1_4dknp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_p038w")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "Hello"
+
+[node name="AmountLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 40.0
+grow_vertical = 0
+text = "0"

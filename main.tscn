@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=14 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="PackedScene" uid="uid://en3g0v7xjkgn" path="res://Nodes/ui.tscn" id="1_hgfpu"]
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="3_71dis"]
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="4_s37af"]
+[ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="6_iygk2"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_v30gr"]
 vertices = PackedVector3Array(-9.5, 0, -19.25, -19.25, 0, -19.25, -19.25, 0, -9.75, -19.25, 0, 0, -1.75, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -1.75, 0.25, 0, -19.25, -19.25, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -19.25, -9.5, 0, -19.25, -19.25, 0, -9.75, 19.25, 0, -9.75, 19.25, 0, -19.25, 9.75, 0, -19.25, 2, 0, -1.25, 2, 0, 0, 19.25, 0, 0, 0.25, 0, -19.25, 0.25, 0, -1.75, 1.5, 0, -1.75, 1.5, 0, -1.75, 2, 0, -1.25, 19.25, 0, 0, 19.25, 0, -9.75, 9.75, 0, -19.25, 0.25, 0, -19.25, -0.25, 1.5, -0.25, -0.25, 1.5, 0.5, 0.5, 1.5, 0.5, 0.5, 1.5, -0.25, -19.25, 0, 9.5, -19.25, 0, 19.25, -9.75, 0, 19.25, 0, 0, 19.25, 0, 0, 2, -1.25, 0, 2, -1.75, 0, 1.5, -1.75, 0, 0, -19.25, 0, 0, 0, 0, 19.25, -1.25, 0, 2, -1.75, 0, 1.5, -19.25, 0, 0, -19.25, 0, 9.5, -9.75, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 19.25, 19.25, 0, 9.5, 19.25, 0, 0, 2, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 2, 0, 0, 19.25, 19.25, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 9.5)
@@ -79,5 +80,14 @@ mesh = SubResource("PlaneMesh_frnof")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_7dn26")
+
+[node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)
+
+[node name="Ammo2" parent="." instance=ExtResource("6_iygk2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.767375, 1.372, -0.549004)
+
+[node name="Ammo3" parent="." instance=ExtResource("6_iygk2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.742771, 1.372, -0.549004)
 
 [editable path="CameraController"]

@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgiy16ss3fg6n"]
+
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_4rvdi"]
+
+[sub_resource type="GDScript" id="GDScript_4pf0e"]
+script/source = "extends Node3D
+
+@export var SLOT_DATA: SlotData
+@onready var action_icon = $ActionIcon
+
+func _ready():
+	action_icon.visible = false
+	SLOT_DATA = SLOT_DATA.duplicate()
+
+func _on_area_3d_body_entered(_body):
+	action_icon.visible = true
+
+func _on_area_3d_body_exited(_body):
+	action_icon.visible = false
+
+func _input(_event):
+	if Input.is_action_just_pressed(\"action\") and action_icon.visible:
+		Events.emit_signal('item_pick_up', SLOT_DATA, self)
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1q38j"]
+
+[node name="PickUpBase" type="Node3D"]
+script = SubResource("GDScript_4pf0e")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_1q38j")
+
+[node name="ActionIcon" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.512846, 0)
+modulate = Color(0, 0.839216, 0, 1)
+billboard = 1
+double_sided = false
+texture = ExtResource("1_4rvdi")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
