@@ -21,13 +21,16 @@ func _input(_event):
 	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
 		inventory_instance = INVENTORY_UI.instantiate()
 		add_child(inventory_instance)
+		get_tree().paused = true
 	if Input.is_action_just_pressed('ui_cancel'):
+		get_tree().paused = false
 		if inventory_instance != null: inventory_instance.queue_free()
 
 
 "
 
 [node name="UI" type="CanvasLayer"]
+process_mode = 3
 script = SubResource("GDScript_tkxjl")
 INVENTORY_UI = ExtResource("1_4fkr4")
 

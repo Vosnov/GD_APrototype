@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_02ruj")
-MAX_AMOUNT = 28
+MAX_AMOUNT = 10
 NAME = "Ammo"
 DESCRIPTION = "Its AMMO"
 TEXTURE = ExtResource("1_mj6ba")

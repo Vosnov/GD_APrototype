@@ -31,12 +31,13 @@ func reload():
 	if amount_total == 0: return
 	if AMOUNT_LOADED == MAX_AMOUNT_LOADED: return
 	
-	AMOUNT_LOADED = min(amount_total, MAX_AMOUNT_LOADED)
+	var need_amount = MAX_AMOUNT_LOADED - AMOUNT_LOADED
+	AMOUNT_LOADED += min(need_amount, amount_total)
 	amount_total -= AMOUNT_LOADED
 	is_reloading = true
 	reload_timer.one_shot = true
 	reload_timer.start(RELOAD_TIMEOUT)
-	Events.emit_signal("player_reload", AMOUNT_LOADED)
+	Events.emit_signal("player_reload", need_amount)
 	Events.emit_signal("player_reload_data_ui", AMOUNT_LOADED, amount_total)
 
 func _input(_event):
