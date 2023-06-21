@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0psydh1fjawf"]
+[gd_scene load_steps=10 format=3 uid="uid://c0psydh1fjawf"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_ft7tw"]
-[ext_resource type="Material" uid="uid://d0p81ue363vha" path="res://Materials/test_mat_2.tres" id="2_vm7mj"]
-[ext_resource type="PackedScene" uid="uid://do3hfvhi8t8c6" path="res://Nodes/Helpers/scene_changer.tscn" id="3_o1lay"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="4_33aen"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="4_b4gjv"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="5_4hof0"]
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="5_qk7ct"]
+[ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="8_2lmr8"]
 [ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="8_i6pt3"]
 [ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="9_q1ijs"]
 
@@ -55,15 +54,6 @@ operation = 2
 size = Vector3(1, 2, 1)
 material = ExtResource("1_ft7tw")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 3.95)
-size = Vector3(1, 2, 1)
-material = ExtResource("2_vm7mj")
-
-[node name="SceneChanger" parent="CSGCombiner3D/CSGBox3D/CSGBox3D5" instance=ExtResource("3_o1lay")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.45)
-NEXT_SCENE = "res://Scenes/test_scene.tscn"
-
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D/CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.10439, -1.08454, -2.17164)
 size = Vector3(1.94266, 1, 1)
@@ -107,3 +97,7 @@ TARGET = NodePath("../Player2")
 [node name="Ammo" parent="." instance=ExtResource("5_qk7ct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.85742, 1.66696, -6.89688)
 SLOT_DATA = SubResource("Resource_2xiao")
+
+[node name="Door" parent="." instance=ExtResource("8_2lmr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
+NEXT_SCENE = "res://Scenes/test_scene.tscn"

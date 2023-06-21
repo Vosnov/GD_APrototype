@@ -1,13 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://b08yftpcev0nj"]
+[gd_scene load_steps=10 format=3 uid="uid://b08yftpcev0nj"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_a51ut"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_2o045"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_hnljr"]
-[ext_resource type="Material" uid="uid://d0p81ue363vha" path="res://Materials/test_mat_2.tres" id="2_sg381"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="3_hl6ks"]
-[ext_resource type="PackedScene" uid="uid://do3hfvhi8t8c6" path="res://Nodes/Helpers/scene_changer.tscn" id="4_6wx5s"]
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="7_ecjkj"]
 [ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="8_51ihh"]
+[ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="8_mlrs1"]
 [ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="9_juyxu"]
 
 [sub_resource type="Resource" id="Resource_wcvsw"]
@@ -41,15 +40,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.904209, 0.847611, -2.56137
 size = Vector3(3.97409, 1.06335, 1.55412)
 material = ExtResource("2_hnljr")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
-size = Vector3(1, 2, 1)
-material = ExtResource("2_sg381")
-
-[node name="SceneChanger" parent="CSGCombiner3D/CSGBox3D6" instance=ExtResource("4_6wx5s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.45)
-NEXT_SCENE = "res://Scenes/test_scene.tscn"
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
@@ -63,3 +53,7 @@ TARGET = NodePath("../Player2")
 [node name="Ammo" parent="." instance=ExtResource("7_ecjkj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.916871, 1.40494, -1.97947)
 SLOT_DATA = SubResource("Resource_wcvsw")
+
+[node name="Door" parent="." instance=ExtResource("8_mlrs1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
+NEXT_SCENE = "res://Scenes/test_scene.tscn"
