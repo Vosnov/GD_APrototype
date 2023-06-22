@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://0u1raq4i067k"]
-
-[ext_resource type="Resource" uid="uid://bemwgorxb3qbr" path="res://Data/inventory_data.tres" id="1_6o6tf"]
-[ext_resource type="Script" path="res://Scripts/Components/inventory_component.gd" id="1_rik81"]
-
-[node name="InventoryComponent" type="Node"]
-script = ExtResource("1_rik81")
-INVENTORY_DATA = ExtResource("1_6o6tf")

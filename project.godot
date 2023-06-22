@@ -18,9 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 Events="*res://Scripts/events.gd"
-Inventory="*res://Scripts/inventory.gd"
-SceneTransition="*res://Nodes/UI/scene_transition.tscn"
-Ui="*res://Nodes/UI/ui.tscn"
+SceneTransition="*res://Nodes/Global/scene_transition.tscn"
+Ui="*res://Nodes/Global/ui.tscn"
+Inventory="*res://Nodes/Global/inventory.tscn"
 
 [input]
 
