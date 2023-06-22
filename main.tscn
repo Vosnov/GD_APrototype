@@ -106,5 +106,3 @@ SLOT_DATA = SubResource("Resource_vndvk")
 [node name="Ammo3" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.742771, 1.372, -0.549004)
 SLOT_DATA = SubResource("Resource_xej0a")
-
-[editable path="CameraController"]
