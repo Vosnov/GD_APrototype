@@ -5,8 +5,6 @@ extends Node
 var slots: Array[SlotData] = []
 var max_size = 0
 
-var no_spawn_items: Array[String] = []
-
 func _ready():
 	Inventory.slots = INVENTORY_DATA.SLOTS
 	Inventory.max_size = INVENTORY_DATA.MAX_SIZE
@@ -20,7 +18,7 @@ func _on_item_pick_up(item: SlotData, body: Node3D):
 	var success = item.add_to_inventory()
 	if success:
 		body.queue_free()
-		Inventory.no_spawn_items.push_back(body.get_path().get_concatenated_names())
+		GlobalVariables.no_spawn_items.push_back(body.get_path().get_concatenated_names())
 	Events.emit_signal('inventory_update', INVENTORY_DATA.SLOTS)
 
 func _on_player_reload(amount_drop: int):

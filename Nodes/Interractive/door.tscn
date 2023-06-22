@@ -11,11 +11,13 @@ script/source = "extends Node3D
 @export var NEED_ACCEPT = false
 @export var NEED_KEY_DATA: ItemData
 @export var CLOSED = false
+@export var SHOULD_SPAWN = false
 
 @onready var accept_sprite = $AcceptSprite
 @onready var need_accept_sprite = $NeedAcceptSprite
 @onready var active_node = $ActiveNode as ActiveNode
 @onready var close_sprite = $CloseSprite
+@onready var spawn_point = $SpawnPoint
 
 var is_accepted = false
 
@@ -29,6 +31,13 @@ func _on_active_node_action_pressed():
 	if CLOSED: return
 	if NEED_ACCEPT and !is_accepted:
 		return
+		
+	if SHOULD_SPAWN:
+		var spawn_data = PlayerSpawnData.new(
+			spawn_point.global_transform,
+			get_path().get_name(1)
+		)
+		GlobalVariables.player_spawn_data = spawn_data
 	SceneTransition.change_scene(NEXT_SCENE)
 
 func _on_area_3d_body_entered(_body):
@@ -95,6 +104,9 @@ texture = ExtResource("3_xujjp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_vk8t2")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
