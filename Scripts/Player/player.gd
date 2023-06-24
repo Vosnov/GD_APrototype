@@ -16,6 +16,8 @@ var aiming = false
 var sprinting = false
 var mouse_rotation = 0
 
+var scene_camera: Camera3D
+
 func get_rotate_speed():
 	if aiming: return AIM_ROTATE_SPEED
 	return ROTATE_SPEED
@@ -51,15 +53,40 @@ func movement(delta: float):
 func _ready():
 	update_ui()
 	check_spawn_pos()
+	
+	Events.connect('player_set_scene_camera', _on_set_camera)
+	Events.connect('player_remove_scene_camera', _on_remove_camera)
 	#Events.connect('player_take_damage', _on_take_damage)
 
 func _physics_process(delta):
 	movement(delta)
+	return
+	if scene_camera != null:
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		var input_dir = Input.get_vector("left", "right", "top", "bottom")
+		
+		var t = scene_camera.global_transform
+		var quat = Quaternion(scene_camera.global_transform.basis)
+		quat.x = 0
+		quat.z = 0
+		t.basis = Basis(quat)
+		var direction = (t.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			rotation.y = atan2(-direction.x, -direction.z)
+			velocity = velocity.lerp(direction * get_speed(input_dir), delta * SMOOTH_SPEED)
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
+		move_and_slide()
+	else:
+		movement(delta)
 
 func _init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
+	#if scene_camera != null: return
 	if event is InputEventMouseMotion:
 		rotation.y -= deg_to_rad(event.relative.x) * get_rotate_speed()
 	#if Input.is_action_just_pressed("shot") and aiming:
@@ -81,3 +108,10 @@ func update_ui():
 func _on_take_damage(damage: float):
 	HP = max(0, HP - damage)
 	update_ui()
+
+func _on_set_camera(_camera: Camera3D):
+	scene_camera = _camera
+
+func _on_remove_camera(_camera: Camera3D):
+	if scene_camera == _camera:
+		scene_camera = null 

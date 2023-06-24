@@ -33,5 +33,5 @@ func _on_player_reload(amount_drop: int):
 			if slot_data.AMOUNT <= 0: INVENTORY_DATA.SLOTS.erase(slot_data)
 	Events.emit_signal('inventory_update', INVENTORY_DATA.SLOTS)
 
-func _on_inventory_update(slots: Array[SlotData]):
-	Inventory.slots = slots
+func _on_inventory_update(_slots: Array[SlotData]):
+	slots = _slots
