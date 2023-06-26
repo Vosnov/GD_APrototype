@@ -1,6 +1,7 @@
 extends Node
 
 @export var PLAYER: CharacterBody3D
+@export var PLAYER_MOVEMENTS: PlayerMovements
 @export var ANIMATION_TREE: AnimationTree
 @export var IWR_SMOOTH = 8.0
 
@@ -33,10 +34,12 @@ func _physics_process(delta):
 	else:
 		ANIMATION_TREE.set('parameters/aim_trans/transition_request', 'not_aim')
 
-	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir)
+	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir.length())
 	
-	if is_aim:
-		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir * 0.5)
+	if PLAYER_MOVEMENTS.active_camera.is_in_group('scene_camera'):
+		var basis = PLAYER_MOVEMENTS.get_active_camera_basis()
+		var direction = Vector3(input_dir.x, 0, input_dir.y) * PLAYER.global_transform.basis * basis
+		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", Vector2(direction.z, direction.x))
 	else:
 		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
 

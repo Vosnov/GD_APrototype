@@ -1,17 +1,14 @@
 extends Node3D
 
-@export var SMOOT_ROTATE = 30.0
+@export var ROTATE_SPEED = 0.6
 @export var TARGET: Node3D
 
-var spring_enabled = false
-
-func _ready():
-	if !TARGET:
-		return
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !TARGET:
 		return
 	
-	rotation.y = lerp_angle(rotation.y, TARGET.rotation.y, delta * SMOOT_ROTATE)
 	global_position = TARGET.global_position
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		quaternion *= Quaternion(Vector3.UP, -deg_to_rad(event.relative.x) * ROTATE_SPEED)

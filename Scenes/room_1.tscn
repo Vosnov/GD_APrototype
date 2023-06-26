@@ -63,6 +63,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="Camera3D" parent="." node_paths=PackedStringArray("AREA") instance=ExtResource("9_7ivnq")]
+transform = Transform3D(-0.740805, -0.394828, 0.543433, 0, 0.809017, 0.587785, -0.671721, 0.435434, -0.599323, 2.21683, 3.94401, -1.83638)
 AREA = NodePath("../Area3D")
 
 [node name="Area3D" type="Area3D" parent="."]
