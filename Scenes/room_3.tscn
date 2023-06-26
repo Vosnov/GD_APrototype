@@ -3,7 +3,7 @@
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_q0tqy"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="4_hj3s7"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="5_jafbj"]
-[ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="6_kg5le"]
+[ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="6_kg5le"]
 [ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="7_chj7x"]
 [ext_resource type="Material" uid="uid://cy3e66p0m55d0" path="res://Materials/test_mat_4.tres" id="8_cy7ol"]
 [ext_resource type="Resource" uid="uid://c1f5nhddcsns4" path="res://Data/key_data.tres" id="8_ro5wj"]

@@ -1,18 +1,22 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0psydh1fjawf"]
+[gd_scene load_steps=12 format=3 uid="uid://c0psydh1fjawf"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_ft7tw"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="4_33aen"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="4_b4gjv"]
-[ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/camera_controller.tscn" id="5_4hof0"]
+[ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="5_4hof0"]
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="5_qk7ct"]
 [ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="8_2lmr8"]
 [ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="8_i6pt3"]
+[ext_resource type="PackedScene" uid="uid://bolyparjmu12n" path="res://Nodes/Helpers/rotate_camera.tscn" id="9_hooss"]
 [ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="9_q1ijs"]
 
 [sub_resource type="Resource" id="Resource_2xiao"]
 script = ExtResource("9_q1ijs")
 ITEM_DATA = ExtResource("8_i6pt3")
 AMOUNT = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tncge"]
+size = Vector3(3, 2, 10.762)
 
 [node name="Room2" type="Node3D"]
 
@@ -101,3 +105,15 @@ SLOT_DATA = SubResource("Resource_2xiao")
 [node name="Door" parent="." instance=ExtResource("8_2lmr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
+
+[node name="RotateCamera" parent="." node_paths=PackedStringArray("AREA") instance=ExtResource("9_hooss")]
+transform = Transform3D(0.984807, -0.0996005, 0.142244, 0, 0.819152, 0.573576, -0.173648, -0.564862, 0.806707, -1.941, 3.409, 2.219)
+AREA = NodePath("../Area3D")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.835, -2.27123)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_tncge")

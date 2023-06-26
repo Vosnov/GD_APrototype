@@ -63,18 +63,17 @@ func _on_body_enter(body: Node3D):
 	lerp_pos = center_pos
 	target = body
 	current = true
-	Events.emit_signal('player_set_scene_camera', self)
+	CameraController.emit_signal('set_scene_camera', self)
 	
 func _on_body_exit(_body: Node3D):
 	process_mode = Node.PROCESS_MODE_DISABLED
 	target = null
 	current = false
-	Events.emit_signal('player_remove_scene_camera', self)
+	CameraController.emit_signal('remove_scene_camera', self)
 "
 
 [node name="RotateCamera" type="Camera3D" groups=["scene_camera"]]
 transform = Transform3D(-0.740804, -0.394828, 0.543433, 0, 0.809017, 0.587785, -0.67172, 0.435434, -0.599323, 2.05596, 3.94401, -1.69325)
-current = true
 script = SubResource("GDScript_j5gcu")
 X_DEAD_ZONE = 150
 Y_DEAD_ZONE = 150
