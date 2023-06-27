@@ -1,14 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://728vxpr147if"]
+[gd_scene load_steps=2 format=3 uid="uid://728vxpr147if"]
 
 [ext_resource type="Script" path="res://Scripts/Player/main_camera.gd" id="1_t1e7i"]
-
-[sub_resource type="GDScript" id="GDScript_ltrbp"]
-script/source = "extends Camera3D
-
-func _init():
-	CameraController.main_camera = self
-	CameraController.active_camera = self
-"
 
 [node name="MainCamera" type="Node3D"]
 script = ExtResource("1_t1e7i")
@@ -21,4 +13,3 @@ margin = 0.35
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
 transform = Transform3D(0.866025, 0.162784, -0.472759, 0, 0.945518, 0.325568, 0.5, -0.28195, 0.818843, 0, 0, 0)
-script = SubResource("GDScript_ltrbp")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b08yftpcev0nj"]
+[gd_scene load_steps=10 format=3 uid="uid://b08yftpcev0nj"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_a51ut"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_2o045"]
@@ -7,16 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="7_ecjkj"]
 [ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="8_51ihh"]
 [ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="8_mlrs1"]
-[ext_resource type="PackedScene" uid="uid://bolyparjmu12n" path="res://Nodes/Helpers/rotate_camera.tscn" id="9_7ivnq"]
 [ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="9_juyxu"]
 
 [sub_resource type="Resource" id="Resource_wcvsw"]
 script = ExtResource("9_juyxu")
 ITEM_DATA = ExtResource("8_51ihh")
 AMOUNT = 4
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_stvyb"]
-radius = 6.49397
 
 [node name="Room1" type="Node3D"]
 
@@ -61,14 +57,3 @@ SLOT_DATA = SubResource("Resource_wcvsw")
 [node name="Door" parent="." instance=ExtResource("8_mlrs1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
-
-[node name="Camera3D" parent="." node_paths=PackedStringArray("AREA") instance=ExtResource("9_7ivnq")]
-transform = Transform3D(-0.740805, -0.394828, 0.543433, 0, 0.809017, 0.587785, -0.671721, 0.435434, -0.599323, 2.21683, 3.94401, -1.83638)
-AREA = NodePath("../Area3D")
-
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_stvyb")

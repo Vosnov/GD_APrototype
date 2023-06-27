@@ -77,7 +77,7 @@ SPRITE = NodePath("../AcceptSprite")
 AREA = NodePath("../Area3D")
 
 [node name="AcceptSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.685785)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
 modulate = Color(0.513726, 1, 0.482353, 1)
 billboard = 1
 double_sided = false
@@ -85,7 +85,7 @@ no_depth_test = true
 texture = ExtResource("3_xujjp")
 
 [node name="NeedAcceptSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.685785)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
 visible = false
 modulate = Color(1, 1, 0, 1)
 billboard = 1
@@ -94,7 +94,7 @@ no_depth_test = true
 texture = ExtResource("3_xujjp")
 
 [node name="CloseSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.685785)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
 visible = false
 modulate = Color(1, 0, 0, 1)
 billboard = 1
