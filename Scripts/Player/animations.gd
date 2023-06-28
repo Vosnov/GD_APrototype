@@ -9,6 +9,9 @@ var input_dir = Vector2()
 var is_aim = false
 var is_run = false
 
+var relative_x = 0.0
+var lerp_relative_x = 0.0
+
 func _ready():
 	Events.connect('player_shot', _on_player_shot)
 	Events.connect('player_reload', _on_player_reload)
@@ -36,9 +39,16 @@ func _physics_process(delta):
 
 	ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir.length())
 	
-	ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
+	if input_dir.length() > 0.2:
+		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", input_dir)
+	else:
+		lerp_relative_x = lerpf(lerp_relative_x, relative_x, delta)
+		relative_x = lerpf(relative_x, 0, delta * 10)
+		ANIMATION_TREE.set("parameters/aim_iwr/blend_position", Vector2(lerp_relative_x, lerp_relative_x))
 
-func _input(_event):
+func _input(event):
+	if event is InputEventMouseMotion:
+		relative_x = clampf(event.relative.x, -1, 1)
 	if Input.is_action_just_released("aim"):
 		ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 
