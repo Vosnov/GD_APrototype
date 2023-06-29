@@ -4,6 +4,7 @@ class_name Enemy
 @export var player: Node3D
 @export var HP = 3.0
 @export var DYING_ANIM_NAME = 'Dying'
+@export var INIT_STATE = EnemyState.StateTypes.PATROL
 
 @onready var state_machine = $StateMachine as StateMachine
 @onready var state_label = $StateLabel
@@ -52,3 +53,6 @@ func _on_take_damage(enemy: Enemy, damage: float):
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == DYING_ANIM_NAME:
 		process_mode = Node.PROCESS_MODE_DISABLED
+
+func get_init_state():
+	return INIT_STATE

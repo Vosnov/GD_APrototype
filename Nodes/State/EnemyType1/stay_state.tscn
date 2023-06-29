@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxt8aue0ycv7v"]
+
+[sub_resource type="GDScript" id="GDScript_uq2pp"]
+script/source = "extends EnemyState
+
+@export var PLAYER_DETECT_AREA: Area3D
+
+var player_is_detect = false
+
+func _ready():
+	Events.connect('player_shot', _on_player_shot)
+	PLAYER_DETECT_AREA.connect('body_entered', _on_player_detect)
+
+func enter():
+	player_is_detect = false
+
+func update(_delta: float) -> StateTypes:
+	if player_is_detect:
+		return StateTypes.PATROL
+	return StateTypes.NONE
+
+func _on_player_detect(_body: Node3D):
+	player_is_detect = true
+
+func _on_player_shot():
+	if AGENT.player:
+		player_is_detect = true
+"
+
+[node name="StayState" type="Node"]
+script = SubResource("GDScript_uq2pp")

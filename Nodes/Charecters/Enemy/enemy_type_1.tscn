@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=32 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -9,10 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
 [ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="9_sjnhw"]
+[ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
 radius = 0.346272
-height = 1.56695
+height = 1.52105
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q2o8k"]
 animation = &"Attack1"
@@ -135,31 +136,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.156558, -0.5225, 0.0479335)
+bones/0/position = Vector3(0.143416, -0.566035, -0.174533)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.308946, -0.107512, -0.0107295, 0.944922)
+bones/2/rotation = Quaternion(0.30404, -0.0973327, -0.0109842, 0.94761)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.00209671, -0.178598, -1.75574e-08, 0.98392)
+bones/4/rotation = Quaternion(-0.0929501, 0.0983223, 8.22085e-09, 0.990804)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.133419, -0.127023, -0.792172, 0.581832)
+bones/5/rotation = Quaternion(0.10796, -0.0630331, -0.775213, 0.619207)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.191563, -0.00302071, -0.345597, 0.918617)
-bones/7/rotation = Quaternion(0.342595, 0.0075283, 0.123398, 0.931314)
+bones/6/rotation = Quaternion(0.161551, 0.00669286, -0.333651, 0.928727)
+bones/7/rotation = Quaternion(0.356617, 0.00585646, 0.144757, 0.922949)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.281945, 0.356242, 0.810643, -0.369401)
+bones/12/rotation = Quaternion(-0.251797, 0.387812, 0.786996, -0.408457)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.240463, -0.0127252, -0.409003, 0.880189)
+bones/13/rotation = Quaternion(-0.233982, -0.012823, -0.39798, 0.886961)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.135203, 0.143839, 0.948983, 0.245888)
+bones/14/rotation = Quaternion(0.234726, 0.36315, 0.846626, 0.310244)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.144304, -0.0113459, 0.29262, 0.94521)
+bones/15/rotation = Quaternion(-0.20743, -0.0106018, 0.420627, 0.883139)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.160846, -1.12137, 1.3497)
-bones/17/position = Vector3(-0.399367, -2.11167, -0.641656)
-bones/18/position = Vector3(-1.4266, -1.07638, 0.680513)
-bones/19/position = Vector3(0.62024, -2.13509, 0.495886)
+bones/16/position = Vector3(0.114082, -1.11517, 1.25171)
+bones/17/position = Vector3(-0.535919, -2.12981, -0.221047)
+bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
+bones/19/position = Vector3(0.636543, -2.13397, 0.498886)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -190,9 +191,9 @@ SHOW_DEBUG_LINES = true
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("AGENT")]
 script = ExtResource("4_y5l6s")
-INIT_STATE = 4
+AGENT = NodePath("..")
 
 [node name="PatrolState" parent="StateMachine" node_paths=PackedStringArray("PLAYER_DETECT_AREA", "NAV_AGENT", "ANIMATION_TREE", "AGENT") instance=ExtResource("4_ihlw1")]
 PLAYER_DETECT_AREA = NodePath("../../PlayerDirectArea")
@@ -221,6 +222,11 @@ ATTACK_AREA = NodePath("../../AttackArea")
 ATTACK_ANIM_NAMES = Array[String](["Attack1", "Attack2", "Attack3"])
 AGENT = NodePath("../..")
 STATE_TYPE = 3
+
+[node name="StayState" parent="StateMachine" node_paths=PackedStringArray("PLAYER_DETECT_AREA", "AGENT") instance=ExtResource("9_uaegf")]
+PLAYER_DETECT_AREA = NodePath("../../PlayerDirectArea")
+AGENT = NodePath("../..")
+STATE_TYPE = 5
 
 [node name="PlayerDirectArea" type="Area3D" parent="."]
 visible = false
