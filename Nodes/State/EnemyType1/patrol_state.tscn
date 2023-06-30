@@ -5,6 +5,7 @@ script/source = "extends EnemyState
 
 @export_group(\"Required Nodes\", \"\")
 @export var PLAYER_DETECT_AREA: Area3D
+@export var PLAYER_HEARING_AREA: Area3D
 @export var NAV_AGENT: NavigationAgent3D
 @export var ANIMATION_TREE: AnimationTree
 @export_group(\"Params\", \"\")
@@ -19,13 +20,17 @@ script/source = "extends EnemyState
 @onready var change_path_timer = $ChangePathTimer
 
 var player_is_detect = false
+var player_in_hear_zone = false
 
 func _init():
 	randomize()
 
 func _ready():
 	Events.connect('player_shot', _on_player_shot)
+	AGENT.connect('take_damage', func(): player_is_detect = true)
 	PLAYER_DETECT_AREA.connect('body_entered', _on_player_detect)
+	PLAYER_HEARING_AREA.connect('body_entered', _on_player_enter_hear_zone)
+	PLAYER_HEARING_AREA.connect('body_exited', _on_player_exit_hear_zone)
 
 func enter():
 	set_random_target_pos()
@@ -71,8 +76,14 @@ func _on_player_detect(_body: Node3D):
 	player_is_detect = true
 
 func _on_player_shot():
-	if AGENT.player:
+	if AGENT.player and player_in_hear_zone:
 		player_is_detect = true
+
+func _on_player_enter_hear_zone(_body: Node3D):
+	player_in_hear_zone = true
+
+func _on_player_exit_hear_zone(_body: Node3D):
+	player_in_hear_zone = false
 "
 
 [node name="PatrolState" type="Node"]

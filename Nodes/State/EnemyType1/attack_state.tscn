@@ -11,7 +11,6 @@ script/source = "extends EnemyState
 @export var ATTACK_ANIM_NAMES: Array[String] = []
 @export var MOVE_TO_PLAYER_WAIT_TIME = 1.0
 @export var SPEED = 1.0
-@export var IWR_MUL = 1.5
 
 @onready var move_to_player_timer = $MoveToPlayerTimer
 
@@ -57,9 +56,9 @@ func update(_delta: float) -> StateTypes:
 		AGENT.velocity = Vector3.ZERO
 		ANIMATION_TREE.set('parameters/walk_iwr/blend_position', Vector2())
 	else:
-		AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 10)
-		var follow_iwr = Vector2(0, AGENT.velocity.z) * IWR_MUL
-		ANIMATION_TREE.set('parameters/walk_iwr/blend_position', follow_iwr)
+		AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 6)
+		var follow_iwr = AGENT.velocity * AGENT.global_transform.basis
+		ANIMATION_TREE.set('parameters/walk_iwr/blend_position', Vector2(follow_iwr.x, follow_iwr.z))
 		
 	if anim_is_finish:
 		return StateTypes.WAIT

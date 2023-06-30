@@ -4,6 +4,7 @@ class_name SteeringBehaviorComponent
 @export var SHOW_DEBUG_LINES = false
 @export var NUM_RAYS = 12
 @export var RAY_RANGE = 1.0
+@export_flags_3d_physics var COLLISION_MASK
 
 var rays: Array[Ray] = []
 var velocity = Vector3()
@@ -33,6 +34,7 @@ func check_ray_collision():
 	has_collision = false
 	for i in NUM_RAYS:
 		var ray = PhysicsRayQueryParameters3D.new()
+		ray.collision_mask = COLLISION_MASK
 		ray.from = global_position
 		ray.to = global_position + rays[i].get_direction()
 		var hit = space_state.intersect_ray(ray)

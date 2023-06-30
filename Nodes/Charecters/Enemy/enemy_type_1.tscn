@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=34 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -9,10 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
 [ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="9_sjnhw"]
+[ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
 radius = 0.346272
-height = 1.56695
+height = 1.52105
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q2o8k"]
 animation = &"Attack1"
@@ -93,7 +94,7 @@ blend_point_5/pos = Vector2(0, -1)
 min_space = Vector2(-1, -2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
-graph_offset = Vector2(-617.616, -51.794)
+graph_offset = Vector2(-739.262, -189.155)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -126,6 +127,12 @@ points = PackedVector3Array(0, 0, 0, 3, 2, -6, -3, 2, -6, -3, -2, -6, 3, -2, -6)
 radius = 0.426279
 height = 1.11209
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_aycqf"]
+radius = 13.01
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_275u1"]
+radius = 4.98596
+
 [node name="EnemyType1" type="CharacterBody3D"]
 collision_layer = 4
 collision_mask = 5
@@ -135,31 +142,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.156704, -0.557139, -0.150985)
+bones/0/position = Vector3(0.158953, -0.554572, -0.142778)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.304052, -0.0973565, -0.0109837, 0.947604)
+bones/2/rotation = Quaternion(0.304055, -0.0973632, -0.0109835, 0.947602)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.0710752, 0.087627, 4.26474e-09, 0.993615)
+bones/4/rotation = Quaternion(-0.0655952, 0.0821392, -4.36278e-09, 0.99446)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.108101, -0.0974409, -0.761964, 0.631055)
+bones/5/rotation = Quaternion(0.108496, -0.106182, -0.759163, 0.63295)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.189605, -0.00187591, -0.32023, 0.92817)
-bones/7/rotation = Quaternion(0.378456, 0.0067251, 0.15627, 0.912308)
+bones/6/rotation = Quaternion(0.196381, -0.00393643, -0.318532, 0.927338)
+bones/7/rotation = Quaternion(0.383439, 0.00701684, 0.157974, 0.909928)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.258383, 0.385782, 0.789107, -0.402145)
+bones/12/rotation = Quaternion(-0.260073, 0.384712, 0.789953, -0.400415)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.234256, -0.0128189, -0.398446, 0.886679)
+bones/13/rotation = Quaternion(-0.234382, -0.0128171, -0.39866, 0.88655)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.232692, 0.347994, 0.856704, 0.301352)
+bones/14/rotation = Quaternion(0.232209, 0.343012, 0.860038, 0.29792)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.195436, -0.0107681, 0.396306, 0.897012)
+bones/15/rotation = Quaternion(-0.191596, -0.0108187, 0.388518, 0.901237)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.0622323, -1.07993, 1.39169)
-bones/17/position = Vector3(-0.531576, -2.14642, -0.220795)
+bones/16/position = Vector3(-0.107632, -1.06824, 1.41862)
+bones/17/position = Vector3(-0.529875, -2.15214, -0.220775)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.636466, -2.13398, 0.498872)
+bones/19/position = Vector3(0.636444, -2.13398, 0.498868)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -185,17 +192,20 @@ parameters/walk_iwr/blend_position = Vector2(0, 0)
 [node name="SteeringBehaviorComponent" parent="." instance=ExtResource("3_jc71t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.202351)
 SHOW_DEBUG_LINES = true
+RAY_RANGE = 0.7
+COLLISION_MASK = 4
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("AGENT")]
 script = ExtResource("4_y5l6s")
-INIT_STATE = 4
+AGENT = NodePath("..")
 
-[node name="PatrolState" parent="StateMachine" node_paths=PackedStringArray("PLAYER_DETECT_AREA", "NAV_AGENT", "ANIMATION_TREE", "AGENT") instance=ExtResource("4_ihlw1")]
+[node name="PatrolState" parent="StateMachine" node_paths=PackedStringArray("PLAYER_DETECT_AREA", "PLAYER_HEARING_AREA", "NAV_AGENT", "ANIMATION_TREE", "AGENT") instance=ExtResource("4_ihlw1")]
 PLAYER_DETECT_AREA = NodePath("../../PlayerDirectArea")
+PLAYER_HEARING_AREA = NodePath("../../PlayerHearingArea")
 NAV_AGENT = NodePath("../../NavigationAgent3D")
 ANIMATION_TREE = NodePath("../../AnimationTree")
 AGENT = NodePath("../..")
@@ -205,6 +215,7 @@ STATE_TYPE = 4
 NAV_AGENT = NodePath("../../NavigationAgent3D")
 STEERING_BEHAVIOR = NodePath("../../SteeringBehaviorComponent")
 ANIMATION_TREE = NodePath("../../AnimationTree")
+DISTANCE_TO_WAIT = 2.0
 AGENT = NodePath("../..")
 STATE_TYPE = 1
 
@@ -212,6 +223,9 @@ STATE_TYPE = 1
 STEERING_BEHAVIOR = NodePath("../../SteeringBehaviorComponent")
 ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
+DISTANCE_TO_FOLLOW = 2.5
+ATTACK_TIME_MIN = 0.2
+ATTACK_TIME_MAX = 6.0
 AGENT = NodePath("../..")
 STATE_TYPE = 2
 
@@ -219,8 +233,15 @@ STATE_TYPE = 2
 ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
 ATTACK_ANIM_NAMES = Array[String](["Attack1", "Attack2", "Attack3"])
+MOVE_TO_PLAYER_WAIT_TIME = 1.5
 AGENT = NodePath("../..")
 STATE_TYPE = 3
+
+[node name="StayState" parent="StateMachine" node_paths=PackedStringArray("PLAYER_DETECT_AREA", "PLAYER_HEARING_AREA", "AGENT") instance=ExtResource("9_uaegf")]
+PLAYER_DETECT_AREA = NodePath("../../PlayerDirectArea")
+PLAYER_HEARING_AREA = NodePath("../../PlayerHearingArea")
+AGENT = NodePath("../..")
+STATE_TYPE = 5
 
 [node name="PlayerDirectArea" type="Area3D" parent="."]
 visible = false
@@ -241,6 +262,22 @@ collision_mask = 6
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.136004, -0.645887)
 shape = SubResource("CapsuleShape3D_b7geb")
 
+[node name="PlayerFindingArea" type="Area3D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerFindingArea"]
+shape = SubResource("SphereShape3D_aycqf")
+
+[node name="PlayerHearingArea" type="Area3D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHearingArea"]
+shape = SubResource("SphereShape3D_275u1")
+
 [node name="StateLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83258, 0)
 billboard = 1
@@ -252,5 +289,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841
 ENEMY = NodePath("..")
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
+[connection signal="body_entered" from="PlayerFindingArea" to="." method="_on_player_finding_area_body_entered"]
 
 [editable path="enemyType1"]

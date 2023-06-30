@@ -9,6 +9,8 @@ script/source = "extends Node3D
 @onready var action_icon = $ActionIcon
 
 func _ready():
+	if GlobalVariables.no_spawn_items.has(get_path().get_concatenated_names()):
+		queue_free()
 	action_icon.visible = false
 	SLOT_DATA = SLOT_DATA.duplicate()
 

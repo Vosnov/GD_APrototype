@@ -1,18 +1,18 @@
 extends Node
 class_name StateMachine
 
-@export var INIT_STATE: EnemyState.StateTypes
+@export var AGENT: Enemy
 
 var current_state: EnemyState
 var current_state_name: EnemyState.StateTypes
 var state_list: Array[Node] = []
 
 func _ready():
-	current_state_name = INIT_STATE
+	current_state_name = AGENT.get_init_state()
 	
 	state_list = get_children()
 	for child in state_list:
-		if child.STATE_TYPE == INIT_STATE:
+		if child.STATE_TYPE == AGENT.get_init_state():
 			current_state = child
 			current_state.enter()
 

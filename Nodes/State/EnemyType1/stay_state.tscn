@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxt8aue0ycv7v"]
+
+[sub_resource type="GDScript" id="GDScript_uq2pp"]
+script/source = "extends EnemyState
+
+@export var PLAYER_DETECT_AREA: Area3D
+@export var PLAYER_HEARING_AREA: Area3D
+
+var player_is_detect = false
+var player_in_hear_zone = false
+
+func _ready():
+	Events.connect('player_shot', _on_player_shot)
+	AGENT.connect('take_damage', func(): player_is_detect = true)
+	PLAYER_DETECT_AREA.connect('body_entered', _on_player_detect)
+	PLAYER_HEARING_AREA.connect('body_entered', _on_player_enter_hear_zone)
+	PLAYER_HEARING_AREA.connect('body_exited', _on_player_exit_hear_zone)
+
+func enter():
+	player_is_detect = false
+	player_in_hear_zone = false
+
+func update(_delta: float) -> StateTypes:
+	if player_is_detect:
+		return StateTypes.FOLLOW
+	return StateTypes.NONE
+
+func _on_player_detect(_body: Node3D):
+	player_is_detect = true
+
+func _on_player_shot():
+	if AGENT.player and player_in_hear_zone:
+		player_is_detect = true
+
+func _on_player_enter_hear_zone(_body: Node3D):
+	player_in_hear_zone = true
+
+func _on_player_exit_hear_zone(_body: Node3D):
+	player_in_hear_zone = false
+"
+
+[node name="StayState" type="Node"]
+script = SubResource("GDScript_uq2pp")

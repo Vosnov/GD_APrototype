@@ -1,0 +1,114 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsbmcxe7n4yyv"]
+
+[ext_resource type="Material" uid="uid://d0p81ue363vha" path="res://Materials/test_mat_2.tres" id="1_wd37w"]
+[ext_resource type="PackedScene" uid="uid://dtanochifrdyf" path="res://Nodes/Helpers/action_node.tscn" id="2_oqy51"]
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="3_xujjp"]
+
+[sub_resource type="GDScript" id="GDScript_8bmqr"]
+script/source = "extends Node3D
+
+@export_file(\"*.tscn\") var NEXT_SCENE
+@export var NEED_ACCEPT = false
+@export var NEED_KEY_DATA: ItemData
+@export var CLOSED = false
+@export var SHOULD_SPAWN = false
+
+@onready var accept_sprite = $AcceptSprite
+@onready var need_accept_sprite = $NeedAcceptSprite
+@onready var active_node = $ActiveNode as ActiveNode
+@onready var close_sprite = $CloseSprite
+@onready var spawn_point = $SpawnPoint
+
+var is_accepted = false
+
+func _ready():
+	if CLOSED:
+		active_node.change_sprite(close_sprite)
+	if NEED_ACCEPT and !is_accepted:
+		active_node.change_sprite(need_accept_sprite)
+
+func _on_active_node_action_pressed():
+	if CLOSED: return
+	if NEED_ACCEPT and !is_accepted:
+		return
+		
+	if SHOULD_SPAWN:
+		var spawn_data = PlayerSpawnData.new(
+			spawn_point.global_transform,
+			get_path().get_name(1)
+		)
+		GlobalVariables.player_spawn_data = spawn_data
+	SceneTransition.change_scene(NEXT_SCENE)
+
+func _on_area_3d_body_entered(_body):
+	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
+	if items.has(NEED_KEY_DATA):
+		is_accepted = true
+		active_node.change_sprite(accept_sprite)
+"
+
+[sub_resource type="BoxMesh" id="BoxMesh_jb30f"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5p4sj"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vk8t2"]
+size = Vector3(1, 2, 1)
+
+[node name="Door" type="StaticBody3D"]
+script = SubResource("GDScript_8bmqr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_wd37w")
+mesh = SubResource("BoxMesh_jb30f")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.26225)
+shape = SubResource("BoxShape3D_5p4sj")
+
+[node name="ActiveNode" parent="." node_paths=PackedStringArray("SPRITE", "AREA") instance=ExtResource("2_oqy51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.627733)
+SPRITE = NodePath("../AcceptSprite")
+AREA = NodePath("../Area3D")
+
+[node name="AcceptSprite" type="Sprite3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
+modulate = Color(0.513726, 1, 0.482353, 1)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("3_xujjp")
+
+[node name="NeedAcceptSprite" type="Sprite3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
+visible = false
+modulate = Color(1, 1, 0, 1)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("3_xujjp")
+
+[node name="CloseSprite" type="Sprite3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
+visible = false
+modulate = Color(1, 0, 0, 1)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("3_xujjp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_vk8t2")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
+
+[editable path="ActiveNode"]

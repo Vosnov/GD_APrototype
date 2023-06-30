@@ -11,14 +11,17 @@ config_version=5
 [application]
 
 config/name="APrototype"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Scenes/test_scene.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Events="*res://Scripts/events.gd"
-Inventory="*res://Scripts/inventory.gd"
+Events="*res://Scripts/Global/events.gd"
+SceneTransition="*res://Nodes/Global/scene_transition.tscn"
+Ui="*res://Nodes/Global/ui.tscn"
+Inventory="*res://Nodes/Global/inventory.tscn"
+GlobalVariables="*res://Scripts/Global/global_variables.gd"
 
 [input]
 

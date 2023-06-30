@@ -9,7 +9,8 @@ enum StateTypes {
 	FOLLOW,
 	WAIT,
 	ATTACK,
-	PATROL
+	PATROL,
+	STAY
 }
 
 func enter():
