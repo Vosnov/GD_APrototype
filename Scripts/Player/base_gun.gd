@@ -14,6 +14,7 @@ var is_reloading = false
 var amount_total = 0
 
 func _ready():
+	_on_inventory_update(Inventory.slots)
 	Events.connect('inventory_update', _on_inventory_update)
 	Events.emit_signal("player_reload_data_ui", AMOUNT_LOADED, amount_total)
 
