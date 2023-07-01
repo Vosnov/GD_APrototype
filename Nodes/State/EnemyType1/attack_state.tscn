@@ -26,10 +26,6 @@ func enter():
 	
 	move_to_player_timer.one_shot = true
 	move_to_player_timer.start(MOVE_TO_PLAYER_WAIT_TIME)
-
-func exit():
-	return
-	anim_is_finish = false
 	
 func _init():
 	randomize()
@@ -43,18 +39,11 @@ func _ready():
 		attack_trans_names.append(input_name)
 
 func update(_delta: float) -> StateTypes:
-	#if anim_is_playing:
-		#AGENT.velocity = Vector3.ZERO
-		#ANIMATION_TREE.set('parameters/walk_iwr/blend_position', Vector2())
-	#else:
-		#AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 6)
-		#var follow_iwr = AGENT.velocity * AGENT.global_transform.basis
-		#ANIMATION_TREE.set('parameters/walk_iwr/blend_position', Vector2(follow_iwr.x, follow_iwr.z))
 	if should_move:
 		AGENT.velocity = AGENT.velocity.lerp(-AGENT.global_transform.basis.z * SPEED, _delta * 6)
-		print(AGENT.velocity)
 	else:
 		AGENT.velocity = AGENT.velocity.lerp(Vector3(), _delta * 6)
+		
 	if anim_is_finish:
 		return StateTypes.WAIT
 	return StateTypes.NONE
@@ -73,18 +62,6 @@ func play_animation():
 		\"parameters/attack_shot/request\", 
 		AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 	)
-
-#func _on_player_enter_area(body: Node3D):
-	#if anim_is_playing: return
-	#if not state_is_active: return
-	#if body is Player:
-		#player_in_area = true
-		#play_animation()
-		#move_to_player_timer.stop()
-		
-#func _on_player_exit_area(body: Node3D):
-	#if body is Player:
-		#player_in_area = false
 
 func attack():
 	if ATTACK_AREA.get_overlapping_bodies().has(AGENT.player):

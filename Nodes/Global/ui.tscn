@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=4 format=3 uid="uid://en3g0v7xjkgn"]
 
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_vjmbd"]
 
@@ -32,6 +32,43 @@ func _input(_event):
 		if inventory_instance != null: inventory_instance.queue_free()
 "
 
+[sub_resource type="GDScript" id="GDScript_oc8qm"]
+script/source = "extends Control
+
+@export_file(\"*.tscn\") var RESTART_SCENE
+@export_file(\"*.tscn\") var MENU_SCENE
+
+func _init():
+	hide_dead_screen()
+	Events.connect('show_dead_screen', _on_show_dead_screen)
+
+func _on_exit_button_down():
+	get_tree().quit()
+
+func _on_menu_button_down():
+	hide_dead_screen()
+	get_tree().paused = false
+	SceneTransition.change_scene(MENU_SCENE)
+
+
+func _on_restart_button_down():
+	hide_dead_screen()
+	get_tree().paused = false
+	SceneTransition.change_scene(RESTART_SCENE)
+
+func _on_show_dead_screen():
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	visible = true
+
+func hide_dead_screen():
+	visible = false
+
+func _input(_event):
+	if Input.is_action_just_pressed(\"ui_cancel\"):
+		_on_show_dead_screen()
+"
+
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
 script = SubResource("GDScript_tkxjl")
@@ -45,4 +82,44 @@ offset_bottom = 23.0
 offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 63.0
-text = "HP: "
+
+[node name="DeadScreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_oc8qm")
+RESTART_SCENE = "res://Scenes/test_scene.tscn"
+MENU_SCENE = "res://Scenes/Menu/main_menu.tscn"
+
+[node name="PanelContainer" type="PanelContainer" parent="DeadScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeadScreen/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Restart" type="Button" parent="DeadScreen/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Menu" type="Button" parent="DeadScreen/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Menu
+"
+
+[node name="Exit" type="Button" parent="DeadScreen/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="button_down" from="DeadScreen/PanelContainer/VBoxContainer/Restart" to="DeadScreen" method="_on_restart_button_down"]
+[connection signal="button_down" from="DeadScreen/PanelContainer/VBoxContainer/Menu" to="DeadScreen" method="_on_menu_button_down"]
+[connection signal="button_down" from="DeadScreen/PanelContainer/VBoxContainer/Exit" to="DeadScreen" method="_on_exit_button_down"]

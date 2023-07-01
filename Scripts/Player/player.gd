@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Player
 
-@export var HP = 10
+@export var HP = 6
 
 func _ready():
 	update_ui()
@@ -23,6 +23,10 @@ func check_spawn_pos():
 func update_ui():
 	Events.emit_signal("player_hp_ui", HP)
 
+func die():
+	Events.emit_signal('show_dead_screen')
+
 func _on_take_damage(damage: float):
 	HP = max(0, HP - damage)
+	if HP <= 0: die()
 	update_ui()
