@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dmruxdnqw4rtm"]
+[gd_scene load_steps=30 format=3 uid="uid://dmruxdnqw4rtm"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player.gd" id="1_argoq"]
 [ext_resource type="PackedScene" uid="uid://bbh0f6e0pgr5d" path="res://Models/Player/myNewPlayer.glb" id="3_dwu3i"]
@@ -20,6 +20,9 @@ animation = &"Aim"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_exjd4"]
 animation = &"Reload"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nftjt"]
+animation = &"Hit"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ig2hn"]
 animation = &"Run"
@@ -64,6 +67,12 @@ input_1/name = "not_aim"
 input_1/auto_advance = false
 input_1/reset = true
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ttehh"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Arm.R", "Armature/Skeleton3D:Bone.001", "Armature/Skeleton3D:Bone.003"]
+fadein_time = 0.1
+fadeout_time = 0.3
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_t17j6"]
 xfade_time = 0.3
 input_0/name = "walk"
@@ -99,7 +108,7 @@ blend_point_1/pos = 1.0
 min_space = 0.0
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_qr6x4"]
-graph_offset = Vector2(-585.552, -343.436)
+graph_offset = Vector2(-200.597, -242.339)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ig2hn")
 nodes/Animation/position = Vector2(240, 80)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_bnpjx")
@@ -108,22 +117,26 @@ nodes/Animation/position = Vector2(240, 80)
 "nodes/Animation 3/position" = Vector2(-520, -320)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_exjd4")
 "nodes/Animation 4/position" = Vector2(60, -20)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_nftjt")
+"nodes/Animation 5/position" = Vector2(460, 140)
 nodes/Blend2/node = SubResource("AnimationNodeBlend2_8h4ec")
 nodes/Blend2/position = Vector2(-340, -440)
 nodes/aim_iwr/node = SubResource("AnimationNodeBlendSpace2D_fsug7")
 nodes/aim_iwr/position = Vector2(-540, -500)
 nodes/aim_trans/node = SubResource("AnimationNodeTransition_afpca")
 nodes/aim_trans/position = Vector2(60, -220)
+nodes/hit_shot/node = SubResource("AnimationNodeOneShot_ttehh")
+nodes/hit_shot/position = Vector2(680, -60)
 nodes/main_trans/node = SubResource("AnimationNodeTransition_t17j6")
 nodes/main_trans/position = Vector2(440, -60)
-nodes/output/position = Vector2(620, -60)
+nodes/output/position = Vector2(840, -60)
 nodes/reload_shot/node = SubResource("AnimationNodeOneShot_quhkh")
 nodes/reload_shot/position = Vector2(240, -180)
 nodes/shot/node = SubResource("AnimationNodeOneShot_v0wim")
 nodes/shot/position = Vector2(-160, -300)
 nodes/walk_iwr/node = SubResource("AnimationNodeBlendSpace1D_edijs")
 nodes/walk_iwr/position = Vector2(-160, -60)
-node_connections = [&"output", 0, &"main_trans", &"Blend2", 0, &"aim_iwr", &"Blend2", 1, &"Animation 3", &"aim_trans", 0, &"shot", &"aim_trans", 1, &"walk_iwr", &"main_trans", 0, &"reload_shot", &"main_trans", 1, &"Animation", &"reload_shot", 0, &"aim_trans", &"reload_shot", 1, &"Animation 4", &"shot", 0, &"Blend2", &"shot", 1, &"Animation 2"]
+node_connections = [&"output", 0, &"hit_shot", &"Blend2", 0, &"aim_iwr", &"Blend2", 1, &"Animation 3", &"aim_trans", 0, &"shot", &"aim_trans", 1, &"walk_iwr", &"hit_shot", 0, &"main_trans", &"hit_shot", 1, &"Animation 5", &"main_trans", 0, &"reload_shot", &"main_trans", 1, &"Animation", &"reload_shot", 0, &"aim_trans", &"reload_shot", 1, &"Animation 4", &"shot", 0, &"Blend2", &"shot", 1, &"Animation 2"]
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 3
@@ -134,38 +147,38 @@ script = ExtResource("1_argoq")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="myNewPlayer/Armature" index="0"]
-bones/0/position = Vector3(0.00071048, -0.29416, -0.039178)
+bones/0/position = Vector3(0.00145212, -0.326579, -0.0404111)
 bones/0/rotation = Quaternion(0.0186382, -0.196081, -0.00372765, 0.980404)
-bones/1/rotation = Quaternion(0.11564, -0.154871, 0.0198747, 0.980942)
+bones/1/rotation = Quaternion(0.115851, -0.14316, 0.0183718, 0.982724)
 bones/2/rotation = Quaternion(0.110454, -0.194868, -0.0220907, 0.97434)
 bones/3/rotation = Quaternion(-0.186458, 0.365145, -0.00155414, 0.912086)
 bones/4/rotation = Quaternion(-1.28079e-10, 0.14834, 3.04512e-10, 0.988936)
-bones/5/rotation = Quaternion(0.0903951, 0.101582, -0.772068, 0.620823)
-bones/6/position = Vector3(0.0421056, 0.456646, 0.072813)
-bones/6/rotation = Quaternion(0.102802, 0.0779001, -0.515943, 0.846856)
-bones/7/rotation = Quaternion(0.438656, 0.0765702, 0.128587, 0.886105)
-bones/11/rotation = Quaternion(0.139757, -0.0493644, 0.799143, 0.582581)
-bones/12/position = Vector3(-0.0406092, 0.456276, 0.0220804)
-bones/12/rotation = Quaternion(0.0711188, -0.168849, 0.420992, 0.888368)
-bones/13/rotation = Quaternion(0.309023, 0.0355882, -0.0175121, 0.950227)
-bones/17/position = Vector3(0.24198, 0.131739, 0.0370622)
-bones/17/rotation = Quaternion(-0.292378, 0.112444, 0.936768, -0.156006)
+bones/5/rotation = Quaternion(0.0896005, 0.114273, -0.771852, 0.618998)
+bones/6/position = Vector3(0.0493137, 0.456596, 0.0719253)
+bones/6/rotation = Quaternion(0.114027, 0.0814758, -0.518726, 0.843376)
+bones/7/rotation = Quaternion(0.459805, 0.0949352, 0.16652, 0.867086)
+bones/11/rotation = Quaternion(0.136628, -0.0540372, 0.785471, 0.601205)
+bones/12/position = Vector3(-0.033908, 0.455748, 0.0248302)
+bones/12/rotation = Quaternion(0.0691618, -0.173381, 0.435573, 0.880586)
+bones/13/rotation = Quaternion(0.329877, 0.0498533, 0.00911046, 0.942663)
+bones/17/position = Vector3(0.237427, 0.13324, 0.0227432)
+bones/17/rotation = Quaternion(-0.309252, 0.124112, 0.933724, -0.130837)
 bones/17/scale = Vector3(1.00004, 0.999995, 1.00006)
-bones/18/rotation = Quaternion(-0.173443, -0.013638, -0.336521, 0.925465)
+bones/18/rotation = Quaternion(-0.0624656, -0.0146805, -0.127241, 0.989794)
 bones/18/scale = Vector3(0.999997, 0.999998, 1)
-bones/19/position = Vector3(-0.259959, 0.127928, 0.0420168)
-bones/19/rotation = Quaternion(0.549593, 0.0516999, 0.832622, 0.0448956)
+bones/19/position = Vector3(-0.255349, 0.127327, 0.0782369)
+bones/19/rotation = Quaternion(0.572103, 0.00776368, 0.819362, 0.0358205)
 bones/19/scale = Vector3(1.00003, 0.999997, 1.00006)
-bones/20/rotation = Quaternion(-0.125405, -0.0118731, 0.221455, 0.967001)
-bones/21/position = Vector3(0.296698, -0.000294089, 0.856654)
-bones/22/position = Vector3(-0.801253, -0.0481077, -0.416597)
-bones/23/position = Vector3(-0.254546, -2.05731, -0.414485)
-bones/24/position = Vector3(-0.392092, -1.1439, 1.06975)
-bones/25/position = Vector3(0.303521, -1.99809, 0.00513197)
-bones/26/position = Vector3(-0.0527497, -1.1406, 1.07609)
+bones/20/rotation = Quaternion(-0.122923, -0.0120064, 0.207611, 0.970383)
+bones/21/position = Vector3(0.302842, -0.012875, 0.856654)
+bones/22/position = Vector3(-0.80062, -0.0484165, -0.400085)
+bones/23/position = Vector3(-0.297736, -2.06718, -0.530238)
+bones/24/position = Vector3(-0.351967, -1.15975, 1.07147)
+bones/25/position = Vector3(0.254246, -2.13048, 0.431593)
+bones/26/position = Vector3(-0.0537195, -1.14147, 1.08028)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="myNewPlayer/Armature/Skeleton3D" index="2"]
-transform = Transform3D(-0.990238, -0.123292, -0.0650204, 0.120758, -0.991811, 0.041563, -0.0696124, 0.0333056, 0.997018, -0.801261, -0.0481132, -0.416601)
+transform = Transform3D(-0.992187, -0.089408, -0.0870102, 0.0842207, -0.994543, 0.0615704, -0.0920405, 0.0537614, 0.994303, -0.800493, -0.0487556, -0.400594)
 bone_name = "Bone.011.R"
 bone_idx = 14
 
@@ -185,13 +198,15 @@ parameters/aim_iwr/blend_position = Vector2(0, -0.5)
 parameters/aim_trans/current_state = "not_aim"
 parameters/aim_trans/transition_request = ""
 parameters/aim_trans/current_index = 1
+parameters/hit_shot/active = false
+parameters/hit_shot/request = 0
 parameters/main_trans/current_state = "walk"
 parameters/main_trans/transition_request = ""
 parameters/main_trans/current_index = 0
 parameters/reload_shot/active = false
 parameters/reload_shot/request = 0
 parameters/shot/active = false
-parameters/shot/request = 1
+parameters/shot/request = 0
 parameters/walk_iwr/blend_position = 1.0
 
 [node name="AimComponent" parent="." instance=ExtResource("4_p34vl")]

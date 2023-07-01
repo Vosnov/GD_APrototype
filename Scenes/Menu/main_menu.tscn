@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://jbuxuquitwqd"]
+
+[sub_resource type="GDScript" id="GDScript_v2ius"]
+script/source = "extends Node2D
+
+@export_file(\"*.tscn\") var START_SCENE
+
+func _on_quit_button_button_down():
+	get_tree().quit()
+
+func _on_start_button_button_down():
+	SceneTransition.change_scene(START_SCENE)
+"
+
+[node name="MainMenu" type="Node2D"]
+script = SubResource("GDScript_v2ius")
+START_SCENE = "res://Scenes/test_scene.tscn"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Exit
+"
+
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]

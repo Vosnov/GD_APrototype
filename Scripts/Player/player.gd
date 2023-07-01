@@ -6,8 +6,7 @@ class_name Player
 func _ready():
 	update_ui()
 	check_spawn_pos()
-	
-	#Events.connect('player_take_damage', _on_take_damage)
+	Events.connect('player_take_damage', _on_take_damage)
 
 func _init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -22,8 +21,7 @@ func check_spawn_pos():
 	global_position.y = start_y
 
 func update_ui():
-	pass
-	#Events.emit_signal("player_hp_ui", HP)
+	Events.emit_signal("player_hp_ui", HP)
 
 func _on_take_damage(damage: float):
 	HP = max(0, HP - damage)

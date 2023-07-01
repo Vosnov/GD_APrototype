@@ -15,6 +15,7 @@ var lerp_relative_x = 0.0
 func _ready():
 	Events.connect('player_shot', _on_player_shot)
 	Events.connect('player_reload', _on_player_reload)
+	Events.connect('player_take_damage', _on_take_damage)
 
 func _physics_process(delta):
 	is_aim = false
@@ -57,3 +58,6 @@ func _on_player_reload(_amount_drop: int):
 
 func _on_player_shot():
 	ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func _on_take_damage(_damage: float):
+	ANIMATION_TREE.set("parameters/hit_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

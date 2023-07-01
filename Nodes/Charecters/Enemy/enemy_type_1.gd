@@ -6,6 +6,7 @@ signal take_damage()
 @export var HP = 3.0
 @export var DYING_ANIM_NAME = 'Dying'
 @export var INIT_STATE = EnemyState.StateTypes.PATROL
+@export var ATTACK_DAMAGE = 1
 
 @onready var state_machine = $StateMachine as StateMachine
 @onready var state_label = $StateLabel
@@ -56,6 +57,7 @@ func _on_take_damage(enemy: Enemy, damage: float):
 	if enemy == self:
 		HP -= damage
 		take_damage.emit()
+		animation_tree.set("parameters/hit_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		if HP <= 0: die()
 
 func _on_animation_tree_animation_finished(anim_name):

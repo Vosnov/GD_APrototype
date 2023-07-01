@@ -30,12 +30,6 @@ animation = &"Hit"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dnvay"]
 animation = &"Dying"
 
-[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2qwla"]
-filter_enabled = true
-filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.003"]
-fadein_time = 0.1
-fadeout_time = 0.1
-
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_tkex1"]
 fadein_time = 0.1
 fadeout_time = 0.3
@@ -50,6 +44,12 @@ input_1/reset = true
 input_2/name = "attack_type_3"
 input_2/auto_advance = false
 input_2/reset = true
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2qwla"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.003"]
+fadein_time = 0.1
+fadeout_time = 0.1
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_o3qgx"]
 xfade_time = 0.3
@@ -94,7 +94,6 @@ blend_point_5/pos = Vector2(0, -1)
 min_space = Vector2(-1, -2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
-graph_offset = Vector2(-739.262, -189.155)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -105,17 +104,17 @@ nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 4/position" = Vector2(-680, 320)
 "nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_2ijr0")
 "nodes/Animation 5/position" = Vector2(-580, -60)
-nodes/OneShot/node = SubResource("AnimationNodeOneShot_2qwla")
-nodes/OneShot/position = Vector2(-400, -140)
 nodes/attack_shot/node = SubResource("AnimationNodeOneShot_tkex1")
 nodes/attack_shot/position = Vector2(-220, 40)
 nodes/attack_trans/node = SubResource("AnimationNodeTransition_vxwh5")
 nodes/attack_trans/position = Vector2(-400, 100)
+nodes/hit_shot/node = SubResource("AnimationNodeOneShot_2qwla")
+nodes/hit_shot/position = Vector2(-400, -140)
 nodes/main_trans/node = SubResource("AnimationNodeTransition_o3qgx")
 nodes/main_trans/position = Vector2(120, 140)
 nodes/walk_iwr/node = SubResource("AnimationNodeBlendSpace2D_e1bop")
 nodes/walk_iwr/position = Vector2(-580, -240)
-node_connections = [&"output", 0, &"main_trans", &"OneShot", 0, &"walk_iwr", &"OneShot", 1, &"Animation 5", &"attack_shot", 0, &"OneShot", &"attack_shot", 1, &"attack_trans", &"attack_trans", 0, &"Animation 2", &"attack_trans", 1, &"Animation 3", &"attack_trans", 2, &"Animation 4", &"main_trans", 0, &"attack_shot", &"main_trans", 1, &"Animation"]
+node_connections = [&"output", 0, &"main_trans", &"attack_shot", 0, &"hit_shot", &"attack_shot", 1, &"attack_trans", &"attack_trans", 0, &"Animation 2", &"attack_trans", 1, &"Animation 3", &"attack_trans", 2, &"Animation 4", &"hit_shot", 0, &"walk_iwr", &"hit_shot", 1, &"Animation 5", &"main_trans", 0, &"attack_shot", &"main_trans", 1, &"Animation"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wdj30"]
 radius = 1.5
@@ -124,7 +123,7 @@ radius = 1.5
 points = PackedVector3Array(0, 0, 0, 3, 2, -6, -3, 2, -6, -3, -2, -6, 3, -2, -6)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b7geb"]
-radius = 0.426279
+radius = 0.511102
 height = 1.11209
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aycqf"]
@@ -142,31 +141,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.158953, -0.554572, -0.142778)
+bones/0/position = Vector3(0.160826, -0.550652, -0.128608)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.304055, -0.0973632, -0.0109835, 0.947602)
+bones/2/rotation = Quaternion(0.30406, -0.0973736, -0.0109833, 0.9476)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.0655952, 0.0821392, -4.36278e-09, 0.99446)
+bones/4/rotation = Quaternion(-0.0576923, 0.0718449, 8.88181e-09, 0.995746)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.108496, -0.106182, -0.759163, 0.63295)
+bones/5/rotation = Quaternion(0.108012, -0.115094, -0.756407, 0.634772)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.196381, -0.00393643, -0.318532, 0.927338)
-bones/7/rotation = Quaternion(0.383439, 0.00701684, 0.157974, 0.909928)
+bones/6/rotation = Quaternion(0.206612, -0.00529658, -0.320351, 0.924478)
+bones/7/rotation = Quaternion(0.39443, 0.00813772, 0.159188, 0.904996)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.260073, 0.384712, 0.789953, -0.400415)
+bones/12/rotation = Quaternion(-0.262458, 0.382528, 0.79152, -0.39785)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.234382, -0.0128171, -0.39866, 0.88655)
+bones/13/rotation = Quaternion(-0.234576, -0.0128142, -0.398989, 0.886351)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.232209, 0.343012, 0.860038, 0.29792)
+bones/14/rotation = Quaternion(0.231569, 0.334629, 0.865623, 0.291714)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.191596, -0.0108187, 0.388518, 0.901237)
+bones/15/rotation = Quaternion(-0.1852, -0.0109003, 0.37555, 0.908044)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.107632, -1.06824, 1.41862)
-bones/17/position = Vector3(-0.529875, -2.15214, -0.220775)
+bones/16/position = Vector3(-0.168179, -1.04907, 1.44211)
+bones/17/position = Vector3(-0.526887, -2.16193, -0.220766)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.636444, -2.13398, 0.498868)
+bones/19/position = Vector3(0.63641, -2.13398, 0.498861)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -177,13 +176,13 @@ shape = SubResource("CapsuleShape3D_5xduw")
 tree_root = SubResource("AnimationNodeBlendTree_xr4ar")
 anim_player = NodePath("../enemyType1/AnimationPlayer")
 active = true
-parameters/OneShot/active = false
-parameters/OneShot/request = 0
 parameters/attack_shot/active = false
 parameters/attack_shot/request = 0
 parameters/attack_trans/current_state = "attack_type_3"
 parameters/attack_trans/transition_request = ""
 parameters/attack_trans/current_index = 2
+parameters/hit_shot/active = false
+parameters/hit_shot/request = 0
 parameters/main_trans/current_state = "walk"
 parameters/main_trans/transition_request = ""
 parameters/main_trans/current_index = 0
@@ -224,6 +223,7 @@ STEERING_BEHAVIOR = NodePath("../../SteeringBehaviorComponent")
 ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
 DISTANCE_TO_FOLLOW = 2.5
+LERP_ROTATE = 2.0
 ATTACK_TIME_MIN = 0.2
 ATTACK_TIME_MAX = 6.0
 AGENT = NodePath("../..")
@@ -233,7 +233,6 @@ STATE_TYPE = 2
 ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
 ATTACK_ANIM_NAMES = Array[String](["Attack1", "Attack2", "Attack3"])
-MOVE_TO_PLAYER_WAIT_TIME = 1.5
 AGENT = NodePath("../..")
 STATE_TYPE = 3
 
@@ -259,7 +258,7 @@ collision_layer = 6
 collision_mask = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.136004, -0.645887)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.136004, -0.794057)
 shape = SubResource("CapsuleShape3D_b7geb")
 
 [node name="PlayerFindingArea" type="Area3D" parent="."]

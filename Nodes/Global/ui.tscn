@@ -8,14 +8,19 @@ script/source = "extends CanvasLayer
 @export var INVENTORY_UI: PackedScene
 
 @onready var reload_label = $ReloadData
+@onready var hp_label = $HP
 
 var inventory_instance: Node
 
 func _init():
 	Events.connect(\"player_reload_data_ui\", _on_reload_data)
+	Events.connect(\"player_hp_ui\", _on_player_hp_ui)
 	
 func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
+
+func _on_player_hp_ui(_hp: float):
+	hp_label.text = str('HP: ', _hp)
 
 func _input(_event):
 	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
@@ -25,8 +30,6 @@ func _input(_event):
 	if Input.is_action_just_pressed('ui_cancel'):
 		get_tree().paused = false
 		if inventory_instance != null: inventory_instance.queue_free()
-
-
 "
 
 [node name="UI" type="CanvasLayer"]
@@ -37,3 +40,9 @@ INVENTORY_UI = ExtResource("1_vjmbd")
 [node name="ReloadData" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="HP" type="Label" parent="."]
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 63.0
+text = "HP: "
