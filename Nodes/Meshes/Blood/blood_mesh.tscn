@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://cctmpxqunoamv"]
+
+[ext_resource type="Texture2D" uid="uid://d3sirehomp6vs" path="res://Textures/blood.png" id="1_4xr3r"]
+
+[sub_resource type="GDScript" id="GDScript_r4kxw"]
+script/source = "extends Node3D
+
+@onready var animation_player = $AnimationPlayer
+
+func _ready():
+	animation_player.play(\"blood_anim\")
+
+func _on_animation_player_animation_finished(_anim_name):
+	queue_free()
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4fpcg"]
+resource_local_to_scene = true
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("1_4xr3r")
+
+[sub_resource type="QuadMesh" id="QuadMesh_s1kp6"]
+
+[sub_resource type="Animation" id="Animation_em3l4"]
+resource_name = "blood_anim"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i4ou5"]
+_data = {
+"blood_anim": SubResource("Animation_em3l4")
+}
+
+[node name="BloodMesh" type="Node3D"]
+script = SubResource("GDScript_r4kxw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, -1.74846e-08, 0.4, 0, -0.4, -1.74846e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_4fpcg")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_s1kp6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_i4ou5")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
