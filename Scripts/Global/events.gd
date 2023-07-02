@@ -9,10 +9,11 @@ signal enemy_die(enemy: Enemy)
 signal player_shot()
 signal player_reload(amount_drop: int)
 signal player_take_damage(damage: float)
+signal player_dead()
 #UI
 signal player_hp_ui(hp: float)
 signal player_reload_data_ui(amount: int, total_amount: int)
-signal show_dead_screen()
+signal ui_clear()
 #INVENTORY
 signal item_pick_up(slot_data: SlotData, body: Node3D)
 signal inventory_update(slot_datas: Array[SlotData])

@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 Events="*res://Scripts/Global/events.gd"
 SceneTransition="*res://Nodes/Global/scene_transition.tscn"
-Ui="*res://Nodes/Global/ui.tscn"
+UI="*res://Nodes/Global/ui.tscn"
 Inventory="*res://Nodes/Global/inventory.tscn"
 GlobalVariables="*res://Scripts/Global/global_variables.gd"
 

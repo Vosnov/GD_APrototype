@@ -24,9 +24,9 @@ func update_ui():
 	Events.emit_signal("player_hp_ui", HP)
 
 func die():
-	Events.emit_signal('show_dead_screen')
+	Events.emit_signal('player_dead')
 
 func _on_take_damage(damage: float):
 	HP = max(0, HP - damage)
-	if HP <= 0: die()
 	update_ui()
+	if HP <= 0: die()
