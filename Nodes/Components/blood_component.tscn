@@ -1,38 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhhvox01a216a"]
+[gd_scene load_steps=4 format=3 uid="uid://bhhvox01a216a"]
 
+[ext_resource type="Script" path="res://Scripts/Components/blood_component.gd" id="1_6ox26"]
 [ext_resource type="PackedScene" uid="uid://cctmpxqunoamv" path="res://Nodes/Meshes/Blood/blood_mesh.tscn" id="1_vi5f5"]
-
-[sub_resource type="GDScript" id="GDScript_067fv"]
-script/source = "extends Node3D
-
-@export var BLOOD_MESH: PackedScene
-
-@onready var ray_cast_3d = $RayCast3D
-@onready var root = get_tree().root
-
-func _on_timer_timeout():
-	if ray_cast_3d.collide_with_bodies:
-		var pos = ray_cast_3d.get_collision_point()
-		pos.y += 0.01
-		pos.x += randf_range(-0.25, 0.25)
-		pos.z += randf_range(-0.25, 0.25)
-		var blood = BLOOD_MESH.instantiate() as Node3D
-		root.add_child(blood)
-		blood.global_position = pos
-		blood.rotate_y(randf_range(-PI, PI))
-		var blood_scale = randf_range(0.5, 1)
-		blood.global_scale(Vector3(blood_scale, blood_scale, blood_scale))
-"
+[ext_resource type="PackedScene" uid="uid://hc031gape20s" path="res://Particles/blood_particle.tscn" id="2_fjars"]
 
 [node name="BloodComponent" type="Node3D"]
-script = SubResource("GDScript_067fv")
+script = ExtResource("1_6ox26")
 BLOOD_MESH = ExtResource("1_vi5f5")
+BLOOD_PARTICLE = ExtResource("2_fjars")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -2, 0)
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SpawnBloodMeshTimer" type="Timer" parent="."]
 wait_time = 0.2
-autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="SpawnBloodMeshTimeout" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="SpawnBloodMeshTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="SpawnBloodMeshTimeout" to="." method="_on_spawn_b_lood_mesh_timeout_timeout"]
