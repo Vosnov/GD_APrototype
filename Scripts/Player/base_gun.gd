@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var MUZZLE_FLASH: PackedScene
 @export var MAX_AMOUNT_LOADED = 9
 @export var AMOUNT_LOADED = 9
 @export var SHOT_TIMEOUT = 0.4
@@ -7,6 +8,7 @@ extends Node3D
 
 @onready var shot_timer = $ShotTimer
 @onready var reload_timer = $ReloadTimer
+@onready var muzzle_pos = $MuzzlePos
 
 var aiming = false
 var is_runing = false
@@ -28,6 +30,9 @@ func shot():
 	shot_timer.start(SHOT_TIMEOUT)
 	Events.emit_signal("player_shot")
 	Events.emit_signal("player_reload_data_ui", AMOUNT_LOADED, amount_total)
+	
+	var muzzle = MUZZLE_FLASH.instantiate()
+	muzzle_pos.add_child(muzzle)
 
 func reload():
 	if amount_total == 0: return

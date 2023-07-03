@@ -148,38 +148,38 @@ HP = 1
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="myNewPlayer/Armature" index="0"]
-bones/0/position = Vector3(-0.000869035, -0.292687, -0.039122)
+bones/0/position = Vector3(-0.00133463, -0.30641, -0.0396439)
 bones/0/rotation = Quaternion(0.0186382, -0.196081, -0.00372765, 0.980404)
-bones/1/rotation = Quaternion(0.115142, -0.179565, 0.0230436, 0.976713)
+bones/1/rotation = Quaternion(0.114982, -0.186781, 0.0239697, 0.975355)
 bones/2/rotation = Quaternion(0.110454, -0.194868, -0.0220907, 0.97434)
 bones/3/rotation = Quaternion(-0.186458, 0.365145, -0.00155414, 0.912086)
 bones/4/rotation = Quaternion(-1.28079e-10, 0.14834, 3.04512e-10, 0.988936)
-bones/5/rotation = Quaternion(0.0841835, 0.0983417, -0.755749, 0.641939)
-bones/6/position = Vector3(0.0253742, 0.456763, 0.0748737)
-bones/6/rotation = Quaternion(0.0866838, 0.0825911, -0.525459, 0.842352)
-bones/7/rotation = Quaternion(0.4383, 0.04259, 0.0626692, 0.89563)
-bones/11/rotation = Quaternion(0.138485, -0.0616316, 0.79438, 0.588205)
-bones/12/position = Vector3(-0.0561642, 0.457501, 0.0156981)
-bones/12/rotation = Quaternion(0.0955546, -0.169742, 0.433996, 0.879605)
-bones/13/rotation = Quaternion(0.342146, -0.00519458, -0.056127, 0.937955)
-bones/17/position = Vector3(0.251675, 0.128542, 0.0675578)
-bones/17/rotation = Quaternion(-0.263092, -0.0649297, 0.962347, 0.0213065)
+bones/5/rotation = Quaternion(0.0868832, 0.0913494, -0.75993, 0.637662)
+bones/6/position = Vector3(0.0204423, 0.456798, 0.0754811)
+bones/6/rotation = Quaternion(0.0763509, 0.078236, -0.517951, 0.848397)
+bones/7/rotation = Quaternion(0.416125, 0.0292034, 0.0480691, 0.907566)
+bones/11/rotation = Quaternion(0.136359, -0.0685875, 0.789247, 0.594804)
+bones/12/position = Vector3(-0.0607495, 0.457862, 0.0138167)
+bones/12/rotation = Quaternion(0.104706, -0.170282, 0.435338, 0.877793)
+bones/13/rotation = Quaternion(0.357907, -0.0173671, -0.0736786, 0.930684)
+bones/17/position = Vector3(0.254533, 0.1276, 0.0765471)
+bones/17/rotation = Quaternion(-0.263076, -0.103145, 0.957881, 0.0511493)
 bones/17/scale = Vector3(1.00004, 0.999995, 1.00006)
-bones/18/rotation = Quaternion(-0.0711977, -0.0143805, -0.125473, 0.989435)
+bones/18/rotation = Quaternion(-0.0386036, -0.0144306, -0.0662166, 0.996954)
 bones/18/scale = Vector3(0.999997, 0.999998, 1)
-bones/19/position = Vector3(-0.269778, 0.129209, -0.0351231)
-bones/19/rotation = Quaternion(0.491503, 0.222999, 0.835311, 0.104652)
+bones/19/position = Vector3(-0.272672, 0.129587, -0.0578616)
+bones/19/rotation = Quaternion(0.463593, 0.224096, 0.854646, 0.0666557)
 bones/19/scale = Vector3(1.00003, 0.999997, 1.00006)
-bones/20/rotation = Quaternion(-0.128938, -0.0115875, 0.251176, 0.959245)
-bones/21/position = Vector3(0.283992, 0.025723, 0.856654)
-bones/22/position = Vector3(-0.778095, -0.0481077, -0.399957)
-bones/23/position = Vector3(-0.298691, -2.03123, 0.162554)
-bones/24/position = Vector3(-0.477547, -1.11015, 1.06609)
-bones/25/position = Vector3(0.254546, -2.04108, -0.474365)
-bones/26/position = Vector3(-0.0506604, -1.13872, 1.06707)
+bones/20/rotation = Quaternion(-0.0577612, -0.0119183, 0.116066, 0.991489)
+bones/21/position = Vector3(0.297935, -0.00282679, 0.856654)
+bones/22/position = Vector3(-0.794936, -0.0481077, -0.399957)
+bones/23/position = Vector3(-0.276082, -2.04503, 0.409465)
+bones/24/position = Vector3(-0.502737, -1.1002, 1.06501)
+bones/25/position = Vector3(0.275069, -2.05056, -0.526648)
+bones/26/position = Vector3(-0.0500648, -1.13819, 1.06449)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="myNewPlayer/Armature/Skeleton3D" index="2"]
-transform = Transform3D(-0.987928, -0.154794, -0.00604338, 0.152949, -0.980859, 0.120503, -0.0245811, 0.118125, 0.992694, -0.778098, -0.0481213, -0.399962)
+transform = Transform3D(-0.981937, -0.187731, 0.0235791, 0.189157, -0.97118, 0.145016, -0.00432469, 0.146857, 0.989148, -0.794959, -0.0481386, -0.399966)
 bone_name = "Bone.011.R"
 bone_idx = 14
 
@@ -221,7 +221,8 @@ BONE_NAME = "Bone.001"
 [node name="PlayerMovements" type="Node" parent="." node_paths=PackedStringArray("PLAYER")]
 script = ExtResource("7_gi7yc")
 PLAYER = NodePath("..")
-AIM_SPEED = 0.4
+ROTATE_SPEED = 8
+AIM_SPEED = 0.35
 SPRINT_SPEED = 1.5
 
 [node name="AnimationController" type="Node" parent="." node_paths=PackedStringArray("PLAYER", "PLAYER_MOVEMENTS", "ANIMATION_TREE")]

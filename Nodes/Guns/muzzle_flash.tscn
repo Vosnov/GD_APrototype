@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://rth81jaj34mp"]
+
+[ext_resource type="PackedScene" uid="uid://dy1ltt2015kn" path="res://Nodes/Helpers/destroy_timer.tscn" id="1_7fn6c"]
+[ext_resource type="Texture2D" uid="uid://bur2pqw4gh2qy" path="res://Textures/muzzle.png" id="2_lv8qg"]
+
+[node name="MuzzleFlash" instance=ExtResource("1_7fn6c")]
+
+[node name="Timer" parent="." index="0"]
+wait_time = 0.05
+
+[node name="Sprite3D" type="Sprite3D" parent="." index="1"]
+transform = Transform3D(0.313, 0, 0, 0, 0.313, 0, 0, 0, 0.313, 0, 0, 0)
+billboard = 1
+double_sided = false
+texture = ExtResource("2_lv8qg")
