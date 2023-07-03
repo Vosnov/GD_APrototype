@@ -11,13 +11,11 @@ script/source = "extends CanvasLayer
 
 @onready var reload_label = $ReloadData
 @onready var hp_label = $HP
-@onready var ui_container = $UIContainer
 
 var inventory_instance: Node
-var dead_screen_open = false
+var dead_screen_instance: Node
 
-func _init():
-	Events.connect(\"ui_clear\", _on_clear_ui)
+func _ready():
 	Events.connect(\"player_dead\", _on_player_dead)
 	Events.connect(\"player_reload_data_ui\", _on_reload_data)
 	Events.connect(\"player_hp_ui\", _on_player_hp_ui)
@@ -26,12 +24,6 @@ func close_inventory():
 	get_tree().paused = false
 	if inventory_instance != null: inventory_instance.queue_free()
 
-func _on_clear_ui():
-	hp_label.text = ''
-	reload_label.text = ''
-	for child in ui_container.get_children():
-		child.queue_free()
-
 func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
 
@@ -39,18 +31,22 @@ func _on_player_hp_ui(_hp: float):
 	hp_label.text = str('HP: ', _hp)
 
 func _input(_event):
-	if dead_screen_open: return
+	if dead_screen_instance != null: return
 	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
 		inventory_instance = INVENTORY_UI.instantiate()
-		ui_container.add_child(inventory_instance)
+		add_child(inventory_instance)
 		get_tree().paused = true
 	if Input.is_action_just_pressed('ui_cancel'):
 		close_inventory()
 
 func _on_player_dead():
-	dead_screen_open = true
 	close_inventory()
-	ui_container.add_child(DEAD_SCREEN.instantiate())
+	dead_screen_instance = DEAD_SCREEN.instantiate()
+	add_child(dead_screen_instance)
+	get_tree().paused = true
+
+func _exit_tree():
+	get_tree().paused = false
 "
 
 [node name="UI" type="CanvasLayer"]
@@ -67,11 +63,3 @@ offset_bottom = 23.0
 offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 63.0
-
-[node name="UIContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
