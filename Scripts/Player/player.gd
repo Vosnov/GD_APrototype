@@ -13,10 +13,10 @@ func _init():
 
 func check_spawn_pos():
 	var start_y = global_position.y
-	if GlobalVariables.player_spawn_data == null: return
-	if get_path().get_name(1) != GlobalVariables.player_spawn_data.location_name:
-		return
-	var point = GlobalVariables.player_spawn_data.point as Transform3D
+	var key = get_path().get_name(1)
+	if not GlobalVariables.player_spawn_data.has(key): return
+	var point = GlobalVariables.player_spawn_data.get(key) as Transform3D
+	
 	global_transform = point
 	global_position.y = start_y
 

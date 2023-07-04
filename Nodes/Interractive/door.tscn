@@ -11,7 +11,6 @@ script/source = "extends Node3D
 @export_file(\"*.tscn\") var NEXT_SCENE
 @export var NEED_ACCEPT = false
 @export var NEED_KEY_DATA: ItemData
-@export var SHOULD_SPAWN = false
 @export_multiline var CLOSE_MESSAGE: String
 @export_multiline var NEED_ACCEPT_MESSAGE: String
 
@@ -33,23 +32,26 @@ func _on_active_node_action_pressed():
 	if CLOSED:
 		Events.emit_signal('message_ui', CLOSE_MESSAGE)
 		return
+
 	if NEED_ACCEPT and !is_accepted:
 		Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE)
 		return
 		
-	if SHOULD_SPAWN:
-		var spawn_data = PlayerSpawnData.new(
-			spawn_point.global_transform,
-			get_path().get_name(1)
-		)
-		GlobalVariables.player_spawn_data = spawn_data
+	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform
 	SceneTransition.change_scene(NEXT_SCENE)
 
-func _on_area_3d_body_entered(_body):
+func check_accept():
 	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
 	if items.has(NEED_KEY_DATA):
-		is_accepted = true
 		active_node.change_sprite(accept_sprite)
+		Events.emit_signal('message_ui', 'Door opened by KEY', self)
+
+func _on_message(owner):
+	if owner == self:
+		is_accepted = true
+
+func _on_area_3d_body_entered(_body):
+	pass
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_jb30f"]
