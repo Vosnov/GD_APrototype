@@ -8,19 +8,29 @@ extends Node
 var input_dir = Vector2()
 var is_aim = false
 var is_run = false
+var message_is_open = false
 
 var relative_x = 0.0
 var lerp_relative_x = 0.0
 
 func _ready():
+	Events.connect("message_ui", func(_message): message_is_open = true)
+	Events.connect("message_close_ui", func(): message_is_open = false)
+	
 	Events.connect('player_shot', _on_player_shot)
 	Events.connect('player_reload', _on_player_reload)
 	Events.connect('player_take_damage', _on_take_damage)
 
 func _physics_process(delta):
+	if message_is_open:
+		input_dir = input_dir.lerp(Vector2(), delta * 10)
+		ANIMATION_TREE.set("parameters/walk_iwr/blend_position", input_dir)
+		ANIMATION_TREE.set('parameters/main_trans/transition_request', 'walk')
+		return
+	
 	is_aim = false
 	is_run = false
-	input_dir = input_dir.lerp(Input.get_vector("left", "right", "top", "bottom"), delta * IWR_SMOOTH)
+	input_dir = input_dir.lerp(PLAYER_MOVEMENTS.input_dir, delta * IWR_SMOOTH)
 	
 	if Input.is_action_pressed("aim"):
 		is_aim = true

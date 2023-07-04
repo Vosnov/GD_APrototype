@@ -13,6 +13,8 @@ signal player_dead()
 #UI
 signal player_hp_ui(hp: float)
 signal player_reload_data_ui(amount: int, total_amount: int)
+signal message_ui(message: String)
+signal message_close_ui()
 #INVENTORY
 signal item_pick_up(slot_data: SlotData, body: Node3D)
 signal inventory_update(slot_datas: Array[SlotData])

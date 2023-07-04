@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=6 format=3 uid="uid://en3g0v7xjkgn"]
 
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_vjmbd"]
 [ext_resource type="PackedScene" uid="uid://bdvj6pfhtgs1e" path="res://Nodes/UI/dead_screen.tscn" id="2_e8xum"]
+[ext_resource type="PackedScene" uid="uid://drr3ddmpotjgj" path="res://Nodes/UI/message_ui.tscn" id="3_138rf"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
@@ -49,6 +50,48 @@ func _exit_tree():
 	get_tree().paused = false
 "
 
+[sub_resource type="GDScript" id="GDScript_py8tj"]
+script/source = "extends Node
+
+@export var MESSAGE_UI: PackedScene
+
+@onready var destroy_block_timer = $DestroyBlockTimer
+
+var message_ui: MessageUI
+var can_destory = false
+var remove_message_ui_inputs = [\"action\", \"ui_cancel\", \"ui_menu\", \"shot\", \"aim\"]
+
+
+func _ready():
+	Events.connect(\"message_ui\", _on_message)
+	
+func _on_message(message: String):
+	if message_ui != null:
+		return
+	
+	can_destory = false
+	destroy_block_timer.start(destroy_block_timer.wait_time)
+
+	message_ui = MESSAGE_UI.instantiate() as MessageUI
+	add_child(message_ui)
+	message_ui.set_message(message)
+
+func _input(_event):
+	if message_ui == null or can_destory == false: return
+	for action_name in remove_message_ui_inputs:
+		var is_pressed = Input.is_action_just_pressed(action_name)
+		if is_pressed:
+			remove_message_ui()
+			return
+
+func remove_message_ui():
+	message_ui.queue_free()
+	Events.emit_signal(\"message_close_ui\")
+
+func _on_destroy_block_timer_timeout():
+	can_destory = true
+"
+
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
 script = SubResource("GDScript_tkxjl")
@@ -63,3 +106,13 @@ offset_bottom = 23.0
 offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 63.0
+
+[node name="MessageContainer" type="Node" parent="."]
+script = SubResource("GDScript_py8tj")
+MESSAGE_UI = ExtResource("3_138rf")
+
+[node name="DestroyBlockTimer" type="Timer" parent="MessageContainer"]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="MessageContainer/DestroyBlockTimer" to="MessageContainer" method="_on_destroy_block_timer_timeout"]
