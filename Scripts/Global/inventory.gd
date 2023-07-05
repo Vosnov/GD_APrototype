@@ -6,13 +6,13 @@ var slots: Array[SlotData] = []
 var max_size = 0
 
 func _ready():
-	Inventory.slots = INVENTORY_DATA.SLOTS
-	Inventory.max_size = INVENTORY_DATA.MAX_SIZE
+	slots = INVENTORY_DATA.SLOTS
+	max_size = INVENTORY_DATA.MAX_SIZE
 	
 	Events.emit_signal('inventory_update', INVENTORY_DATA.SLOTS)
 	Events.connect('item_pick_up', _on_item_pick_up)
 	Events.connect('player_reload', _on_player_reload)
-	Events.connect('inventory_update', _on_inventory_update)
+	Events.connect('inventory_remove_item', _on_inventory_remove_item)
 
 func _on_item_pick_up(item: SlotData, body: Node3D):
 	var success = item.add_to_inventory()
@@ -33,5 +33,9 @@ func _on_player_reload(amount_drop: int):
 			if slot_data.AMOUNT <= 0: INVENTORY_DATA.SLOTS.erase(slot_data)
 	Events.emit_signal('inventory_update', INVENTORY_DATA.SLOTS)
 
-func _on_inventory_update(_slots: Array[SlotData]):
-	slots = _slots
+func _on_inventory_remove_item(item: ItemData):
+	for slot in INVENTORY_DATA.SLOTS:
+		if slot.ITEM_DATA == item:
+			INVENTORY_DATA.SLOTS.erase(slot)
+			Events.emit_signal('inventory_update', INVENTORY_DATA.SLOTS)
+			return

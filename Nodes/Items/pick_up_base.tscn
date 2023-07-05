@@ -7,7 +7,6 @@
 script/source = "extends Node3D
 
 @export var SLOT_DATA: SlotData
-@export_multiline var MESSAGE: String
 
 func _ready():
 	if GlobalVariables.no_spawn_items.has(get_path().get_concatenated_names()):
@@ -23,7 +22,6 @@ func _on_active_node_action_pressed():
 
 [node name="PickUpBase" type="Node3D"]
 script = SubResource("GDScript_4pf0e")
-MESSAGE = "I taked AMMO"
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 2

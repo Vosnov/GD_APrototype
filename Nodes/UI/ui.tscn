@@ -67,10 +67,10 @@ func _ready():
 	Events.connect(\"message_ui\", _on_message)
 	
 func _on_message(_message: String):
-	message = _message
 	if message_ui != null:
 		return
 	
+	message = _message
 	can_destory = false
 	destroy_block_timer.start(destroy_block_timer.wait_time)
 
@@ -117,11 +117,11 @@ script = SubResource("GDScript_py8tj")
 MESSAGE_UI = ExtResource("3_138rf")
 
 [node name="DestroyBlockTimer" type="Timer" parent="MessageContainer"]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [node name="CloseTimer" type="Timer" parent="MessageContainer"]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="MessageContainer/DestroyBlockTimer" to="MessageContainer" method="_on_destroy_block_timer_timeout"]

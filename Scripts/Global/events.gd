@@ -17,4 +17,5 @@ signal message_ui(message: String)
 signal message_close_ui(message: String)
 #INVENTORY
 signal item_pick_up(slot_data: SlotData, body: Node3D)
+signal inventory_remove_item(item: ItemData)
 signal inventory_update(slot_datas: Array[SlotData])

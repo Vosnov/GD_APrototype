@@ -32,8 +32,10 @@ func has_key():
 	return items.has(NEED_KEY_DATA)
 
 func _on_message_close(message: String):
+	#print(message, ' ',  door_opened_message)
 	if message == door_opened_message:
 		is_accepted = true
+		#print(is_accepted)
 
 func _on_door_active_node_action_pressed():
 	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
@@ -43,6 +45,7 @@ func _on_door_active_node_action_pressed():
 	if ACCEPT_STATE == DoorActiveNode.AcceptState.NEED_ACCEPT and !is_accepted:
 		if has_key():
 			active_node.change_sprite(DoorActiveNode.AcceptState.ACCEPT)
+			Events.emit_signal('inventory_remove_item', NEED_KEY_DATA)
 			Events.emit_signal('message_ui', door_opened_message)
 			return
 		else:
