@@ -19,32 +19,34 @@ script/source = "extends Node3D
 @onready var spawn_point = $SpawnPoint
 
 var is_accepted = false
+var door_opened_message = \"\"
 
 func _ready():
-	Events.connect('message_close_ui', _on_message_close)
+	if NEED_KEY_DATA:
+		door_opened_message = str(\"Door opened by: \", NEED_KEY_DATA.NAME)
 	active_node.ACCEPT_STATE = ACCEPT_STATE
+	Events.connect('message_close_ui', _on_message_close)
 
 func has_key():
 	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
 	return items.has(NEED_KEY_DATA)
 
-func _on_message_close(_message_owner: Node):
-	if !has_key(): return
-	if _message_owner == self:
+func _on_message_close(message: String):
+	if message == door_opened_message:
 		is_accepted = true
 
 func _on_door_active_node_action_pressed():
 	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
-		Events.emit_signal('message_ui', CLOSE_MESSAGE, self)
+		Events.emit_signal('message_ui', CLOSE_MESSAGE)
 		return
 
 	if ACCEPT_STATE == DoorActiveNode.AcceptState.NEED_ACCEPT and !is_accepted:
 		if has_key():
 			active_node.change_sprite(DoorActiveNode.AcceptState.ACCEPT)
-			Events.emit_signal('message_ui', 'Door opened by KEY', self)
+			Events.emit_signal('message_ui', door_opened_message)
 			return
 		else:
-			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE, self)
+			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE)
 			return
 		
 	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform

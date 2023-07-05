@@ -99,7 +99,9 @@ mesh = SubResource("PlaneMesh_frnof")
 shape = SubResource("BoxShape3D_7dn26")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D"]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.89141, 0.051697, 0)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D3"]
 mesh = SubResource("BoxMesh_3jlas")
@@ -110,11 +112,14 @@ shape = SubResource("BoxShape3D_kny0l")
 [node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)
 SLOT_DATA = SubResource("Resource_uo3i3")
+MESSAGE = "123"
 
 [node name="Ammo2" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.767375, 1.372, -0.549004)
 SLOT_DATA = SubResource("Resource_vndvk")
+MESSAGE = "123"
 
 [node name="Ammo3" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.742771, 1.372, -0.549004)
 SLOT_DATA = SubResource("Resource_xej0a")
+MESSAGE = "123"

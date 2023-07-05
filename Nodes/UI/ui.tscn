@@ -61,13 +61,13 @@ script/source = "extends Node
 var message_ui: MessageUI
 var can_destory = false
 var remove_message_ui_inputs = [\"action\", \"ui_cancel\", \"ui_menu\", \"shot\", \"aim\"]
-var message_owner: Node
+var message = ''
 
 func _ready():
 	Events.connect(\"message_ui\", _on_message)
 	
-func _on_message(message: String, _message_owner: Node):
-	message_owner = _message_owner
+func _on_message(_message: String):
+	message = _message
 	if message_ui != null:
 		return
 	
@@ -92,10 +92,9 @@ func remove_message_ui():
 func _on_destroy_block_timer_timeout():
 	can_destory = true
 
-
 func _on_close_timer_timeout():
 	message_ui.queue_free()
-	Events.emit_signal(\"message_close_ui\", message_owner)
+	Events.emit_signal(\"message_close_ui\", message)
 "
 
 [node name="UI" type="CanvasLayer"]

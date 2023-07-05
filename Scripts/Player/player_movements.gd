@@ -18,8 +18,8 @@ var message_is_open = false
 var input_dir = Vector2()
 
 func _ready():
-	Events.connect("message_ui", func(_message, _message_owner): message_is_open = true)
-	Events.connect("message_close_ui", func(_message_owner): message_is_open = false)
+	Events.connect("message_ui", func(_message): message_is_open = true)
+	Events.connect("message_close_ui", func(_message): message_is_open = false)
 
 func get_speed():
 	if sprinting and not aiming:
