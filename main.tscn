@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=20 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
@@ -30,6 +30,12 @@ uv1_scale = Vector3(20, 20, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dn26"]
 size = Vector3(40, 0.1, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3jlas"]
+size = Vector3(1, 6, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kny0l"]
+size = Vector3(1, 6, 20)
 
 [sub_resource type="Resource" id="Resource_uo3i3"]
 script = ExtResource("7_r4ngx")
@@ -91,6 +97,15 @@ mesh = SubResource("PlaneMesh_frnof")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_7dn26")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.89141, 0.051697, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D3"]
+mesh = SubResource("BoxMesh_3jlas")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D3"]
+shape = SubResource("BoxShape3D_kny0l")
 
 [node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)

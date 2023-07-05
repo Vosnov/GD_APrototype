@@ -23,35 +23,38 @@ script/source = "extends Node3D
 var is_accepted = false
 
 func _ready():
+	Events.connect('message_close_ui', _on_message_close)
 	if CLOSED:
 		active_node.change_sprite(close_sprite)
 	if NEED_ACCEPT and !is_accepted:
 		active_node.change_sprite(need_accept_sprite)
 
 func _on_active_node_action_pressed():
+	print(\"hello\")
 	if CLOSED:
-		Events.emit_signal('message_ui', CLOSE_MESSAGE)
+		Events.emit_signal('message_ui', CLOSE_MESSAGE, self)
 		return
 
 	if NEED_ACCEPT and !is_accepted:
-		Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE)
-		return
+		if has_key():
+			active_node.change_sprite(accept_sprite)
+			Events.emit_signal('message_ui', 'Door opened by KEY', self)
+			return
+		else:
+			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE, self)
+			return
 		
 	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform
 	SceneTransition.change_scene(NEXT_SCENE)
 
-func check_accept():
+func has_key():
 	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
-	if items.has(NEED_KEY_DATA):
-		active_node.change_sprite(accept_sprite)
-		Events.emit_signal('message_ui', 'Door opened by KEY', self)
+	return items.has(NEED_KEY_DATA)
 
-func _on_message(owner):
-	if owner == self:
+func _on_message_close(_message_owner: Node):
+	if !has_key(): return
+	if _message_owner == self:
 		is_accepted = true
-
-func _on_area_3d_body_entered(_body):
-	pass
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_jb30f"]
@@ -117,7 +120,6 @@ shape = SubResource("BoxShape3D_vk8t2")
 [node name="SpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
 
 [editable path="ActiveNode"]

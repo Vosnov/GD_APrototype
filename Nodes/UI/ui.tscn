@@ -56,16 +56,18 @@ script/source = "extends Node
 @export var MESSAGE_UI: PackedScene
 
 @onready var destroy_block_timer = $DestroyBlockTimer
+@onready var close_timer = $CloseTimer
 
 var message_ui: MessageUI
 var can_destory = false
 var remove_message_ui_inputs = [\"action\", \"ui_cancel\", \"ui_menu\", \"shot\", \"aim\"]
-
+var message_owner: Node
 
 func _ready():
 	Events.connect(\"message_ui\", _on_message)
 	
-func _on_message(message: String):
+func _on_message(message: String, _message_owner: Node):
+	message_owner = _message_owner
 	if message_ui != null:
 		return
 	
@@ -85,11 +87,15 @@ func _input(_event):
 			return
 
 func remove_message_ui():
-	message_ui.queue_free()
-	Events.emit_signal(\"message_close_ui\")
+	close_timer.start(close_timer.wait_time)
 
 func _on_destroy_block_timer_timeout():
 	can_destory = true
+
+
+func _on_close_timer_timeout():
+	message_ui.queue_free()
+	Events.emit_signal(\"message_close_ui\", message_owner)
 "
 
 [node name="UI" type="CanvasLayer"]
@@ -115,4 +121,9 @@ MESSAGE_UI = ExtResource("3_138rf")
 wait_time = 0.1
 one_shot = true
 
+[node name="CloseTimer" type="Timer" parent="MessageContainer"]
+wait_time = 0.1
+one_shot = true
+
 [connection signal="timeout" from="MessageContainer/DestroyBlockTimer" to="MessageContainer" method="_on_destroy_block_timer_timeout"]
+[connection signal="timeout" from="MessageContainer/CloseTimer" to="MessageContainer" method="_on_close_timer_timeout"]
