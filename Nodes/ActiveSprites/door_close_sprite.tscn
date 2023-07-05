@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxkrx5vqri5e4"]
+
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_8g4cc"]
+
+[node name="DoorCloseSprite" type="Sprite3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+modulate = Color(1, 0, 0, 1)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("1_8g4cc")

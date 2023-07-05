@@ -1,51 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsbmcxe7n4yyv"]
+[gd_scene load_steps=10 format=3 uid="uid://dsbmcxe7n4yyv"]
 
 [ext_resource type="Material" uid="uid://d0p81ue363vha" path="res://Materials/test_mat_2.tres" id="1_wd37w"]
-[ext_resource type="PackedScene" uid="uid://dtanochifrdyf" path="res://Nodes/Helpers/action_node.tscn" id="2_oqy51"]
-[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="3_xujjp"]
+[ext_resource type="Script" path="res://Scripts/Helpers/door_active_node.gd" id="2_s6rgp"]
+[ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="3_0fx7q"]
+[ext_resource type="PackedScene" uid="uid://ds5hlv1fie0sv" path="res://Nodes/ActiveSprites/door_need_accept_sprite.tscn" id="3_pj662"]
+[ext_resource type="PackedScene" uid="uid://dxkrx5vqri5e4" path="res://Nodes/ActiveSprites/door_close_sprite.tscn" id="4_201g0"]
 
 [sub_resource type="GDScript" id="GDScript_8bmqr"]
 script/source = "extends Node3D
 
-@export var CLOSED = false
+@export var ACCEPT_STATE = DoorActiveNode.AcceptState.ACCEPT
 @export_file(\"*.tscn\") var NEXT_SCENE
-@export var NEED_ACCEPT = false
 @export var NEED_KEY_DATA: ItemData
 @export_multiline var CLOSE_MESSAGE: String
 @export_multiline var NEED_ACCEPT_MESSAGE: String
 
-@onready var accept_sprite = $AcceptSprite
-@onready var need_accept_sprite = $NeedAcceptSprite
-@onready var active_node = $ActiveNode as ActiveNode
-@onready var close_sprite = $CloseSprite
+@onready var active_node = $DoorActiveNode as DoorActiveNode
 @onready var spawn_point = $SpawnPoint
 
 var is_accepted = false
 
 func _ready():
 	Events.connect('message_close_ui', _on_message_close)
-	if CLOSED:
-		active_node.change_sprite(close_sprite)
-	if NEED_ACCEPT and !is_accepted:
-		active_node.change_sprite(need_accept_sprite)
-
-func _on_active_node_action_pressed():
-	print(\"hello\")
-	if CLOSED:
-		Events.emit_signal('message_ui', CLOSE_MESSAGE, self)
-		return
-
-	if NEED_ACCEPT and !is_accepted:
-		if has_key():
-			active_node.change_sprite(accept_sprite)
-			Events.emit_signal('message_ui', 'Door opened by KEY', self)
-			return
-		else:
-			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE, self)
-			return
-		
-	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform
-	SceneTransition.change_scene(NEXT_SCENE)
+	active_node.ACCEPT_STATE = ACCEPT_STATE
 
 func has_key():
 	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
@@ -55,6 +32,23 @@ func _on_message_close(_message_owner: Node):
 	if !has_key(): return
 	if _message_owner == self:
 		is_accepted = true
+
+func _on_door_active_node_action_pressed():
+	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
+		Events.emit_signal('message_ui', CLOSE_MESSAGE, self)
+		return
+
+	if ACCEPT_STATE == DoorActiveNode.AcceptState.NEED_ACCEPT and !is_accepted:
+		if has_key():
+			active_node.change_sprite(DoorActiveNode.AcceptState.ACCEPT)
+			Events.emit_signal('message_ui', 'Door opened by KEY', self)
+			return
+		else:
+			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE, self)
+			return
+		
+	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform
+	SceneTransition.change_scene(NEXT_SCENE)
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_jb30f"]
@@ -83,43 +77,18 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.26225)
 shape = SubResource("BoxShape3D_5p4sj")
 
-[node name="ActiveNode" parent="." node_paths=PackedStringArray("SPRITE", "AREA") instance=ExtResource("2_oqy51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.627733)
-SPRITE = NodePath("../AcceptSprite")
-AREA = NodePath("../Area3D")
-
-[node name="AcceptSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
-modulate = Color(0.513726, 1, 0.482353, 1)
-billboard = 1
-double_sided = false
-no_depth_test = true
-texture = ExtResource("3_xujjp")
-
-[node name="NeedAcceptSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
-visible = false
-modulate = Color(1, 1, 0, 1)
-billboard = 1
-double_sided = false
-no_depth_test = true
-texture = ExtResource("3_xujjp")
-
-[node name="CloseSprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.540304, -0.611166)
-visible = false
-modulate = Color(1, 0, 0, 1)
-billboard = 1
-double_sided = false
-no_depth_test = true
-texture = ExtResource("3_xujjp")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_vk8t2")
 
 [node name="SpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
-[connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
+[node name="DoorActiveNode" type="Node3D" parent="." node_paths=PackedStringArray("AREA")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.492469, -0.627733)
+script = ExtResource("2_s6rgp")
+ACCEPT_SPRITE = ExtResource("3_0fx7q")
+NEED_ACCEPT_SPRITE = ExtResource("3_pj662")
+CLOSE_SPRITE = ExtResource("4_201g0")
+AREA = NodePath("../Area3D")
 
-[editable path="ActiveNode"]
+[connection signal="action_pressed" from="DoorActiveNode" to="." method="_on_door_active_node_action_pressed"]
