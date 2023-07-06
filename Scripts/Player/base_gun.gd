@@ -18,6 +18,7 @@ var amount_total = 0
 func _ready():
 	if GlobalVariables.gun_amount_loaded >= 0:
 		AMOUNT_LOADED = GlobalVariables.gun_amount_loaded
+	_on_inventory_update(Inventory.SLOTS)
 	Events.connect('inventory_update', _on_inventory_update)
 	Events.emit_signal("player_reload_data_ui", AMOUNT_LOADED, amount_total)
 

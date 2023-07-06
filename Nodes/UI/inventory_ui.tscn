@@ -8,7 +8,7 @@ script/source = "extends HBoxContainer
 @export var SLOT: PackedScene
 
 func _ready():
-	fill_grid(Inventory.slots)
+	fill_grid(Inventory.SLOTS)
 	Events.connect('inventory_update', _on_inventory_update)
 
 func fill_grid(slots: Array[SlotData]):

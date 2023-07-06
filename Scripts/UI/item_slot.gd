@@ -12,6 +12,6 @@ func set_slot_data(slot: SlotData):
 	label.text = slot.ITEM_DATA.NAME
 	texture_rect.texture = slot.ITEM_DATA.TEXTURE
 	
-	if slot.ITEM_DATA is StackableItemData:
+	if slot is StackableSlotData:
 		amount_label.visible = true
 		amount_label.text = str(slot.AMOUNT)
