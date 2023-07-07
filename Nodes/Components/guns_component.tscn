@@ -11,14 +11,19 @@ script/source = "extends Node3D
 var active_gun: GunData
 var current_gun: Node3D
 
+var input_indexes = [0, 1, 2, 3]
+
 func _ready():
+	_on_inventory_update([])
 	Events.connect('inventory_update', _on_inventory_update)
-	
+
+# Select first gun on pick up when hands is empty
 func _on_inventory_update(_slots):
 	if active_gun != null: return
 	select_active_gun(0)
 
 func select_active_gun(index: int):
+	if Inventory.GUN_SLOTS.size() == 0: return
 	var inventory_gun = Inventory.GUN_SLOTS[index]
 	if inventory_gun == null: return
 	for child in get_children(): child.queue_free()
@@ -26,7 +31,13 @@ func select_active_gun(index: int):
 	for gun_data in GUNS_DATA:
 		if gun_data.GUN_SLOT == inventory_gun:
 			active_gun = gun_data
+			GlobalVariables.active_gun = active_gun
 			add_child(active_gun.GUN.instantiate())
+
+func _input(_event):
+	for input_index in input_indexes:
+		if Input.is_action_just_pressed(str('gun_', input_index)):
+			select_active_gun(input_index)
 "
 
 [node name="GunsComponent" type="Node3D"]

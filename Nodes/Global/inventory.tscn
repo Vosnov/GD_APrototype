@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_sxm78"]
 script = ExtResource("3_pwqiq")
-AMOUNT = 14
+AMOUNT = 4
 ITEM_DATA = ExtResource("2_mw5vn")
 
 [node name="Inventory" type="Node"]

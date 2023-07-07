@@ -17,9 +17,10 @@ func _ready():
 func shot():
 	if not shot_timer.is_stopped(): return
 	if GUN_SLOT_DATA.AMMO_LOADED <= 0: return
+	if GUN_SLOT_DATA.AMMO_LOADED < GUN_SLOT_DATA.DROP_AMMO: return
 	
 	GUN_SLOT_DATA.AMMO_LOADED -= GUN_SLOT_DATA.DROP_AMMO
-	#GlobalVariables.gun_amount_loaded = AMOUNT_LOADED
+	
 	shot_timer.one_shot = true
 	shot_timer.start(GUN_SLOT_DATA.SHOT_TIMEOUT)
 	Events.emit_signal("player_shot")

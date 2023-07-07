@@ -1,13 +1,11 @@
 extends Node
 
-@export var PLAYER: CharacterBody3D
+@export var PLAYER: Player
 @export var PLAYER_MOVEMENTS: PlayerMovements
 @export var ANIMATION_TREE: AnimationTree
 @export var IWR_SMOOTH = 8.0
 
 var input_dir = Vector2()
-var is_aim = false
-var is_run = false
 
 var relative_x = 0.0
 var lerp_relative_x = 0.0
@@ -25,14 +23,9 @@ func _physics_process(delta):
 		ANIMATION_TREE.set('parameters/aim_trans/transition_request', 'not_aim')
 		return
 	
-	is_aim = false
-	is_run = false
+	var is_aim = GlobalVariables.player_is_aim
+	var is_run = GlobalVariables.player_is_runing
 	input_dir = input_dir.lerp(Input.get_vector("left", "right", "top", "bottom"), delta * IWR_SMOOTH)
-	
-	if Input.is_action_pressed("aim"):
-		is_aim = true
-	if Input.is_action_pressed("sprint") and input_dir.y <= -0.5:
-		is_run = true
 	
 	if is_run and not is_aim:
 		ANIMATION_TREE.set('parameters/main_trans/transition_request', 'run')

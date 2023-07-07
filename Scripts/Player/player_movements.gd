@@ -29,11 +29,8 @@ func get_speed():
 	return SPEED
 
 func movement(delta: float):
-	sprinting = false
-	aiming = false
-	
-	if Input.is_action_pressed('sprint'): sprinting = true
-	if Input.is_action_pressed("aim"): aiming = true
+	aiming = GlobalVariables.player_is_aim
+	sprinting = GlobalVariables.player_is_runing
 	
 	if not PLAYER.is_on_floor():
 		PLAYER.velocity.y -= gravity * delta

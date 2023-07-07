@@ -32,5 +32,5 @@ func _on_take_damage(damage: float):
 	if HP <= 0: die()
 
 func _input(_event):
-	GlobalVariables.player_is_aim = Input.is_action_pressed("aim")
+	GlobalVariables.player_is_aim = Input.is_action_pressed("aim") and GlobalVariables.active_gun
 	GlobalVariables.player_is_runing = Input.is_action_pressed("sprint")
