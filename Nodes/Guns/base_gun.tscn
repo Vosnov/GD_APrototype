@@ -1,17 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://fgy3u75rkh4s"]
+[gd_scene load_steps=2 format=3 uid="uid://fgy3u75rkh4s"]
 
 [ext_resource type="Script" path="res://Scripts/Player/base_gun.gd" id="1_aldq5"]
-[ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="2_aytwu"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_fj03s"]
 
 [node name="BaseGun" type="Node3D"]
 script = ExtResource("1_aldq5")
-MUZZLE_FLASH = ExtResource("2_aytwu")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.142, 0, 0, 0, 0.193, 0, 0, 0, 0.621, 0, 0, -0.30005)
-mesh = SubResource("BoxMesh_fj03s")
 
 [node name="ShotTimer" type="Timer" parent="."]
 
@@ -19,5 +11,3 @@ mesh = SubResource("BoxMesh_fj03s")
 
 [node name="MuzzlePos" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.84212)
-
-[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

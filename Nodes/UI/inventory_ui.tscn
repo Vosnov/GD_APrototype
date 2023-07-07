@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwhdypbxa1gl7"]
+[gd_scene load_steps=4 format=3 uid="uid://dwhdypbxa1gl7"]
 
 [ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_211y0"]
 
@@ -26,6 +26,25 @@ func fill_grid(slots: Array[SlotData]):
 
 func _on_inventory_update(datas: Array[SlotData]):
 	fill_grid(datas)
+"
+
+[sub_resource type="GDScript" id="GDScript_ko34o"]
+script/source = "extends HBoxContainer
+
+@export var SLOT: PackedScene
+
+func _ready():
+	fill_grid(Inventory.GUN_SLOTS)
+
+func fill_grid(slots: Array[GunSlotData]):
+	for child in get_children():
+		child.queue_free()
+	
+	for slot in slots:
+		var slot_instance = SLOT.instantiate() as SlotUI
+		add_child(slot_instance)
+		slot_instance.set_slot_data(slot)
+
 "
 
 [node name="InventoryUI" type="Control"]
@@ -74,7 +93,7 @@ focus_neighbor_top = NodePath("../Button2")
 focus_neighbor_bottom = NodePath("../Button")
 text = "Test"
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="ItemContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -82,14 +101,34 @@ offset_top = 40.0
 offset_bottom = 176.0
 grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ItemContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="GridContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="GridContainer" type="HBoxContainer" parent="ItemContainer/MarginContainer"]
 layout_mode = 2
 script = SubResource("GDScript_cyvqe")
+SLOT = ExtResource("1_211y0")
+
+[node name="GunContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 200.0
+offset_bottom = 336.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GunContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="GridContainer" type="HBoxContainer" parent="GunContainer/MarginContainer"]
+layout_mode = 2
+script = SubResource("GDScript_ko34o")
 SLOT = ExtResource("1_211y0")

@@ -33,11 +33,16 @@ func _on_player_hp_ui(_hp: float):
 
 func _input(_event):
 	if dead_screen_instance != null: return
+	
+	var inventory_is_just_open = false
 	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
 		inventory_instance = INVENTORY_UI.instantiate()
+		inventory_is_just_open = true
 		add_child(inventory_instance)
 		get_tree().paused = true
-	if Input.is_action_just_pressed('ui_cancel'):
+	
+	if inventory_is_just_open: return
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
 		close_inventory()
 
 func _on_player_dead():

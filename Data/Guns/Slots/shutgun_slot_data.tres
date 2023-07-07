@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="GunSlotData" load_steps=5 format=3 uid="uid://dlva68yk3y5dq"]
+
+[ext_resource type="Script" path="res://Scripts/Data/gun_slot_data.gd" id="1_g85sc"]
+[ext_resource type="Texture2D" uid="uid://cy7evrudtviol" path="res://key.png" id="1_yt2aq"]
+[ext_resource type="Script" path="res://Scripts/Data/item_data.gd" id="2_0negt"]
+
+[sub_resource type="Resource" id="Resource_13jfy"]
+script = ExtResource("2_0negt")
+NAME = "Shutgun"
+DESCRIPTION = "its shutgun"
+TEXTURE = ExtResource("1_yt2aq")
+
+[resource]
+script = ExtResource("1_g85sc")
+DAMAGE = 2
+AMMO_LOADED = 9
+MAX_AMMO_LOADED = 9
+SHOT_TIMEOUT = 1.0
+RELOAD_TIMEOUT = 1.0
+DROP_AMMO = 3
+ITEM_DATA = SubResource("Resource_13jfy")

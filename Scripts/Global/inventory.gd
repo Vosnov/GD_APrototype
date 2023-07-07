@@ -1,6 +1,7 @@
 extends Node
 
 @export var SLOTS: Array[SlotData] = []
+@export var GUN_SLOTS: Array[GunSlotData] = []
 
 func _ready():
 	Events.emit_signal('inventory_update', SLOTS)

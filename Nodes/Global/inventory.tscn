@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbjlun33yyejs"]
+[gd_scene load_steps=5 format=3 uid="uid://dbjlun33yyejs"]
 
 [ext_resource type="Script" path="res://Scripts/Global/inventory.gd" id="1_xlqkd"]
+[ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="2_mw5vn"]
+[ext_resource type="Script" path="res://Scripts/Data/stackable_slot_data.gd" id="3_pwqiq"]
+
+[sub_resource type="Resource" id="Resource_sxm78"]
+script = ExtResource("3_pwqiq")
+AMOUNT = 14
+ITEM_DATA = ExtResource("2_mw5vn")
 
 [node name="Inventory" type="Node"]
 script = ExtResource("1_xlqkd")
+SLOTS = Array[Resource("res://Scripts/Data/slot_data.gd")]([SubResource("Resource_sxm78")])
