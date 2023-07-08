@@ -23,7 +23,7 @@ func shot():
 	
 	shot_timer.one_shot = true
 	shot_timer.start(GUN_SLOT_DATA.SHOT_TIMEOUT)
-	Events.emit_signal("player_shot")
+	Events.emit_signal("player_shot", GUN_SLOT_DATA)
 	Events.emit_signal("player_reload_data_ui", GUN_SLOT_DATA.AMMO_LOADED, amount_total)
 	
 	var muzzle = MUZZLE_FLASH.instantiate()

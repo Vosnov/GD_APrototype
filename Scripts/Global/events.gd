@@ -6,7 +6,7 @@ signal enemy_target_remove()
 signal enemy_take_damage(enemy: Enemy, damage: float)
 signal enemy_die(enemy: Enemy)
 #PLAYER
-signal player_shot()
+signal player_shot(gun_slot: GunSlotData)
 signal player_reload(amount_drop: int)
 signal player_take_damage(damage: float)
 signal player_dead()

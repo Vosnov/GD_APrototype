@@ -39,10 +39,10 @@ func _on_aim_target_remove():
 func _on_animation_player_animation_finished(_anim_name):
 	is_full_target = true
 
-func _on_player_shot():
+func _on_player_shot(gun_slot: GunSlotData):
 	if is_aim_target:
 		if is_full_target:
-			Events.emit_signal("enemy_take_damage", ENEMY, 1.0)
+			Events.emit_signal("enemy_take_damage", ENEMY, gun_slot.DAMAGE)
 		else:
 			anim_player.seek(0, true)
-			Events.emit_signal("enemy_take_damage", ENEMY, 0.5)
+			Events.emit_signal("enemy_take_damage", ENEMY, gun_slot.DAMAGE / 2)
