@@ -14,11 +14,11 @@ var current_gun: Node3D
 var input_indexes = [0, 1, 2, 3]
 
 func _ready():
-	_on_inventory_update([])
+	_on_inventory_update()
 	Events.connect('inventory_update', _on_inventory_update)
 
 # Select first gun on pick up when hands is empty
-func _on_inventory_update(_slots):
+func _on_inventory_update():
 	if active_gun != null: return
 	select_active_gun(0)
 

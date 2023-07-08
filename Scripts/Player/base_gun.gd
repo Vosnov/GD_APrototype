@@ -10,7 +10,7 @@ extends Node3D
 var amount_total = 0
 
 func _ready():
-	_on_inventory_update(Inventory.SLOTS)
+	_on_inventory_update()
 	Events.emit_signal("player_reload_data_ui", GUN_SLOT_DATA.AMMO_LOADED, amount_total)
 	Events.connect('inventory_update', _on_inventory_update)
 
@@ -49,9 +49,9 @@ func _input(_event):
 	if Input.is_action_just_pressed("reload") and not GlobalVariables.player_is_runing:
 		reload()
 
-func _on_inventory_update(slots: Array[SlotData]):
+func _on_inventory_update():
 	amount_total = 0
-	for slot in slots:
+	for slot in Inventory.SLOTS:
 		if slot.ITEM_DATA is AmmoData:
 			amount_total += slot.AMOUNT
 	Events.emit_signal("player_reload_data_ui", GUN_SLOT_DATA.AMMO_LOADED, amount_total)

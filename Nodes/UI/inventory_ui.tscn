@@ -9,7 +9,6 @@ script/source = "extends HBoxContainer
 
 func _ready():
 	fill_grid(Inventory.SLOTS)
-	Events.connect('inventory_update', _on_inventory_update)
 
 func fill_grid(slots: Array[SlotData]):
 	for child in get_children():
@@ -23,9 +22,6 @@ func fill_grid(slots: Array[SlotData]):
 			slot_instance.grab_focus()
 		slot_instance.set_slot_data(slot)
 		index += 1
-
-func _on_inventory_update(datas: Array[SlotData]):
-	fill_grid(datas)
 "
 
 [sub_resource type="GDScript" id="GDScript_ko34o"]
