@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=34 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://b6j0crmquswkj" path="res://Nodes/State/EnemyType1/follow_state.tscn" id="5_g087f"]
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
-[ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="9_sjnhw"]
 [ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
 [ext_resource type="PackedScene" uid="uid://bhhvox01a216a" path="res://Nodes/Components/blood_component.tscn" id="11_mnj1x"]
 
@@ -142,31 +141,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.160557, -0.523643, 0.0377685)
+bones/0/position = Vector3(0.0469191, -0.54232, -0.247085)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.304109, -0.0974753, -0.0109809, 0.947573)
+bones/2/rotation = Quaternion(0.303931, -0.0971059, -0.0109895, 0.947669)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.00945085, -0.106096, -1.1864e-09, 0.994311)
+bones/4/rotation = Quaternion(-0.0252079, -0.205605, 2.03434e-08, 0.97831)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.153273, -0.153911, -0.801073, 0.557763)
+bones/5/rotation = Quaternion(0.166065, -0.143567, -0.7993, 0.559401)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.17369, -0.0140354, -0.317892, 0.931976)
-bones/7/rotation = Quaternion(0.280106, 0.00101566, 0.118177, 0.952667)
+bones/6/rotation = Quaternion(0.1138, -0.025747, -0.238486, 0.964112)
+bones/7/rotation = Quaternion(0.16482, -0.0120957, 0.112557, 0.979806)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.285275, 0.355206, 0.807972, -0.373669)
+bones/12/rotation = Quaternion(-0.215699, 0.301926, 0.844551, -0.386067)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.239432, -0.0127409, -0.407249, 0.881282)
+bones/13/rotation = Quaternion(-0.256003, -0.0124763, -0.435433, 0.862963)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.200173, 0.262981, 0.92026, 0.209509)
+bones/14/rotation = Quaternion(0.296792, 0.272533, 0.879139, 0.254471)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.160253, -0.0111872, 0.324963, 0.931983)
+bones/15/rotation = Quaternion(-0.20654, -0.0106146, 0.418823, 0.884204)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.144474, -1.17702, 1.33053)
-bones/17/position = Vector3(-0.288141, -2.21, -0.241542)
+bones/16/position = Vector3(0.0708649, -1.21155, 1.20246)
+bones/17/position = Vector3(-0.400682, -2.11151, -0.636591)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.63608, -2.13401, 0.498801)
+bones/19/position = Vector3(0.668188, -2.10959, 0.00930727)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -256,6 +255,7 @@ shape = SubResource("SphereShape3D_wdj30")
 shape = SubResource("ConvexPolygonShape3D_5cjby")
 
 [node name="AttackArea" type="Area3D" parent="."]
+visible = false
 collision_layer = 6
 collision_mask = 6
 
@@ -285,9 +285,8 @@ billboard = 1
 double_sided = false
 text = "State: "
 
-[node name="AimTargetComponent" parent="." node_paths=PackedStringArray("ENEMY") instance=ExtResource("9_sjnhw")]
+[node name="TargetMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
-ENEMY = NodePath("..")
 
 [node name="BloodComponent" parent="." instance=ExtResource("11_mnj1x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0860016, 0, -0.438126)

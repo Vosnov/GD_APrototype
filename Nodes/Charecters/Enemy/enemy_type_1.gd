@@ -10,10 +10,10 @@ signal take_damage()
 
 @onready var state_machine = $StateMachine as StateMachine
 @onready var state_label = $StateLabel
-@onready var aim_target_component = $AimTargetComponent
 @onready var animation_tree = $AnimationTree
 @onready var stering_behavior = $SteeringBehaviorComponent
 @onready var blood_component = $BloodComponent
+@onready var target_marker = $TargetMarker
 
 var player: Node3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -38,15 +38,12 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-func get_aim_target() -> Vector3:
-	if aim_target_component == null:
-		return global_position
-	return aim_target_component.global_position
+func get_aim_target() -> Node3D:
+	return target_marker
 
 func die():
 	is_dead = true
 	animation_tree.set("parameters/main_trans/transition_request", 'dying')
-	aim_target_component.queue_free()
 	stering_behavior.queue_free()
 	Events.emit_signal('enemy_die', self)
 	GlobalVariables.no_spawn_enemys.push_back(get_path().get_concatenated_names())
@@ -55,6 +52,7 @@ func get_init_state():
 	return INIT_STATE
 
 func _on_take_damage(enemy: Enemy, damage: float):
+	if is_dead: return
 	if enemy == self:
 		HP -= damage
 		take_damage.emit()

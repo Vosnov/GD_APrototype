@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdnnhihjtlmf3"]
+[gd_scene load_steps=8 format=3 uid="uid://cdnnhihjtlmf3"]
 
 [ext_resource type="Resource" uid="uid://dxjixnptkcwmi" path="res://Data/Guns/Slots/pistol_slot_data.tres" id="2_a6gud"]
+[ext_resource type="Script" path="res://Scripts/Guns/pistol.gd" id="2_rqgru"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="2_tdybi"]
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="3_whdl7"]
 
@@ -9,7 +10,13 @@ albedo_color = Color(0, 0.376471, 0.411765, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hvx2b"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_in0bd"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 10.0
+
 [node name="Pistol" instance=ExtResource("3_whdl7")]
+script = ExtResource("2_rqgru")
 GUN_SLOT_DATA = ExtResource("2_a6gud")
 MUZZLE_FLASH = ExtResource("2_tdybi")
 
@@ -17,3 +24,11 @@ MUZZLE_FLASH = ExtResource("2_tdybi")
 transform = Transform3D(0.142, 0, 0, 0, 0.193, 0, 0, 0, 0.621, 0, 0, -0.30005)
 material_override = SubResource("StandardMaterial3D_nvvw1")
 mesh = SubResource("BoxMesh_hvx2b")
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="4"]
+target_position = Vector3(0, 0, -10)
+collision_mask = 4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RayCast3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -5)
+mesh = SubResource("CylinderMesh_in0bd")

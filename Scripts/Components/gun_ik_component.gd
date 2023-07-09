@@ -22,7 +22,8 @@ func _process(delta):
 		amount = clamp(amount - delta * SPEED, 0, 1)
 	if target != null:
 		amount = clamp(amount + delta * SPEED, 0, 1)
-		global_transform.basis = global_transform.looking_at(target.get_aim_target()).basis
+		var target_pos = target.get_aim_target().global_position
+		global_transform.basis = global_transform.looking_at(target_pos).basis
 		
 	var pos = SKELETON.get_bone_global_pose_no_override(bone_index)
 	var quat = quaternion

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="6_pcpq6"]
 [ext_resource type="Resource" uid="uid://dxjixnptkcwmi" path="res://Data/Guns/Slots/pistol_slot_data.tres" id="7_0e6a4"]
 [ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="7_1ch7u"]
-[ext_resource type="Resource" uid="uid://dlva68yk3y5dq" path="res://Data/Guns/Slots/shutgun_slot_data.tres" id="8_i2hba"]
+[ext_resource type="Resource" uid="uid://dlva68yk3y5dq" path="res://Data/Guns/Slots/shotgun_slot_data.tres" id="8_i2hba"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_124ax"]
 albedo_color = Color(0, 0.376471, 0.411765, 1)

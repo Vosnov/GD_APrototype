@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjoety6t3jgxy"]
+
+[ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="1_5uskf"]
+[ext_resource type="Script" path="res://Scripts/Guns/shutgun.gd" id="2_ipkg4"]
+[ext_resource type="Resource" uid="uid://dlva68yk3y5dq" path="res://Data/Guns/Slots/shotgun_slot_data.tres" id="3_jnjht"]
+[ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="4_miaxy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oieef"]
+albedo_color = Color(0.658824, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4bn3"]
+
+[node name="Shotgun" instance=ExtResource("1_5uskf")]
+script = ExtResource("2_ipkg4")
+FRACTION_COUNT = 8
+V_RANGE = 0.2
+H_RANGE = 0.4
+RAY_DISTANCE = 8.0
+RAY_COLLISION = 4
+GUN_SLOT_DATA = ExtResource("3_jnjht")
+MUZZLE_FLASH = ExtResource("4_miaxy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(0.14, 0, 0, 0, 0.187, 0, 0, 0, 0.607, 0, 0, -0.3)
+material_override = SubResource("StandardMaterial3D_oieef")
+mesh = SubResource("BoxMesh_g4bn3")
+
+[node name="LookAtEnemyNode" type="Node3D" parent="." index="4"]

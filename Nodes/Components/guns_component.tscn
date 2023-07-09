@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c43ppbemapbww"]
 
 [ext_resource type="Resource" uid="uid://dgmeg2dfp0jj3" path="res://Data/Guns/pistol_data.tres" id="1_57wru"]
-[ext_resource type="Resource" uid="uid://b1avnq0g3bspp" path="res://Data/Guns/shutgun_data.tres" id="2_8gf1p"]
+[ext_resource type="Resource" uid="uid://b1avnq0g3bspp" path="res://Data/Guns/shotgun_data.tres" id="2_0jqq8"]
 
 [sub_resource type="GDScript" id="GDScript_tb4jf"]
 script/source = "extends Node3D
@@ -19,6 +19,7 @@ func _ready():
 
 # Select first gun on pick up when hands is empty
 func _on_inventory_update():
+	if Inventory.GUN_SLOTS.size() == 0: return
 	if GlobalVariables.active_gun != null: return
 	
 	var guns_slots = GUNS_DATA.map(gun_data_map)
@@ -46,4 +47,4 @@ func gun_data_map(gun_data: GunData):
 
 [node name="GunsComponent" type="Node3D"]
 script = SubResource("GDScript_tb4jf")
-GUNS_DATA = Array[Resource("res://Scripts/Data/guns_data.gd")]([ExtResource("1_57wru"), ExtResource("2_8gf1p")])
+GUNS_DATA = Array[Resource("res://Scripts/Data/guns_data.gd")]([ExtResource("1_57wru"), ExtResource("2_0jqq8")])
