@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bhhvox01a216a" path="res://Nodes/Components/blood_component.tscn" id="11_mnj1x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
-radius = 0.346272
+radius = 0.35
 height = 1.52105
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q2o8k"]
@@ -141,31 +141,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.0469191, -0.54232, -0.247085)
+bones/0/position = Vector3(0.132476, -0.570929, -0.185109)
 bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
 bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.303931, -0.0971059, -0.0109895, 0.947669)
+bones/2/rotation = Quaternion(0.304033, -0.0973183, -0.0109845, 0.947614)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.0252079, -0.205605, 2.03434e-08, 0.97831)
+bones/4/rotation = Quaternion(-0.0530602, 0.149346, 1.04212e-08, 0.98736)
 bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.166065, -0.143567, -0.7993, 0.559401)
+bones/5/rotation = Quaternion(0.111625, -0.0489647, -0.784638, 0.607853)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.1138, -0.025747, -0.238486, 0.964112)
-bones/7/rotation = Quaternion(0.16482, -0.0120957, 0.112557, 0.979806)
+bones/6/rotation = Quaternion(0.142347, 0.00956441, -0.338886, 0.929947)
+bones/7/rotation = Quaternion(0.332133, 0.00419819, 0.135345, 0.933462)
 bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.215699, 0.301926, 0.844551, -0.386067)
+bones/12/rotation = Quaternion(-0.247577, 0.387861, 0.786355, -0.412208)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.256003, -0.0124763, -0.435433, 0.862963)
+bones/13/rotation = Quaternion(-0.233823, -0.0128254, -0.397709, 0.887124)
 bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.296792, 0.272533, 0.879139, 0.254471)
+bones/14/rotation = Quaternion(0.236147, 0.370507, 0.841893, 0.313328)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.20654, -0.0106146, 0.418823, 0.884204)
+bones/15/rotation = Quaternion(-0.213443, -0.0105137, 0.432821, 0.875784)
 bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(0.0708649, -1.21155, 1.20246)
-bones/17/position = Vector3(-0.400682, -2.11151, -0.636591)
+bones/16/position = Vector3(0.213167, -1.13127, 1.16019)
+bones/17/position = Vector3(-0.537099, -2.12228, -0.221417)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.668188, -2.10959, 0.00930727)
+bones/19/position = Vector3(0.63659, -2.13397, 0.498894)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -234,6 +234,7 @@ ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
 ATTACK_ANIM_NAMES = Array[String](["Attack1", "Attack2", "Attack3"])
 MOVE_TO_PLAYER_WAIT_TIME = 0.8
+SPEED = 1.5
 AGENT = NodePath("../..")
 STATE_TYPE = 3
 

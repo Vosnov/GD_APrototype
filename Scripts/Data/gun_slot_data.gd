@@ -1,6 +1,7 @@
 extends SlotData
 class_name GunSlotData
 
+@export var FULL_DAMAGE = 1.0
 @export var DAMAGE = 1.0
 @export var AMMO_LOADED = 9
 @export var MAX_AMMO_LOADED = 9

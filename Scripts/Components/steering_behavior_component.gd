@@ -23,7 +23,7 @@ class Ray:
 	func get_direction():
 		return direction * ray_range
 
-func _init():
+func _ready():
 	rays.resize(NUM_RAYS)
 	for i in NUM_RAYS:
 		var angle = i * 2 * PI / NUM_RAYS

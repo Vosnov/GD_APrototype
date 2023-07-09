@@ -12,6 +12,7 @@ TEXTURE = ExtResource("1_f1qc5")
 
 [resource]
 script = ExtResource("3_vj0b2")
+FULL_DAMAGE = 1.5
 DAMAGE = 1.0
 AMMO_LOADED = 6
 MAX_AMMO_LOADED = 6

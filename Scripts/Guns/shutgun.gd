@@ -13,6 +13,9 @@ func _init():
 	randomize()
 
 func _override_shot():
+	var damage = GUN_SLOT_DATA.DAMAGE
+	if GlobalVariables.player_target_is_full: damage = GUN_SLOT_DATA.FULL_DAMAGE
+	
 	for i in range(FRACTION_COUNT):
 		var dir = Vector3(randf_range(-H_RANGE, H_RANGE), randf_range(-V_RANGE, V_RANGE), -1) * RAY_DISTANCE
 		var to = (look_at_enemy_node.global_transform.basis * dir) + global_position
@@ -24,7 +27,7 @@ func _override_shot():
 		var hit = space_state.intersect_ray(ray)
 		var collider = hit.get('collider')
 		if collider:
-			Events.enemy_take_damage.emit(collider, GUN_SLOT_DATA.DAMAGE)
+			Events.enemy_take_damage.emit(collider, damage)
 
 func _physics_process(_delta):
 	if target != null: look_at_enemy_node.look_at(
