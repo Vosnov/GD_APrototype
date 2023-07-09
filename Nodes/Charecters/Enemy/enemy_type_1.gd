@@ -5,6 +5,7 @@ signal take_damage()
 
 @export var HP = 3.0
 @export var DYING_ANIM_NAME = 'Dying'
+@export var HIT_ANIM_NAME = 'Hit'
 @export var INIT_STATE = EnemyState.StateTypes.PATROL
 @export var ATTACK_DAMAGE = 1
 
@@ -18,6 +19,7 @@ var player: Node3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var enemy_is_target = false
 var is_dead = false
+var is_stunned = false
 
 func _ready():
 	if GlobalVariables.no_spawn_enemys.has(get_path().get_concatenated_names()):
@@ -30,7 +32,10 @@ func _physics_process(delta):
 	
 	if is_dead: return
 	
-	state_machine.state_update(delta)
+	if is_stunned:
+		velocity = Vector3()
+	else:
+		state_machine.state_update(delta)
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -56,11 +61,14 @@ func _on_take_damage(enemy: Enemy, damage: float):
 		HP -= damage
 		take_damage.emit()
 		animation_tree.set("parameters/hit_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		is_stunned = true
 		if HP <= 0: die()
 
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == DYING_ANIM_NAME:
 		process_mode = Node.PROCESS_MODE_DISABLED
+	if anim_name == HIT_ANIM_NAME:
+		is_stunned = false
 
 func _on_player_finding_area_body_entered(body):
 	player = body

@@ -8,6 +8,7 @@ class_name PlayerMovements
 @export var AIM_ROTATE_SPEED = 6
 @export var AIM_SPEED = 0.5
 @export var SPRINT_SPEED = 2.0
+@export var HIT_ANIM_NAME = 'Hit'
 
 @onready var camera: Camera3D = get_tree().root.get_camera_3d()
 
@@ -16,10 +17,12 @@ var aiming = false
 var sprinting = false
 var message_is_open = false
 var input_dir = Vector2()
+var is_stunned = false
 
 func _ready():
 	Events.connect("message_ui", func(_message): message_is_open = true)
 	Events.connect("message_close_ui", func(_message): message_is_open = false)
+	Events.connect('player_take_damage', func(_damage): is_stunned = true)
 
 func get_speed():
 	if sprinting and not aiming:
@@ -31,9 +34,6 @@ func get_speed():
 func movement(delta: float):
 	aiming = GlobalVariables.player_is_aim
 	sprinting = GlobalVariables.player_is_runing
-	
-	if not PLAYER.is_on_floor():
-		PLAYER.velocity.y -= gravity * delta
 	
 	input_dir = Input.get_vector("left", "right", "top", "bottom")
 	if message_is_open: input_dir = Vector2()
@@ -56,7 +56,18 @@ func movement(delta: float):
 	if direction and not aiming:
 		var rotate_quat = Quaternion(Vector3.UP, atan2(-direction.x, -direction.z))
 		PLAYER.quaternion = PLAYER.quaternion.slerp(rotate_quat, delta * ROTATE_SPEED)
+	
+	if is_stunned:
+		PLAYER.velocity = Vector3()
+	
+	if not PLAYER.is_on_floor():
+		PLAYER.velocity.y -= gravity * delta
 	PLAYER.move_and_slide()
 
 func _physics_process(delta):
 	movement(delta)
+
+
+func _on_animation_tree_animation_finished(anim_name):
+	if anim_name == HIT_ANIM_NAME:
+		is_stunned = false
