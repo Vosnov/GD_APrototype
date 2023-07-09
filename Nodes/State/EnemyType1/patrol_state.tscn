@@ -15,7 +15,6 @@ script/source = "extends EnemyState
 @export var LERP_ROTATE = 2.0
 @export var RADIUS = 8.0
 @export var CHANGE_PATH_WAIT_TIME = 10.0
-@export var IWR_MUL = 2.5
 
 @onready var change_path_timer = $ChangePathTimer
 
@@ -49,7 +48,7 @@ func update(_delta) -> StateTypes:
 		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * LERP_SPEED)
 	
 	var transform_velocity = AGENT.velocity * AGENT.global_transform.basis
-	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) * IWR_MUL
+	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) / SPEED
 	ANIMATION_TREE.set('parameters/walk_iwr/blend_position', follow_iwr)
 	
 	#SMOOT LOOK AT

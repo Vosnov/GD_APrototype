@@ -13,6 +13,7 @@ script/source = "extends EnemyState
 
 @export_group(\"Params\", \"\")
 @export var SPEED = 0.5
+@export var DISTANCE_TO_WALK = 2.0
 @export var DISTANCE_TO_FOLLOW = 3.0
 @export var LERP_VELOCITY = 2.0
 @export var LERP_ROTATE = 4.0
@@ -23,42 +24,28 @@ script/source = "extends EnemyState
 @export var WAIT_TIME_MIN = 1.0
 @export var WAIT_TIME_MAX = 3.0
 
-
-var wait_direction = Vector3()
 var should_attack = false
-var barriers_in_attack_area: Array[Node3D] = []
+var wait_direction = Vector3()
+var to_player_direction = Vector3()
 
-func _init():
-	randomize()
-	
 func _ready():
+	randomize()
 	ATTACK_AREA.connect('body_entered', _on_attack_area_enter)
-	ATTACK_AREA.connect('body_exited', _on_attack_area_exit)
 
 func enter():
 	should_attack = false
-	
 	attack_timer.one_shot = true
 	attack_timer.start(randf_range(ATTACK_TIME_MIN, ATTACK_TIME_MAX))
 	wait_timer.start(randf_range(WAIT_TIME_MIN, WAIT_TIME_MAX))
 
 func exit():
-	should_attack = false
 	wait_timer.stop()
-	attack_timer.stop()
 
 func update(_delta: float) -> StateTypes:
 	var basis_velocity = AGENT.global_transform.basis * AGENT.velocity
-	var walk_iwr =  Vector2(basis_velocity.x, basis_velocity.z)
+	var walk_iwr =  Vector2(basis_velocity.x, basis_velocity.z) / SPEED
 	ANIMATION_TREE.set('parameters/walk_iwr/blend_position', walk_iwr)
 	
-	if STEERING_BEHAVIOR.has_collision:
-		var behavior_velocity = STEERING_BEHAVIOR.velocity
-		var new_velocity = (wait_direction + behavior_velocity).normalized()
-		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * LERP_VELOCITY)
-	else:
-		AGENT.velocity = AGENT.velocity.lerp(wait_direction * SPEED, _delta * LERP_VELOCITY)
-		
 	#SMOOT LOOK AT
 	var new_t = AGENT.global_transform.looking_at(AGENT.player.global_position)
 	var new_q = AGENT.quaternion.slerp(Quaternion(new_t.basis), _delta * LERP_ROTATE)
@@ -66,35 +53,39 @@ func update(_delta: float) -> StateTypes:
 	new_q.z = 0
 	AGENT.global_transform.basis = Basis(new_q)
 	
-	if should_attack:
-		return StateTypes.ATTACK
+	var dir_velocity = to_player_direction
+	if AGENT.global_position.distance_to(AGENT.player.global_position) > DISTANCE_TO_WALK:
+		to_player_direction = (AGENT.player.global_position - AGENT.global_position).normalized()
+		to_player_direction *= SPEED
+	else:
+		to_player_direction = to_player_direction.lerp(Vector3(), _delta * 6)
+		dir_velocity += wait_direction * SPEED
+	AGENT.velocity = AGENT.velocity.lerp(dir_velocity, _delta * LERP_VELOCITY)
 	
-	if AGENT.global_position.distance_to(AGENT.player.global_position) >= DISTANCE_TO_FOLLOW:
+	if STEERING_BEHAVIOR.has_collision:
+		var behavior_velocity = STEERING_BEHAVIOR.velocity
+		var new_velocity = (AGENT.velocity + behavior_velocity).normalized()
+		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * LERP_VELOCITY)
+	
+	if should_attack: return StateTypes.ATTACK
+	if AGENT.global_position.distance_to(AGENT.player.global_position) > DISTANCE_TO_FOLLOW:
 		return StateTypes.FOLLOW
 	return StateTypes.NONE
 
 func _on_wait_timer_timeout():
 	wait_direction.x = randf_range(-1, 1)
 	wait_direction.z = randf_range(-1, 1)
+	wait_direction = (wait_direction * AGENT.transform.basis).normalized()
 	if (wait_direction.dot(-AGENT.global_transform.basis.z) <= -0.2):
 		wait_direction = Vector3()
 
-func set_should_attack():
-	if barriers_in_attack_area.size() == 0:
-		should_attack = true
-
 func _on_attack_timer_timeout():
-	set_should_attack()
+	should_attack = true
 
 func _on_attack_area_enter(body: Node3D):
 	if body is Player:
-		set_should_attack()
+		should_attack = true
 		return
-	if body != AGENT:
-		barriers_in_attack_area.append(body)
-
-func _on_attack_area_exit(body: Node3D):
-	barriers_in_attack_area.erase(body)
 "
 
 [node name="WaitState" type="Node"]

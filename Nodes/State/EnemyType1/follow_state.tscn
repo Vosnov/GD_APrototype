@@ -9,11 +9,9 @@ script/source = "extends EnemyState
 @export var ANIMATION_TREE: AnimationTree
 @export_group(\"Params\", \"\")
 @export var SPEED = 1.0
+@export var SPEED_LERP = 2.0
 @export var DISTANCE_TO_WAIT = 2.5
-@export var LERP_COLLISION = 0.5
-@export var LERP_NO_COLLISION = 2.0
 @export var LERP_ROTATE = 2.0
-@export var IWR_MUL = 2.0
 @export var PATH_WAIT_TIME = 0.4
 
 @onready var path_timer = $PathTimer
@@ -31,12 +29,12 @@ func update(_delta) -> StateTypes:
 	
 	if STEERING_BEHAVIOR.has_collision:
 		var new_velocity = (STEERING_BEHAVIOR.velocity + path).normalized()
-		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * LERP_COLLISION)
+		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * SPEED_LERP)
 	else:
-		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * LERP_NO_COLLISION)
+		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * SPEED_LERP)
 	
 	var transform_velocity = AGENT.velocity * AGENT.global_transform.basis
-	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) * IWR_MUL
+	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) / SPEED
 	ANIMATION_TREE.set('parameters/walk_iwr/blend_position', follow_iwr)
 	
 	#SMOOT LOOK AT
