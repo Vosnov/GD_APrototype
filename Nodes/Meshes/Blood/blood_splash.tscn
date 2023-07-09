@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3iqk04xq3ld6"]
+
+[ext_resource type="PackedScene" uid="uid://cctmpxqunoamv" path="res://Nodes/Meshes/Blood/blood_mesh.tscn" id="1_0j1ay"]
+
+[sub_resource type="GDScript" id="GDScript_8fj3q"]
+script/source = "extends Node3D
+
+@export var BLOOD_MESH: PackedScene
+@export var BLOOD_SPAWN_TIMEOUT = 1.0
+@export var RANGE = 0.25
+@export var SCALE_MIN = 0.5
+@export var SCALE_MAX = 1.0
+
+@onready var ray_cast_3d = $RayCast3D
+@onready var timer = $Timer
+@onready var root = get_tree().root
+
+func _ready():
+	randomize()
+	timer.start(BLOOD_SPAWN_TIMEOUT)
+
+func _on_timer_timeout():
+	if ray_cast_3d.collide_with_bodies:
+		var pos = ray_cast_3d.get_collision_point()
+		pos.y += 0.01
+		pos.x += randf_range(-RANGE, RANGE)
+		pos.z += randf_range(-RANGE, RANGE)
+		var blood = BLOOD_MESH.instantiate() as Node3D
+		root.add_child(blood)
+		blood.global_position = pos
+		blood.rotate_y(randf_range(-PI, PI))
+		var blood_scale = randf_range(SCALE_MIN, SCALE_MAX)
+		blood.global_scale(Vector3(blood_scale, blood_scale, blood_scale))
+"
+
+[node name="BloodSplash" type="Node3D"]
+script = SubResource("GDScript_8fj3q")
+BLOOD_MESH = ExtResource("1_0j1ay")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -4, 0)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

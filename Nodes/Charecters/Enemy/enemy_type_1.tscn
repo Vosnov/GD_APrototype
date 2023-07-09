@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=33 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
 [ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
-[ext_resource type="PackedScene" uid="uid://bhhvox01a216a" path="res://Nodes/Components/blood_component.tscn" id="11_mnj1x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
 radius = 0.35
@@ -144,31 +143,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.0970376, -0.569253, -0.186677)
-bones/0/rotation = Quaternion(0.210478, -0.198277, -0.00490383, 0.957268)
+bones/0/position = Vector3(0.150284, -0.519962, 0.0303613)
+bones/0/rotation = Quaternion(0.213272, -0.198157, -0.00432439, 0.956677)
 bones/1/rotation = Quaternion(0.24046, -0.181481, 0.0222024, 0.953284)
-bones/2/rotation = Quaternion(0.299022, -0.0959726, -0.010022, 0.949355)
+bones/2/rotation = Quaternion(0.297999, -0.0985318, -0.0119207, 0.949392)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120115, 0.939912)
-bones/4/rotation = Quaternion(-0.348419, 0.176498, -0.00112069, 0.920571)
+bones/4/rotation = Quaternion(-0.0176497, -0.0771238, -0.000617791, 0.996865)
 bones/5/position = Vector3(0.207638, 0.920373, 0.199412)
-bones/5/rotation = Quaternion(0.122164, -0.0422351, -0.801272, 0.58417)
+bones/5/rotation = Quaternion(0.159333, -0.155932, -0.805748, 0.548697)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.116825, 0.00835402, -0.33392, 0.935297)
-bones/7/rotation = Quaternion(0.282649, 0.000795552, 0.121617, 0.951482)
+bones/6/rotation = Quaternion(0.160596, -0.0156232, -0.306358, 0.938142)
+bones/7/rotation = Quaternion(0.252872, -0.000819875, 0.115, 0.960641)
 bones/11/position = Vector3(-0.244817, 0.902132, 0.239186)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.233546, 0.379598, 0.798028, -0.405602)
+bones/12/rotation = Quaternion(-0.27644, 0.351869, 0.818257, -0.360867)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.227292, -0.0132605, -0.386295, 0.893834)
+bones/13/rotation = Quaternion(-0.233774, -0.0131752, -0.397305, 0.887313)
 bones/13/scale = Vector3(0.999979, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.247804, 0.375924, 0.83908, 0.305319)
+bones/14/rotation = Quaternion(0.209493, 0.273805, 0.913957, 0.214071)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.220159, -0.0101757, 0.44614, 0.867401)
+bones/15/rotation = Quaternion(-0.160936, -0.0111759, 0.326339, 0.931385)
 bones/15/scale = Vector3(0.99999, 0.999988, 0.999999)
-bones/16/position = Vector3(0.281233, -1.12075, 1.05815)
-bones/17/position = Vector3(-0.52, -2.10881, -0.234767)
+bones/16/position = Vector3(-0.128421, -1.17983, 1.32116)
+bones/17/position = Vector3(-0.30584, -2.20219, -0.223067)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.639247, -2.13434, 0.483923)
+bones/19/position = Vector3(0.636118, -2.13273, 0.463768)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -291,9 +290,6 @@ text = "State: "
 
 [node name="TargetMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
-
-[node name="BloodComponent" parent="." instance=ExtResource("11_mnj1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0860016, 0, -0.438126)
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="PlayerFindingArea" to="." method="_on_player_finding_area_body_entered"]

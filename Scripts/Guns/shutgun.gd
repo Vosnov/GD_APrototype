@@ -5,6 +5,7 @@ extends BaseGun
 @export var H_RANGE = 0.4
 @export var RAY_DISTANCE = 8.0
 @export_flags_3d_physics var RAY_COLLISION
+@export var HIT_PARTICLE: PackedScene
 
 @onready var space_state = get_world_3d().direct_space_state
 @onready var look_at_enemy_node = $LookAtEnemyNode
@@ -15,6 +16,7 @@ func _init():
 func _override_shot():
 	var damage = GUN_SLOT_DATA.DAMAGE
 	if GlobalVariables.player_target_is_full: damage = GUN_SLOT_DATA.FULL_DAMAGE
+	var enemys: Array[Enemy] = []
 	
 	for i in range(FRACTION_COUNT):
 		var dir = Vector3(randf_range(-H_RANGE, H_RANGE), randf_range(-V_RANGE, V_RANGE), -1) * RAY_DISTANCE
@@ -27,7 +29,14 @@ func _override_shot():
 		var hit = space_state.intersect_ray(ray)
 		var collider = hit.get('collider')
 		if collider:
+			if !enemys.has(collider): enemys.push_back(collider)
 			Events.enemy_take_damage.emit(collider, damage)
+	
+	for enemy in enemys:
+		var hit_particle = HIT_PARTICLE.instantiate() as Node3D
+		enemy.add_child(hit_particle)
+		hit_particle.global_position = enemy.get_aim_target().global_position
+		hit_particle.look_at(global_position, hit_particle.basis.y)
 
 func _physics_process(_delta):
 	if target != null: look_at_enemy_node.look_at(

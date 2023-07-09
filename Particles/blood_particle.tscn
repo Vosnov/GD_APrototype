@@ -27,5 +27,6 @@ amount = 15
 lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
+randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_vuh7j")
 draw_pass_1 = SubResource("QuadMesh_88fbt")

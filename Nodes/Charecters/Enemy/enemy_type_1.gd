@@ -12,7 +12,6 @@ signal take_damage()
 @onready var state_label = $StateLabel
 @onready var animation_tree = $AnimationTree
 @onready var stering_behavior = $SteeringBehaviorComponent
-@onready var blood_component = $BloodComponent
 @onready var target_marker = $TargetMarker
 
 var player: Node3D
@@ -57,7 +56,6 @@ func _on_take_damage(enemy: Enemy, damage: float):
 		HP -= damage
 		take_damage.emit()
 		animation_tree.set("parameters/hit_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		blood_component.take_damage()
 		if HP <= 0: die()
 
 func _on_animation_tree_animation_finished(anim_name):
