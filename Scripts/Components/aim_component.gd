@@ -10,7 +10,7 @@ func _ready():
 	Events.connect('enemy_die', _on_enemy_die)
 
 func _input(_event):
-	if Input.is_action_just_pressed("aim"):
+	if GlobalVariables.player_is_aim and not aiming:
 		aiming = true
 		should_emit_target()
 	if Input.is_action_just_released("aim"):
