@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="AmmoData" load_steps=3 format=3 uid="uid://cj8h8vjt3jm5j"]
 
+[ext_resource type="Texture2D" uid="uid://b4xcobddg4rnk" path="res://Textures/Items/ammo.svg" id="1_1mobl"]
 [ext_resource type="Script" path="res://Scripts/Data/ammo_data.gd" id="1_02ruj"]
-[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_mj6ba"]
 
 [resource]
 script = ExtResource("1_02ruj")
-MAX_AMOUNT = 24
 NAME = "Ammo"
 DESCRIPTION = "Its AMMO"
-TEXTURE = ExtResource("1_mj6ba")
+TEXTURE = ExtResource("1_1mobl")

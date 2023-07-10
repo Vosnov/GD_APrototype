@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GunSlotData" load_steps=5 format=3 uid="uid://dxjixnptkcwmi"]
 
-[ext_resource type="Texture2D" uid="uid://d3sirehomp6vs" path="res://Textures/blood.png" id="1_nktb6"]
+[ext_resource type="Texture2D" uid="uid://bx4slcfmn1my5" path="res://Textures/Items/pistol.svg" id="1_s4rbd"]
 [ext_resource type="Script" path="res://Scripts/Data/item_data.gd" id="2_d7cr2"]
 [ext_resource type="Script" path="res://Scripts/Data/gun_slot_data.gd" id="3_igtvt"]
 
@@ -8,10 +8,11 @@
 script = ExtResource("2_d7cr2")
 NAME = "Pistol"
 DESCRIPTION = "Its my pistol"
-TEXTURE = ExtResource("1_nktb6")
+TEXTURE = ExtResource("1_s4rbd")
 
 [resource]
 script = ExtResource("3_igtvt")
+INDEX = 0
 FULL_DAMAGE = 1.0
 DAMAGE = 0.5
 AMMO_LOADED = 9

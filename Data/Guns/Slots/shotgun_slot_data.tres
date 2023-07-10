@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GunSlotData" load_steps=5 format=3 uid="uid://dlva68yk3y5dq"]
 
-[ext_resource type="Texture2D" uid="uid://cy7evrudtviol" path="res://key.png" id="1_f1qc5"]
+[ext_resource type="Texture2D" uid="uid://cfryp7yx3r2lt" path="res://Textures/Items/shotgun.svg" id="1_4ygbo"]
 [ext_resource type="Script" path="res://Scripts/Data/item_data.gd" id="2_lttwa"]
 [ext_resource type="Script" path="res://Scripts/Data/gun_slot_data.gd" id="3_vj0b2"]
 
@@ -8,7 +8,7 @@
 script = ExtResource("2_lttwa")
 NAME = "Shotgun"
 DESCRIPTION = "its shotgun"
-TEXTURE = ExtResource("1_f1qc5")
+TEXTURE = ExtResource("1_4ygbo")
 
 [resource]
 script = ExtResource("3_vj0b2")
