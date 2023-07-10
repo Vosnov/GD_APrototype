@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpcoq8qf7wgv3"]
+
+[ext_resource type="Script" path="res://Scripts/Global/game_save.gd" id="1_vfafc"]
+
+[node name="GameSave" type="Node"]
+script = ExtResource("1_vfafc")

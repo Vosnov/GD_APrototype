@@ -22,6 +22,7 @@ func _ready():
 	Events.connect(\"player_hp_ui\", _on_player_hp_ui)
 
 func close_inventory():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().paused = false
 	if inventory_instance != null: inventory_instance.queue_free()
 
@@ -40,6 +41,7 @@ func _input(_event):
 		inventory_is_just_open = true
 		add_child(inventory_instance)
 		get_tree().paused = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	if inventory_is_just_open: return
 	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
