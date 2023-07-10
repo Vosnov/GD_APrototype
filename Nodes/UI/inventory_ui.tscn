@@ -35,18 +35,20 @@ script/source = "extends GridContainer
 @onready var slot_container_2 = $SlotContainer2
 @onready var slot_container_3 = $SlotContainer3
 
-var panels: Array[Control] = []
-
 func _ready():
-	panels = [slot_container_1, slot_container_2, slot_container_3, slot_container_4]
+	var panels = {
+		0: slot_container_1,
+		1: slot_container_2,
+		2: slot_container_3,
+		3: slot_container_4
+	}
 	
-	var index = 0
-	for panel in panels:
-		if index >= Inventory.GUN_SLOTS.size(): return
+	for gun_slot in Inventory.GUN_SLOTS:
+		if not panels.has(gun_slot.INDEX): continue
+		var panel = panels[gun_slot.INDEX] as Control
 		var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
 		panel.add_child(slot_ui)
-		slot_ui.set_slot_data(Inventory.GUN_SLOTS[index])
-		index += 1
+		slot_ui.set_slot_data(gun_slot)
 "
 
 [node name="InventoryUI" type="Control"]
@@ -122,6 +124,7 @@ offset_right = 40.0
 offset_bottom = 240.0
 
 [node name="GridContainer" type="GridContainer" parent="GunContainer2"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 columns = 3

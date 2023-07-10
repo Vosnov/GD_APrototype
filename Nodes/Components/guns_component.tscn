@@ -20,21 +20,23 @@ func _ready():
 # Select first gun on pick up when hands is empty
 func _on_inventory_update():
 	if Inventory.GUN_SLOTS.size() == 0: return
-	if GlobalVariables.active_gun != null: return
-	
-	var guns_slots = GUNS_DATA.map(gun_data_map)
-	var index = guns_slots.find(Inventory.GUN_SLOTS[0])
-	if index >= 0: select_active_gun(index)
+	select_active_gun(Inventory.GUN_SLOTS[0].INDEX)
 
 func select_active_gun(index: int):
-	var guns_slots = GUNS_DATA.map(gun_data_map)
-	if guns_slots.size() <= index: return
-	var gun_slot = guns_slots[index]
+	var gun_slot = find_gun_slot_by_index(index)
+	if gun_slot == null: return
 	
-	if Inventory.GUN_SLOTS.has(gun_slot):
-		for child in get_children(): child.queue_free()
-		GlobalVariables.active_gun = GUNS_DATA[index]
-		add_child(GlobalVariables.active_gun.GUN.instantiate())
+	for gun in GUNS_DATA:
+		if gun.GUN_SLOT == gun_slot:
+			for child in get_children(): child.queue_free()
+			GlobalVariables.active_gun = gun
+			add_child(GlobalVariables.active_gun.GUN.instantiate())
+			return
+
+func find_gun_slot_by_index(index: int) -> GunSlotData:
+	for slot in Inventory.GUN_SLOTS:
+		if slot.INDEX == index: return slot
+	return null
 
 func _input(_event):
 	for input_index in input_indexes:
