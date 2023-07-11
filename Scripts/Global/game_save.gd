@@ -9,10 +9,10 @@ func save():
 		return
 		
 	var data = {
-		'slots': Inventory.SLOTS.map(func(slot): return slot.get_data())
+		'slots': Inventory.SLOTS.map(func(slot): return slot.get_data()),
+		'global': GlobalVariables.get_data()
 	}
-	print(JSON.stringify(data))
-	file.store_string(JSON.stringify(data))
+	file.store_string(var_to_str(data))
 
 func load_save():
 	if not FileAccess.file_exists(SAVE_FILE_NAME): 
@@ -24,13 +24,9 @@ func load_save():
 		printerr("Load file error")
 		return
 	
-	var json = JSON.new()
-	if json.parse(file.get_as_text()) != OK: 
-		printerr("Load JSON not valid")
-		return
+	var data = str_to_var(file.get_as_text())
 
-	print(json.data)
-	Inventory.SLOTS = parse_slots(json.data.slots)
+	Inventory.SLOTS = parse_slots(data.slots)
 	
 	Events.inventory_update.emit()
 
