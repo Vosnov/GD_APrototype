@@ -1,12 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=27 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="3_71dis"]
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="4_s37af"]
-[ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="6_6nixi"]
+[ext_resource type="Resource" uid="uid://cj8h8vjt3jm5j" path="res://Data/ammo_data.tres" id="6_5s7fs"]
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="6_iygk2"]
-[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="7_r4ngx"]
+[ext_resource type="Script" path="res://Scripts/Data/stackable_slot_data.gd" id="7_idykb"]
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="8_fprk6"]
+[ext_resource type="Resource" uid="uid://dxjixnptkcwmi" path="res://Data/Guns/Slots/pistol_slot_data.tres" id="9_o3kvy"]
+[ext_resource type="Resource" uid="uid://dlva68yk3y5dq" path="res://Data/Guns/Slots/shotgun_slot_data.tres" id="10_sj7dt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_v30gr"]
 vertices = PackedVector3Array(-9.5, 0, -19.25, -19.25, 0, -19.25, -19.25, 0, -9.75, -19.25, 0, 0, -1.75, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -1.75, 0.25, 0, -19.25, -19.25, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -19.25, -9.5, 0, -19.25, -19.25, 0, -9.75, 19.25, 0, -9.75, 19.25, 0, -19.25, 9.75, 0, -19.25, 2, 0, -1.25, 2, 0, 0, 19.25, 0, 0, 0.25, 0, -19.25, 0.25, 0, -1.75, 1.5, 0, -1.75, 1.5, 0, -1.75, 2, 0, -1.25, 19.25, 0, 0, 19.25, 0, -9.75, 9.75, 0, -19.25, 0.25, 0, -19.25, -0.25, 1.5, -0.25, -0.25, 1.5, 0.5, 0.5, 1.5, 0.5, 0.5, 1.5, -0.25, -19.25, 0, 9.5, -19.25, 0, 19.25, -9.75, 0, 19.25, 0, 0, 19.25, 0, 0, 2, -1.25, 0, 2, -1.75, 0, 1.5, -1.75, 0, 0, -19.25, 0, 0, 0, 0, 19.25, -1.25, 0, 2, -1.75, 0, 1.5, -19.25, 0, 0, -19.25, 0, 9.5, -9.75, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 19.25, 19.25, 0, 9.5, 19.25, 0, 0, 2, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 2, 0, 0, 19.25, 19.25, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 9.5)
@@ -37,20 +40,30 @@ size = Vector3(1, 6, 20)
 [sub_resource type="BoxShape3D" id="BoxShape3D_kny0l"]
 size = Vector3(1, 6, 20)
 
-[sub_resource type="Resource" id="Resource_uo3i3"]
-script = ExtResource("7_r4ngx")
-ITEM_DATA = ExtResource("6_6nixi")
-AMOUNT = 14
+[sub_resource type="Resource" id="Resource_latk4"]
+script = ExtResource("7_idykb")
+AMOUNT = 4
+ITEM_DATA = ExtResource("6_5s7fs")
 
-[sub_resource type="Resource" id="Resource_vndvk"]
-script = ExtResource("7_r4ngx")
-ITEM_DATA = ExtResource("6_6nixi")
+[sub_resource type="Resource" id="Resource_7kbwj"]
+script = ExtResource("7_idykb")
 AMOUNT = 14
+ITEM_DATA = ExtResource("6_5s7fs")
 
-[sub_resource type="Resource" id="Resource_xej0a"]
-script = ExtResource("7_r4ngx")
-ITEM_DATA = ExtResource("6_6nixi")
-AMOUNT = 14
+[sub_resource type="Resource" id="Resource_x180o"]
+script = ExtResource("7_idykb")
+AMOUNT = 5
+ITEM_DATA = ExtResource("6_5s7fs")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nfkb0"]
+albedo_color = Color(0, 0.376471, 0.411765, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5i4nd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_apnpe"]
+albedo_color = Color(0.658824, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xgiww"]
 
 [node name="Main" type="Node3D"]
 
@@ -111,12 +124,30 @@ shape = SubResource("BoxShape3D_kny0l")
 
 [node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)
-SLOT_DATA = SubResource("Resource_uo3i3")
+SLOT_DATA = SubResource("Resource_latk4")
 
 [node name="Ammo2" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.767375, 1.372, -0.549004)
-SLOT_DATA = SubResource("Resource_vndvk")
+SLOT_DATA = SubResource("Resource_7kbwj")
 
 [node name="Ammo3" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.742771, 1.372, -0.549004)
-SLOT_DATA = SubResource("Resource_xej0a")
+SLOT_DATA = SubResource("Resource_x180o")
+
+[node name="PickUpBase" parent="." instance=ExtResource("8_fprk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0359512, 1.18734, 2.37823)
+SLOT_DATA = ExtResource("9_o3kvy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase"]
+transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_nfkb0")
+mesh = SubResource("BoxMesh_5i4nd")
+
+[node name="PickUpBase2" parent="." instance=ExtResource("8_fprk6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16071, 1.1547, 2.33029)
+SLOT_DATA = ExtResource("10_sj7dt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase2"]
+transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_apnpe")
+mesh = SubResource("BoxMesh_xgiww")

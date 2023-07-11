@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://cowxw64vqke8q"]
+
+[ext_resource type="PackedScene" uid="uid://dy1ltt2015kn" path="res://Nodes/Helpers/destroy_timer.tscn" id="1_fyudt"]
+[ext_resource type="PackedScene" uid="uid://c3iqk04xq3ld6" path="res://Nodes/Meshes/Blood/blood_splash.tscn" id="2_8mbam"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1434n"]
+albedo_color = Color(1, 0, 0, 1)
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1i7h"]
+direction = Vector3(0, 0, -1)
+gravity = Vector3(0, -7.8, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.5
+scale_min = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_fh3xh"]
+size = Vector2(0.05, 0.06)
+
+[node name="PistolHit" instance=ExtResource("1_fyudt")]
+
+[node name="Timer" parent="." index="0"]
+wait_time = 5.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1"]
+material_override = SubResource("StandardMaterial3D_1434n")
+cast_shadow = 0
+emitting = false
+amount = 12
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_t1i7h")
+draw_pass_1 = SubResource("QuadMesh_fh3xh")
+
+[node name="BloodSplash" parent="." index="2" instance=ExtResource("2_8mbam")]
+BLOOD_SPAWN_TIMEOUT = 0.5

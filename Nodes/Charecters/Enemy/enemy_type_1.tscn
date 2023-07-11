@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=32 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -8,12 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://b6j0crmquswkj" path="res://Nodes/State/EnemyType1/follow_state.tscn" id="5_g087f"]
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
-[ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="9_sjnhw"]
 [ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
-[ext_resource type="PackedScene" uid="uid://bhhvox01a216a" path="res://Nodes/Components/blood_component.tscn" id="11_mnj1x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
-radius = 0.346272
+radius = 0.35
 height = 1.52105
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q2o8k"]
@@ -48,7 +46,7 @@ input_2/reset = true
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2qwla"]
 filter_enabled = true
-filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.003"]
+filters = ["Armature/Skeleton3D:Arm.L", "Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.001", "Armature/Skeleton3D:Bone.003"]
 fadein_time = 0.1
 fadeout_time = 0.1
 
@@ -73,9 +71,6 @@ animation = &"WalkStrafeRight"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kmiyd"]
 animation = &"WalkBack"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_703jj"]
-animation = &"Run"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_abys1"]
 animation = &"Walk"
 
@@ -88,13 +83,11 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_8apfa")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_kmiyd")
 blend_point_3/pos = Vector2(0, 1)
-blend_point_4/node = SubResource("AnimationNodeAnimation_703jj")
-blend_point_4/pos = Vector2(0, -2)
-blend_point_5/node = SubResource("AnimationNodeAnimation_abys1")
-blend_point_5/pos = Vector2(0, -1)
-min_space = Vector2(-1, -2)
+blend_point_4/node = SubResource("AnimationNodeAnimation_abys1")
+blend_point_4/pos = Vector2(0, -1)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
+graph_offset = Vector2(-695.139, -79.313)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -135,38 +128,38 @@ radius = 4.98596
 
 [node name="EnemyType1" type="CharacterBody3D"]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 7
 script = ExtResource("1_qr7er")
 
 [node name="enemyType1" parent="." instance=ExtResource("1_toxgn")]
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.00440656, -0.56124, -0.118224)
-bones/0/rotation = Quaternion(0.210705, -0.192415, -0.00365799, 0.958419)
-bones/1/rotation = Quaternion(0.245982, -0.181089, 0.0232393, 0.951924)
-bones/2/rotation = Quaternion(0.303865, -0.0969689, -0.0109926, 0.947704)
-bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120114, 0.939912)
-bones/4/rotation = Quaternion(-0.0990147, 0.0990147, 2.49256e-08, 0.990148)
-bones/5/position = Vector3(0.206725, 0.914528, 0.200227)
-bones/5/rotation = Quaternion(0.169892, -0.163357, -0.798676, 0.553686)
+bones/0/position = Vector3(0.0244116, -0.535942, -0.027314)
+bones/0/rotation = Quaternion(0.210478, -0.198277, -0.00490383, 0.957268)
+bones/1/rotation = Quaternion(0.24046, -0.181481, 0.0222024, 0.953284)
+bones/2/rotation = Quaternion(0.300324, -0.0981458, -0.0087104, 0.948734)
+bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120115, 0.939912)
+bones/4/rotation = Quaternion(-0.186306, 0.0650852, -2.64059e-05, 0.980334)
+bones/5/position = Vector3(0.207638, 0.920373, 0.199412)
+bones/5/rotation = Quaternion(0.155509, -0.139563, -0.803063, 0.558058)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.130423, -0.0270841, -0.249626, 0.959137)
-bones/7/rotation = Quaternion(0.182122, -0.0100608, 0.113921, 0.976602)
-bones/11/position = Vector3(-0.242826, 0.89598, 0.23957)
+bones/6/rotation = Quaternion(0.147627, -0.0156595, -0.293317, 0.944418)
+bones/7/rotation = Quaternion(0.240235, -0.00350354, 0.118149, 0.963492)
+bones/11/position = Vector3(-0.244817, 0.902132, 0.239186)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.15347, 0.408681, 0.825628, -0.357442)
+bones/12/rotation = Quaternion(-0.165844, 0.387122, 0.846413, -0.32591)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.245514, -0.0126464, -0.417594, 0.874745)
-bones/13/scale = Vector3(0.999978, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.294881, 0.230773, 0.895062, 0.242185)
+bones/13/rotation = Quaternion(-0.240138, -0.0130986, -0.408098, 0.880692)
+bones/13/scale = Vector3(0.999979, 0.999987, 1.00001)
+bones/14/rotation = Quaternion(0.289485, 0.19815, 0.907822, 0.229771)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.201913, -0.0106798, 0.409441, 0.889649)
-bones/15/scale = Vector3(0.99999, 0.999987, 0.999999)
-bones/16/position = Vector3(-0.105379, -1.24899, 1.30876)
-bones/17/position = Vector3(-0.399367, -2.11167, -0.641656)
+bones/15/rotation = Quaternion(-0.178062, -0.0108511, 0.360931, 0.915371)
+bones/15/scale = Vector3(0.99999, 0.999988, 0.999999)
+bones/16/position = Vector3(-0.14109, -1.18884, 1.31274)
+bones/17/position = Vector3(-0.396002, -2.11119, -0.609381)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.34394, -2.15405, 0.44505)
+bones/19/position = Vector3(0.354537, -2.15147, 0.411199)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -187,7 +180,7 @@ parameters/hit_shot/request = 0
 parameters/main_trans/current_state = "walk"
 parameters/main_trans/transition_request = ""
 parameters/main_trans/current_index = 0
-parameters/walk_iwr/blend_position = Vector2(0, 0)
+parameters/walk_iwr/blend_position = Vector2(-0.033871, 0.0317461)
 
 [node name="SteeringBehaviorComponent" parent="." instance=ExtResource("3_jc71t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.202351)
@@ -235,6 +228,7 @@ ANIMATION_TREE = NodePath("../../AnimationTree")
 ATTACK_AREA = NodePath("../../AttackArea")
 ATTACK_ANIM_NAMES = Array[String](["Attack1", "Attack2", "Attack3"])
 MOVE_TO_PLAYER_WAIT_TIME = 0.8
+SPEED = 1.0
 AGENT = NodePath("../..")
 STATE_TYPE = 3
 
@@ -256,6 +250,7 @@ shape = SubResource("SphereShape3D_wdj30")
 shape = SubResource("ConvexPolygonShape3D_5cjby")
 
 [node name="AttackArea" type="Area3D" parent="."]
+visible = false
 collision_layer = 6
 collision_mask = 6
 
@@ -285,12 +280,8 @@ billboard = 1
 double_sided = false
 text = "State: "
 
-[node name="AimTargetComponent" parent="." node_paths=PackedStringArray("ENEMY") instance=ExtResource("9_sjnhw")]
+[node name="TargetMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
-ENEMY = NodePath("..")
-
-[node name="BloodComponent" parent="." instance=ExtResource("11_mnj1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0860016, 0, -0.438126)
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="PlayerFindingArea" to="." method="_on_player_finding_area_body_entered"]

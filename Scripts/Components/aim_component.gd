@@ -1,13 +1,16 @@
 extends Node3D
 
+@export var TARGET_SPRITE: PackedScene
+
 var entered_body: Array = []
 var aiming = false
+var target_sprite: Node3D
 
 func _ready():
 	Events.connect('enemy_die', _on_enemy_die)
 
 func _input(_event):
-	if Input.is_action_just_pressed("aim"):
+	if GlobalVariables.player_is_aim and not aiming:
 		aiming = true
 		should_emit_target()
 	if Input.is_action_just_released("aim"):
@@ -16,11 +19,18 @@ func _input(_event):
 
 func emit_remove_marker():
 	Events.emit_signal("enemy_target_remove")
+	if target_sprite != null: target_sprite.queue_free()
 
 func should_emit_target():
 	if entered_body.size() > 0:
 		var last_entered_body = entered_body.back()
-		if aiming: Events.emit_signal("enemy_target", last_entered_body)
+		if aiming:
+			var aim_target = (last_entered_body as Enemy).get_aim_target()
+			if target_sprite != null: target_sprite.queue_free()
+			target_sprite = TARGET_SPRITE.instantiate()
+			aim_target.add_child(target_sprite)
+			
+			Events.emit_signal("enemy_target", last_entered_body)
 
 func remove_body(body: Node3D):
 	entered_body.erase(body)

@@ -14,6 +14,7 @@ script/source = "extends Node3D
 @export var NEED_KEY_DATA: ItemData
 @export_multiline var CLOSE_MESSAGE: String
 @export_multiline var NEED_ACCEPT_MESSAGE: String
+@export_multiline var OPENED_MESSAGE: String
 
 @onready var active_node = $DoorActiveNode as DoorActiveNode
 @onready var spawn_point = $SpawnPoint
@@ -23,19 +24,17 @@ var door_opened_message = \"\"
 
 func _ready():
 	if NEED_KEY_DATA:
-		door_opened_message = str(\"Door opened by: \", NEED_KEY_DATA.NAME)
+		door_opened_message = str(OPENED_MESSAGE, \" \", NEED_KEY_DATA.NAME)
 	active_node.ACCEPT_STATE = ACCEPT_STATE
 	Events.connect('message_close_ui', _on_message_close)
 
 func has_key():
-	var items = Inventory.slots.map(func(slot: SlotData): return slot.ITEM_DATA)
+	var items = Inventory.SLOTS.map(func(slot: SlotData): return slot.ITEM_DATA)
 	return items.has(NEED_KEY_DATA)
 
 func _on_message_close(message: String):
-	#print(message, ' ',  door_opened_message)
 	if message == door_opened_message:
 		is_accepted = true
-		#print(is_accepted)
 
 func _on_door_active_node_action_pressed():
 	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
@@ -69,6 +68,7 @@ size = Vector3(1, 2, 1)
 script = SubResource("GDScript_8bmqr")
 CLOSE_MESSAGE = "Door closed"
 NEED_ACCEPT_MESSAGE = "Need key"
+OPENED_MESSAGE = "Door opened by:"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_wd37w")

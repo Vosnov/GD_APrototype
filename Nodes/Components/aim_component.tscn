@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqsd8fu40qpul"]
+[gd_scene load_steps=4 format=3 uid="uid://bqsd8fu40qpul"]
 
 [ext_resource type="Script" path="res://Scripts/Components/aim_component.gd" id="1_ck0my"]
+[ext_resource type="PackedScene" uid="uid://clfn6qajh2mki" path="res://Nodes/Components/aim_target_component.tscn" id="2_cxxcg"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7iq6t"]
 points = PackedVector3Array(1.5, -1.5, -7, -1.5, 1.5, -7, 0, 0, 0, -1.5, -1.5, -7, 1.5, 1.5, -7)
 
 [node name="AimComponent" type="Node3D"]
 script = ExtResource("1_ck0my")
+TARGET_SPRITE = ExtResource("2_cxxcg")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 4

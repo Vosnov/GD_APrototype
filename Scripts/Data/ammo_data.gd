@@ -1,3 +1,3 @@
-extends StackableItemData
+extends ItemData
 class_name AmmoData
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwhdypbxa1gl7"]
+[gd_scene load_steps=5 format=3 uid="uid://dwhdypbxa1gl7"]
 
 [ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_211y0"]
+[ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
 
 [sub_resource type="GDScript" id="GDScript_cyvqe"]
 script/source = "extends HBoxContainer
@@ -8,8 +9,7 @@ script/source = "extends HBoxContainer
 @export var SLOT: PackedScene
 
 func _ready():
-	fill_grid(Inventory.slots)
-	Events.connect('inventory_update', _on_inventory_update)
+	fill_grid(Inventory.SLOTS)
 
 func fill_grid(slots: Array[SlotData]):
 	for child in get_children():
@@ -23,9 +23,32 @@ func fill_grid(slots: Array[SlotData]):
 			slot_instance.grab_focus()
 		slot_instance.set_slot_data(slot)
 		index += 1
+"
 
-func _on_inventory_update(datas: Array[SlotData]):
-	fill_grid(datas)
+[sub_resource type="GDScript" id="GDScript_ovlbg"]
+script/source = "extends GridContainer
+
+@export var SLOT_GUN_UI: PackedScene
+
+@onready var slot_container_1 = $SlotContainer1
+@onready var slot_container_4 = $SlotContainer4
+@onready var slot_container_2 = $SlotContainer2
+@onready var slot_container_3 = $SlotContainer3
+
+func _ready():
+	var panels = {
+		0: slot_container_1,
+		1: slot_container_2,
+		2: slot_container_3,
+		3: slot_container_4
+	}
+	
+	for gun_slot in Inventory.GUN_SLOTS:
+		if not panels.has(gun_slot.INDEX): continue
+		var panel = panels[gun_slot.INDEX] as Control
+		var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
+		panel.add_child(slot_ui)
+		slot_ui.set_slot_data(gun_slot)
 "
 
 [node name="InventoryUI" type="Control"]
@@ -74,7 +97,7 @@ focus_neighbor_top = NodePath("../Button2")
 focus_neighbor_bottom = NodePath("../Button")
 text = "Test"
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="ItemContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -82,14 +105,87 @@ offset_top = 40.0
 offset_bottom = 176.0
 grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ItemContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="GridContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="GridContainer" type="HBoxContainer" parent="ItemContainer/MarginContainer"]
 layout_mode = 2
 script = SubResource("GDScript_cyvqe")
 SLOT = ExtResource("1_211y0")
+
+[node name="GunContainer2" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 200.0
+offset_right = 40.0
+offset_bottom = 240.0
+
+[node name="GridContainer" type="GridContainer" parent="GunContainer2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 3
+script = SubResource("GDScript_ovlbg")
+SLOT_GUN_UI = ExtResource("2_wnedq")
+
+[node name="Control" type="Control" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="SlotContainer1" type="PanelContainer" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer1"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1
+"
+
+[node name="Control2" type="Control" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="SlotContainer4" type="PanelContainer" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer4"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "4
+"
+
+[node name="Control3" type="Control" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="SlotContainer2" type="PanelContainer" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "2
+"
+
+[node name="Control4" type="Control" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="SlotContainer3" type="PanelContainer" parent="GunContainer2/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "3"

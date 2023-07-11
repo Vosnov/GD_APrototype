@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://c43ppbemapbww"]
+
+[ext_resource type="Resource" uid="uid://dgmeg2dfp0jj3" path="res://Data/Guns/pistol_data.tres" id="1_57wru"]
+[ext_resource type="Resource" uid="uid://b1avnq0g3bspp" path="res://Data/Guns/shotgun_data.tres" id="2_0jqq8"]
+
+[sub_resource type="GDScript" id="GDScript_tb4jf"]
+script/source = "extends Node3D
+
+@export var GUNS_DATA: Array[GunData] = []
+
+var current_gun: Node3D
+var input_indexes = [0, 1, 2, 3]
+
+func _ready():
+	var index = GUNS_DATA.find(GlobalVariables.active_gun)
+	if index >= 0: select_active_gun(index)
+	
+	Events.connect('inventory_update', _on_inventory_update)
+
+# Select first gun on pick up when hands is empty
+func _on_inventory_update():
+	if Inventory.GUN_SLOTS.size() == 0: return
+	select_active_gun(Inventory.GUN_SLOTS[0].INDEX)
+
+func select_active_gun(index: int):
+	var gun_slot = find_gun_slot_by_index(index)
+	if gun_slot == null: return
+	
+	for gun in GUNS_DATA:
+		if gun.GUN_SLOT == gun_slot:
+			for child in get_children(): child.queue_free()
+			GlobalVariables.active_gun = gun
+			add_child(GlobalVariables.active_gun.GUN.instantiate())
+			return
+
+func find_gun_slot_by_index(index: int) -> GunSlotData:
+	for slot in Inventory.GUN_SLOTS:
+		if slot.INDEX == index: return slot
+	return null
+
+func _input(_event):
+	for input_index in input_indexes:
+		if Input.is_action_just_pressed(str('gun_', input_index)):
+			select_active_gun(input_index)
+
+func gun_data_map(gun_data: GunData):
+	return gun_data.GUN_SLOT
+"
+
+[node name="GunsComponent" type="Node3D"]
+script = SubResource("GDScript_tb4jf")
+GUNS_DATA = Array[Resource("res://Scripts/Data/guns_data.gd")]([ExtResource("1_57wru"), ExtResource("2_0jqq8")])
