@@ -28,6 +28,7 @@ func fill_grid(slots: Array[SlotData]):
 	
 	var index = 0
 	for slot in slots:
+		if slot.ITEM_DATA is ItemGunData: continue
 		var slot_instance = SLOT.instantiate() as SlotUI
 		add_child(slot_instance)
 		if index == 0:
@@ -54,12 +55,13 @@ func _ready():
 		3: slot_container_4
 	}
 	
-	for gun_slot in Inventory.GUN_SLOTS:
-		if not panels.has(gun_slot.INDEX): continue
-		var panel = panels[gun_slot.INDEX] as Control
-		var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
-		panel.add_child(slot_ui)
-		slot_ui.set_slot_data(gun_slot)
+	for slot in Inventory.SLOTS:
+		if slot.ITEM_DATA is ItemGunData:
+			if not panels.has(slot.ITEM_DATA.INDEX): continue
+			var panel = panels[slot.ITEM_DATA.INDEX] as Control
+			var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
+			panel.add_child(slot_ui)
+			slot_ui.set_slot_data(slot.ITEM_DATA)
 "
 
 [node name="InventoryUI" type="Control"]

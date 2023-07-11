@@ -15,6 +15,6 @@ func _on_animation_player_animation_finished(_anim_name):
 	is_full_target = true
 	GlobalVariables.player_target_is_full = true
 
-func _on_player_shot(_gun_slot):
+func _on_player_shot():
 	if not is_full_target:
 		anim_player.seek(0, true)

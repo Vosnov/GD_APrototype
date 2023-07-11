@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="1_5uskf"]
 [ext_resource type="Script" path="res://Scripts/Guns/shutgun.gd" id="2_ipkg4"]
 [ext_resource type="PackedScene" uid="uid://cfrc1mhs7087f" path="res://Particles/shotgun_hit.tscn" id="3_1ster"]
-[ext_resource type="Resource" uid="uid://dlva68yk3y5dq" path="res://Data/Guns/Slots/shotgun_slot_data.tres" id="3_jnjht"]
+[ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="4_hkqpc"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="4_miaxy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oieef"]
@@ -19,7 +19,11 @@ H_RANGE = 0.4
 RAY_DISTANCE = 8.0
 RAY_COLLISION = 4
 HIT_PARTICLE = ExtResource("3_1ster")
-GUN_SLOT_DATA = ExtResource("3_jnjht")
+FULL_DAMAGE = 1.5
+AMMO_LOADED = 6
+MAX_AMMO_LOADED = 6
+DROP_AMMO = 2
+ITEM_GUN_DATA = ExtResource("4_hkqpc")
 MUZZLE_FLASH = ExtResource("4_miaxy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]

@@ -56,7 +56,7 @@ func _input(event):
 func _on_player_reload(_amount_drop: int):
 	ANIMATION_TREE.set("parameters/reload_shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
-func _on_player_shot(_gun_slot):
+func _on_player_shot():
 	ANIMATION_TREE.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func _on_take_damage(_damage: float):

@@ -27,6 +27,7 @@ func load_save():
 	var data = str_to_var(file.get_as_text())
 
 	Inventory.SLOTS = parse_slots(data.slots)
+	GlobalVariables.set_data(data.global)
 	
 	Events.inventory_update.emit()
 

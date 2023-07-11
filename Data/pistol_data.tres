@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemGunData" load_steps=3 format=3 uid="uid://d0sjep38cxp8q"]
+
+[ext_resource type="Script" path="res://Scripts/Data/item_gun_data.gd" id="1_idnmw"]
+[ext_resource type="Texture2D" uid="uid://bx4slcfmn1my5" path="res://Textures/Items/pistol.svg" id="1_ufqia"]
+
+[resource]
+script = ExtResource("1_idnmw")
+INDEX = 0
+NAME = "Pistol"
+DESCRIPTION = "Its my Pistol"
+TEXTURE = ExtResource("1_ufqia")

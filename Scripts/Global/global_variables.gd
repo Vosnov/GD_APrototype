@@ -18,7 +18,6 @@ func get_data() -> Dictionary:
 	}
 
 func set_data(dict: Dictionary):
-	return
 	no_spawn_items = dict.no_spawn_items
 	no_spawn_enemys = dict.no_spawn_enemys
 	player_spawn_data = dict.player_spawn_data

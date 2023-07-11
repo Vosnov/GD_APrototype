@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://cdnnhihjtlmf3"]
 
-[ext_resource type="Resource" uid="uid://dxjixnptkcwmi" path="res://Data/Guns/Slots/pistol_slot_data.tres" id="2_a6gud"]
 [ext_resource type="Script" path="res://Scripts/Guns/pistol.gd" id="2_rqgru"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="2_tdybi"]
 [ext_resource type="PackedScene" uid="uid://cowxw64vqke8q" path="res://Particles/pistol_hit.tscn" id="3_6ltvh"]
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="3_whdl7"]
+[ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="4_hji00"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvvw1"]
 albedo_color = Color(0, 0.376471, 0.411765, 1)
@@ -14,7 +14,9 @@ albedo_color = Color(0, 0.376471, 0.411765, 1)
 [node name="Pistol" instance=ExtResource("3_whdl7")]
 script = ExtResource("2_rqgru")
 HIT_PARTICLE = ExtResource("3_6ltvh")
-GUN_SLOT_DATA = ExtResource("2_a6gud")
+DAMAGE = 0.5
+SHOT_TIMEOUT = 0.5
+ITEM_GUN_DATA = ExtResource("4_hji00")
 MUZZLE_FLASH = ExtResource("2_tdybi")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
