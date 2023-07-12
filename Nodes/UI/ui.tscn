@@ -21,11 +21,6 @@ func _ready():
 	Events.connect(\"player_reload_data_ui\", _on_reload_data)
 	Events.connect(\"player_hp_ui\", _on_player_hp_ui)
 
-func close_inventory():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	get_tree().paused = false
-	if inventory_instance != null: inventory_instance.queue_free()
-
 func _on_reload_data(amount: int, total_amount: int):
 	reload_label.text = str(\"Load amount: \", amount, \" Total amount: \", total_amount)
 
@@ -34,27 +29,16 @@ func _on_player_hp_ui(_hp: float):
 
 func _input(_event):
 	if dead_screen_instance != null: return
+	if GlobalVariables.menu_ui_is_open: return
 	
-	var inventory_is_just_open = false
 	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
 		inventory_instance = INVENTORY_UI.instantiate()
-		inventory_is_just_open = true
 		add_child(inventory_instance)
-		get_tree().paused = true
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	if inventory_is_just_open: return
-	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
-		close_inventory()
 
 func _on_player_dead():
-	close_inventory()
+	if inventory_instance != null: inventory_instance.queue_free()
 	dead_screen_instance = DEAD_SCREEN.instantiate()
 	add_child(dead_screen_instance)
-	get_tree().paused = true
-
-func _exit_tree():
-	get_tree().paused = false
 "
 
 [sub_resource type="GDScript" id="GDScript_py8tj"]

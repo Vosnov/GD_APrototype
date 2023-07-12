@@ -3,15 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_211y0"]
 [ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
 
-[sub_resource type="GDScript" id="GDScript_t3ynw"]
+[sub_resource type="GDScript" id="GDScript_gxcol"]
 script/source = "extends Control
 
-func _on_button_button_down():
-	GameSave.save()
+func _ready():
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
+func _exit_tree():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
 
-func _on_button_2_button_down():
-	GameSave.load_save()
+func _input(_event):
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
+		queue_free()
 "
 
 [sub_resource type="GDScript" id="GDScript_cyvqe"]
@@ -71,7 +76,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_t3ynw")
+script = SubResource("GDScript_gxcol")
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
 visible = false
@@ -203,19 +208,3 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "3"
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Save"
-
-[node name="Button2" type="Button" parent="."]
-layout_mode = 0
-offset_left = 64.0
-offset_right = 110.0
-offset_bottom = 31.0
-text = "Load"
-
-[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
-[connection signal="button_down" from="Button2" to="." method="_on_button_2_button_down"]

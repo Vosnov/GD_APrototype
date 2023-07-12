@@ -87,7 +87,7 @@ NEXT_SCENE = "res://Scenes/room_3.tscn"
 
 [node name="Door6" parent="." instance=ExtResource("7_1ch7u")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.45, 1.5, -9)
-ACCEPT_STATE = 2
+NEXT_SCENE = "res://Scenes/save_room.tscn"
 
 [node name="Player2" parent="." instance=ExtResource("1_i475y")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.07001, 1.52476, 9.83544)
