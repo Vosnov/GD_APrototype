@@ -4,6 +4,7 @@ extends Node
 var no_spawn_items: Array[String] = []
 var no_spawn_enemys: Array[String] = []
 var player_spawn_data: Dictionary = {}
+var player_ammo_load: Dictionary = {}
 var active_gun: GunData
 
 var player_is_runing = false
@@ -14,10 +15,12 @@ func get_data() -> Dictionary:
 	return {
 		'no_spawn_items': no_spawn_items,
 		'no_spawn_enemys': no_spawn_enemys,
-		'player_spawn_data': player_spawn_data
+		'player_spawn_data': player_spawn_data,
+		'player_ammo_load': player_ammo_load
 	}
 
 func set_data(dict: Dictionary):
 	no_spawn_items = dict.no_spawn_items
 	no_spawn_enemys = dict.no_spawn_enemys
 	player_spawn_data = dict.player_spawn_data
+	player_ammo_load = dict.player_ammo_load

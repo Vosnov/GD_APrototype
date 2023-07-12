@@ -20,6 +20,9 @@ var amount_total = 0
 var target: Enemy
 
 func _ready():
+	if GlobalVariables.player_ammo_load.has(ITEM_GUN_DATA.NAME):
+		AMMO_LOADED = GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME]
+	
 	_on_inventory_update()
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
 	Events.connect('inventory_update', _on_inventory_update)
@@ -37,6 +40,7 @@ func shot():
 	shot_timer.start(SHOT_TIMEOUT)
 	Events.emit_signal("player_shot")
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
+	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
 	
 	var muzzle = MUZZLE_FLASH.instantiate()
 	muzzle_pos.add_child(muzzle)
@@ -57,6 +61,7 @@ func reload():
 	reload_timer.start(RELOAD_TIMEOUT)
 	Events.emit_signal("player_reload", need_amount)
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
+	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
 
 func _input(_event):
 	if not reload_timer.is_stopped(): return
