@@ -51,7 +51,7 @@ func _on_door_active_node_action_pressed():
 			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE)
 			return
 		
-	GlobalVariables.player_spawn_data[get_path().get_name(1)] = spawn_point.global_transform
+	GlobalVariables.player_spawn_data[owner.scene_file_path] = spawn_point.global_transform
 	SceneTransition.change_scene(NEXT_SCENE)
 "
 

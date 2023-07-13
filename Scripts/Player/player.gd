@@ -17,7 +17,7 @@ func check_spawn_pos():
 		global_transform = GlobalVariables.save_data.player_transform
 		return
 	
-	var key = get_path().get_name(1)
+	var key = owner.scene_file_path
 	if not GlobalVariables.player_spawn_data.has(key): return
 	var point = GlobalVariables.player_spawn_data.get(key) as Transform3D
 	
