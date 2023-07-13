@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_v2ius"]
 script/source = "extends Node2D
 
-@export_file(\"*.tscn\") var START_SCENE
+@export_file(\"*.tscn\") var LOAD_SAVE_UI
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -12,12 +12,12 @@ func _on_quit_button_button_down():
 	get_tree().quit()
 
 func _on_start_button_button_down():
-	SceneTransition.change_scene(START_SCENE)
+	SceneTransition.change_scene(LOAD_SAVE_UI)
 "
 
 [node name="MainMenu" type="Node2D"]
 script = SubResource("GDScript_v2ius")
-START_SCENE = "res://Scenes/test_scene.tscn"
+LOAD_SAVE_UI = "res://Nodes/UI/load_save_ui.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -10,15 +10,24 @@ script/source = "extends Node3D
 
 @export var LEVEL_NAME: String = ''
 @export var SAVE_UI: PackedScene
+@export_file('*.tscn') var LEVEL_PATH
 
 var save_ui: Node
+var player: Node3D
 
 func _on_active_node_action_pressed():
 	if save_ui != null: return
 	
 	GlobalVariables.save_data.level_name = LEVEL_NAME
+	GlobalVariables.save_data.level_path = LEVEL_PATH
+	GlobalVariables.save_data.player_transform = player.global_transform
+	GlobalVariables.save_data.date = GlobalVariables.get_current_date()
 	save_ui = SAVE_UI.instantiate()
 	add_child(save_ui)
+
+
+func _on_area_3d_body_entered(body):
+	player = body
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2elru"]
@@ -52,3 +61,4 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_5g0l4")
 
 [connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

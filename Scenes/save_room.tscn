@@ -45,3 +45,4 @@ NEXT_SCENE = "res://Scenes/test_scene.tscn"
 [node name="SaveNode" parent="." instance=ExtResource("6_0p0iw")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.639866, 1.56396, -1.81688)
 LEVEL_NAME = "Save Room"
+LEVEL_PATH = "res://Scenes/save_room.tscn"

@@ -12,8 +12,8 @@ var current_gun: Node3D
 var input_indexes = [0, 1, 2, 3]
 
 func _ready():
-	var index = GUNS_DATA.find(GlobalVariables.active_gun)
-	if index >= 0: select_active_gun(index)
+	if GlobalVariables.active_gun_index >= 0: 
+		select_active_gun(GlobalVariables.active_gun_index)
 	
 	Events.connect('inventory_update', _on_inventory_update)
 
@@ -26,12 +26,12 @@ func _on_inventory_update():
 
 func select_active_gun(index: int):
 	var slot_items = Inventory.SLOTS.map(func(slot: SlotData): return slot.ITEM_DATA)
-	for gun in GUNS_DATA:
-		if gun.ITEM_GUN_DATA.INDEX == index:
-			if not slot_items.has(gun.ITEM_GUN_DATA): continue
+	for gun_data in GUNS_DATA:
+		if gun_data.ITEM_GUN_DATA.INDEX == index:
+			if not slot_items.has(gun_data.ITEM_GUN_DATA): continue
 			for child in get_children(): child.queue_free()
-			GlobalVariables.active_gun = gun
-			add_child(GlobalVariables.active_gun.GUN.instantiate())
+			GlobalVariables.active_gun_index = gun_data.ITEM_GUN_DATA.INDEX
+			add_child(gun_data.GUN.instantiate())
 			return
 
 func _input(_event):

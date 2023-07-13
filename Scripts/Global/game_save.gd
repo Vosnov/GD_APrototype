@@ -13,7 +13,6 @@ func save(index: int):
 	var data = {
 		'slots': Inventory.SLOTS.map(func(slot): return slot.get_data()),
 		'global': GlobalVariables.get_data(),
-		'save_data': GlobalVariables.get_save_data()
 	}
 	file.store_string(var_to_str(data))
 
@@ -43,7 +42,7 @@ func get_save_data(index: int):
 	var file = load_file(index)
 	if file == null: return null
 	var data = str_to_var(file.get_as_text())
-	return data.save_data
+	return data.global.save_data
 
 func get_file_name(index: int) -> String:
 	return str(PATH, SAVE_FILE_NAME, '_', index, EXTENSION)
