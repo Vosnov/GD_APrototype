@@ -7,7 +7,6 @@
 script/source = "extends CanvasLayer
 
 @export var SAVE_MESSAGE: String
-@export var SAVE_COUNT = 4
 @export var ACCEPT_UI: PackedScene
 @export var SAVE_BTN_UI: PackedScene
 
@@ -42,14 +41,14 @@ func fill_save_buttons():
 	for child in h_box_container.get_children():
 		child.queue_free()
 	
-	for index in range(SAVE_COUNT):
+	for index in range(GlobalVariables.save_count):
 		var save_data = GameSave.get_save_data(index)
 		var btn = SAVE_BTN_UI.instantiate() as SaveBtnUI
 		btn.SAVE_INDEX = index
 		
 		if save_data != null:
 			btn.LEVEL_NAME = save_data.level_name
-			btn.DATE = save_data.date
+			btn.DATE = GlobalVariables.get_date_format(save_data.date)
 			btn.PLAY_TIME = '3:11'
 		else:
 			btn.IS_EMPTY = true

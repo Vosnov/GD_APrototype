@@ -21,7 +21,7 @@ func _on_active_node_action_pressed():
 	GlobalVariables.save_data.level_name = LEVEL_NAME
 	GlobalVariables.save_data.level_path = LEVEL_PATH
 	GlobalVariables.save_data.player_transform = player.global_transform
-	GlobalVariables.save_data.date = GlobalVariables.get_current_date()
+	GlobalVariables.save_data.date = Time.get_datetime_string_from_system()
 	save_ui = SAVE_UI.instantiate()
 	add_child(save_ui)
 

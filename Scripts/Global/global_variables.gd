@@ -14,6 +14,8 @@ var player_is_aim = false
 var player_target_is_full = false
 var span_on_save_transform = false
 
+const save_count = 4
+
 func get_data() -> Dictionary:
 	return {
 		'no_spawn_items': no_spawn_items,
@@ -32,7 +34,6 @@ func set_data(dict: Dictionary):
 	active_gun_index = dict.active_gun_index
 	save_data = dict.save_data
 
-func get_current_date() -> String:
-	var date = Time.get_date_dict_from_system()
-	var time = Time.get_time_dict_from_system()
-	return "%02d.%02d.%02d %02d:%02d" % [date.day, date.month, date.year, time.hour, time.minute]
+func get_date_format(date_string: String) -> String:
+	var date = Time.get_datetime_dict_from_datetime_string(date_string, false)
+	return "%02d.%02d.%02d %02d:%02d" % [date.day, date.month, date.year, date.hour, date.minute]

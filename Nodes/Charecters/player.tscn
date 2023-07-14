@@ -147,7 +147,7 @@ script = ExtResource("1_argoq")
 [node name="UI" parent="." instance=ExtResource("8_xdrrl")]
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.191977, -0.138556, -0.322408, 0.349179, 0.111983, 0.159793, 0.0349099, -0.358137, 0.174697, 0.13686, 0.463466, -0.611322)
+transform = Transform3D(-0.479942, 0.346387, 0.806022, 0.872948, 0.279955, 0.399482, -0.0872748, 0.895344, -0.43674, -0.342153, 1.15866, 1.52831)
 bone_name = "Bone.011.R"
 bone_idx = 14
 use_external_skeleton = true

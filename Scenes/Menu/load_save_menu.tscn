@@ -1,38 +1,44 @@
 [gd_scene load_steps=4 format=3 uid="uid://b0wpcvevja3qn"]
 
-[ext_resource type="PackedScene" uid="uid://n6b5jqbuuxx4" path="res://Nodes/UI/accept_ui.tscn" id="1_6kor1"]
-[ext_resource type="PackedScene" uid="uid://fkchkki1t0fg" path="res://Nodes/UI/save_btn.tscn" id="2_v6aia"]
+[ext_resource type="PackedScene" uid="uid://n6b5jqbuuxx4" path="res://Nodes/UI/accept_ui.tscn" id="1_t4q0a"]
+[ext_resource type="PackedScene" uid="uid://fkchkki1t0fg" path="res://Nodes/UI/save_btn.tscn" id="2_be1i7"]
 
 [sub_resource type="GDScript" id="GDScript_qn43d"]
 script/source = "extends CanvasLayer
 
 @export var LOAD_MESSAGE: String
-@export var SAVE_COUNT = 4
+@export var NEW_SAVE_MESSAGE: String
 @export var ACCEPT_UI: PackedScene
 @export var SAVE_BTN_UI: PackedScene
+
 @export_file(\"*.tscn\") var MENU_SCENE
-@export_file(\"*.tscn\") var FIRST_LEVEL
+@export_file(\"*.tscn\") var START_LEVEL
 
 @onready var h_box_container = $VBoxContainer/HBoxContainer
 
 var active_load_index = 0
-
+var save_data
 func _ready():
 	fill_save_buttons()
 
 func _on_button_down(index: int):
+	save_data = GameSave.get_save_data(index)
 	active_load_index = index
+	
 	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
 	accept_ui.accept.connect(_on_accept)
-	accept_ui.MESSAGE = LOAD_MESSAGE
+	
+	if save_data.size() == 0:
+		accept_ui.MESSAGE = NEW_SAVE_MESSAGE
+	else:
+		accept_ui.MESSAGE = LOAD_MESSAGE
+	
 	add_child(accept_ui)
 
 func _on_accept():
-	var save_data = GameSave.get_save_data(active_load_index)
 	if save_data == null:
-		SceneTransition.change_scene(FIRST_LEVEL)
+		SceneTransition.change_scene(START_LEVEL)
 	else:
-		GlobalVariables.span_on_save_transform = true
 		GameSave.load_save(active_load_index)
 		SceneTransition.change_scene(save_data.level_path)
 
@@ -40,14 +46,14 @@ func fill_save_buttons():
 	for child in h_box_container.get_children():
 		child.queue_free()
 	
-	for index in range(SAVE_COUNT):
-		var save_data = GameSave.get_save_data(index)
+	for index in range(GlobalVariables.save_count):
+		save_data = GameSave.get_save_data(index)
 		var btn = SAVE_BTN_UI.instantiate() as SaveBtnUI
 		btn.SAVE_INDEX = index
-		
+
 		if save_data != null:
 			btn.LEVEL_NAME = save_data.level_name
-			btn.DATE = save_data.date
+			btn.DATE = GlobalVariables.get_date_format(save_data.date)
 			btn.PLAY_TIME = '3:11'
 		else:
 			btn.IS_EMPTY = true
@@ -63,15 +69,17 @@ func _on_back_button_down():
 	SceneTransition.change_scene(MENU_SCENE)
 "
 
-[node name="LoadSaveUI" type="CanvasLayer"]
+[node name="LoadSave" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = SubResource("GDScript_qn43d")
 LOAD_MESSAGE = "Load save?"
-ACCEPT_UI = ExtResource("1_6kor1")
-SAVE_BTN_UI = ExtResource("2_v6aia")
+NEW_SAVE_MESSAGE = "Start new game?"
+ACCEPT_UI = ExtResource("1_t4q0a")
+SAVE_BTN_UI = ExtResource("2_be1i7")
 MENU_SCENE = "res://Scenes/Menu/main_menu.tscn"
-FIRST_LEVEL = "res://Scenes/test_scene.tscn"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -79,19 +87,19 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Save load"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Back" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Back"
 
-[connection signal="button_down" from="VBoxContainer/Back" to="." method="_on_back_button_down"]
+[connection signal="button_down" from="CanvasLayer/VBoxContainer/Back" to="CanvasLayer" method="_on_back_button_down"]
