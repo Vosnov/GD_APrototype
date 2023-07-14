@@ -12,7 +12,6 @@ var menu_ui_is_open = false
 var player_is_runing = false
 var player_is_aim = false
 var player_target_is_full = false
-var span_on_save_transform = false
 
 const save_count = 4
 

@@ -32,10 +32,10 @@ material = ExtResource("2_k1qyr")
 transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
 [node name="Player2" parent="." instance=ExtResource("3_ka1ri")]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
 
 [node name="CameraController2" parent="." node_paths=PackedStringArray("TARGET") instance=ExtResource("4_x7b7k")]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
 TARGET = NodePath("../Player2")
 
 [node name="Door" parent="." instance=ExtResource("5_lcrnd")]

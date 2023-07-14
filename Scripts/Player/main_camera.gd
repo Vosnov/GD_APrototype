@@ -5,6 +5,9 @@ extends Node3D
 
 @onready var camera_3d = $SpringArm3D/Camera3D
 
+func _ready():
+	global_rotation.y = TARGET.global_rotation.y
+
 func _physics_process(_delta):
 	if !TARGET:
 		return
