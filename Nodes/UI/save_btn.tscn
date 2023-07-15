@@ -51,12 +51,6 @@ text = "13.07.2023 12:12"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayTime" type="Label" parent="Control/VBoxContainer"]
-layout_mode = 2
-text = "3:12"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="EmptyLabel" type="Label" parent="Control"]
 visible = false
 layout_mode = 1

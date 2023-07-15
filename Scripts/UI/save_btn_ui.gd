@@ -6,13 +6,11 @@ class_name SaveBtnUI
 @export var SAVE_NAME: String
 @export var LEVEL_NAME: String
 @export var DATE: String
-@export var PLAY_TIME: String
 
 @onready var v_box_container = $Control/VBoxContainer
 @onready var save_name = $SaveName
 @onready var level_name = $Control/VBoxContainer/LevelName
 @onready var date = $Control/VBoxContainer/Date
-@onready var play_time = $Control/VBoxContainer/PlayTime
 @onready var empty_label = $Control/EmptyLabel
 
 func _ready():
@@ -25,4 +23,3 @@ func _ready():
 	
 	level_name.text = LEVEL_NAME
 	date.text = DATE
-	play_time.text = PLAY_TIME

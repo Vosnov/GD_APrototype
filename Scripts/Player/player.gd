@@ -12,9 +12,9 @@ func _init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func check_spawn_pos():
-	if GlobalVariables.save_data.has('player_transform'):
+	if GlobalVariables.should_spawn_on_player_transform:
 		global_transform = GlobalVariables.save_data.player_transform
-		GlobalVariables.save_data.erase('player_transform')
+		GlobalVariables.should_spawn_on_player_transform = false
 		return
 	
 	var key = owner.scene_file_path

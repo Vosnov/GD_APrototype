@@ -28,7 +28,7 @@ func _on_button_down(index: int):
 	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
 	accept_ui.accept.connect(_on_accept)
 	
-	if save_data.size() == 0:
+	if save_data == null:
 		accept_ui.MESSAGE = NEW_SAVE_MESSAGE
 	else:
 		accept_ui.MESSAGE = LOAD_MESSAGE
@@ -54,7 +54,6 @@ func fill_save_buttons():
 		if save_data != null:
 			btn.LEVEL_NAME = save_data.level_name
 			btn.DATE = GlobalVariables.get_date_format(save_data.date)
-			btn.PLAY_TIME = '3:11'
 		else:
 			btn.IS_EMPTY = true
 		

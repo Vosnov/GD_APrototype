@@ -24,6 +24,7 @@ func load_save(index: int):
 
 	Inventory.SLOTS = parse_slots(data.slots)
 	GlobalVariables.set_data(data.global)
+	GlobalVariables.should_spawn_on_player_transform = true
 	
 	Events.inventory_update.emit()
 
