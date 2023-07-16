@@ -11,6 +11,8 @@ grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_5hk11")
+ACCEPT_LABEL = "ok"
+CANCEL_LABEL = "cancel"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -47,11 +49,11 @@ size_flags_horizontal = 4
 
 [node name="Accept" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "OK"
+text = "ok"
 
 [node name="Cancel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "CANCEL"
+text = "cancel"
 
 [connection signal="button_down" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Accept" to="." method="_on_accept_button_down"]
 [connection signal="button_down" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Cancel" to="." method="_on_cancel_button_down"]

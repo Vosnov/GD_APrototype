@@ -8,13 +8,13 @@ class_name SaveBtnUI
 @export var DATE: String
 
 @onready var v_box_container = $Control/VBoxContainer
-@onready var save_name = $SaveName
+@onready var slot_name = $SlotName
 @onready var level_name = $Control/VBoxContainer/LevelName
 @onready var date = $Control/VBoxContainer/Date
 @onready var empty_label = $Control/EmptyLabel
 
 func _ready():
-	save_name.text = str(SAVE_NAME, ' ', SAVE_INDEX + 1)
+	slot_name.text = tr(SAVE_NAME) % [SAVE_INDEX + 1]
 	
 	if IS_EMPTY:
 		v_box_container.visible = false

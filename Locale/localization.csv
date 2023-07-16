@@ -1,0 +1,14 @@
+,en,ru
+cancel,Cancel,Отмена
+ok,Ok,Ок
+back,Back,Назад
+menu.continue,Continue,Продолжить
+menu.newGame,New game,Новая игра
+menu.loadGame,Load game,Загрузить игру
+menu.settings,Settings,Настройки
+menu.exit,Exit,Выход
+loadSaveMenu.title,Load game,Загрузить игру
+loadSaveMenu.accept.startNewGame,Start a new game?,Начать новую игру?
+loadSaveMenu.accept.loadGame,Load slot %d?,Загрузить слот %d?
+saveBtn.slot,Slot %d,Слот %d
+saveBtn.emptySlot,Empty slot,Пустой слот

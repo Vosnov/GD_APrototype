@@ -132,6 +132,10 @@ gun_3={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://Locale/localization.en.translation", "res://Locale/localization.ru.translation")
+
 [layer_names]
 
 3d_physics/layer_1="Main"

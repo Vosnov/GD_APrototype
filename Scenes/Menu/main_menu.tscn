@@ -72,25 +72,23 @@ START_LEVEL = "res://Scenes/test_scene.tscn"
 
 [node name="Continue" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Continue"
+text = "menu.continue"
 
 [node name="New" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "New game"
+text = "menu.newGame"
 
 [node name="Load" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Load game
-"
+text = "menu.loadGame"
 
 [node name="Settings" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Settings"
+text = "menu.settings"
 
 [node name="Quit" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Exit
-"
+text = "menu.exit"
 
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Continue" to="CanvasLayer/Control/VBoxContainer" method="_on_continue_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/New" to="CanvasLayer/Control/VBoxContainer" method="_on_new_button_down"]

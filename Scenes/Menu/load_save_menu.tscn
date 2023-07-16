@@ -31,7 +31,7 @@ func _on_button_down(index: int):
 	if save_data == null:
 		accept_ui.MESSAGE = NEW_SAVE_MESSAGE
 	else:
-		accept_ui.MESSAGE = LOAD_MESSAGE
+		accept_ui.MESSAGE = tr(LOAD_MESSAGE) % [index + 1]
 	
 	add_child(accept_ui)
 
@@ -72,8 +72,8 @@ func _on_back_button_down():
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = SubResource("GDScript_qn43d")
-LOAD_MESSAGE = "Load save?"
-NEW_SAVE_MESSAGE = "Start new game?"
+LOAD_MESSAGE = "loadSaveMenu.accept.loadGame"
+NEW_SAVE_MESSAGE = "loadSaveMenu.accept.startNewGame"
 ACCEPT_UI = ExtResource("1_t4q0a")
 SAVE_BTN_UI = ExtResource("2_be1i7")
 MENU_SCENE = "res://Scenes/Menu/main_menu.tscn"
@@ -86,9 +86,9 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="Title" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-text = "Save load"
+text = "loadSaveMenu.title"
 horizontal_alignment = 1
 uppercase = true
 
@@ -99,6 +99,6 @@ alignment = 1
 [node name="Back" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Back"
+text = "back"
 
 [connection signal="button_down" from="CanvasLayer/VBoxContainer/Back" to="CanvasLayer" method="_on_back_button_down"]
