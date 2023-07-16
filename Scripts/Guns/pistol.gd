@@ -5,8 +5,8 @@ extends BaseGun
 @onready var ray_cast_3d = $RayCast3D as RayCast3D
 
 func _override_shot():
-	var damage = GUN_SLOT_DATA.DAMAGE
-	if GlobalVariables.player_target_is_full: damage = GUN_SLOT_DATA.FULL_DAMAGE
+	var damage = DAMAGE
+	if GlobalVariables.player_target_is_full: damage = FULL_DAMAGE
 	
 	var collider = ray_cast_3d.get_collider() as Node3D
 	if collider:

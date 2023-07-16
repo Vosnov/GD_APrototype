@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="APrototype"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Scenes/Menu/main_menu.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,7 @@ Events="*res://Scripts/Global/events.gd"
 SceneTransition="*res://Nodes/Global/scene_transition.tscn"
 Inventory="*res://Nodes/Global/inventory.tscn"
 GlobalVariables="*res://Scripts/Global/global_variables.gd"
+GameSave="*res://Nodes/Global/game_save.tscn"
 
 [input]
 

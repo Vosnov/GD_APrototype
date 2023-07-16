@@ -1,7 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwhdypbxa1gl7"]
+[gd_scene load_steps=6 format=3 uid="uid://dwhdypbxa1gl7"]
 
 [ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_211y0"]
 [ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
+
+[sub_resource type="GDScript" id="GDScript_gxcol"]
+script/source = "extends Control
+
+func _ready():
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _exit_tree():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+
+func _input(_event):
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
+		queue_free()
+"
 
 [sub_resource type="GDScript" id="GDScript_cyvqe"]
 script/source = "extends HBoxContainer
@@ -17,6 +33,7 @@ func fill_grid(slots: Array[SlotData]):
 	
 	var index = 0
 	for slot in slots:
+		if slot.ITEM_DATA is ItemGunData: continue
 		var slot_instance = SLOT.instantiate() as SlotUI
 		add_child(slot_instance)
 		if index == 0:
@@ -43,12 +60,13 @@ func _ready():
 		3: slot_container_4
 	}
 	
-	for gun_slot in Inventory.GUN_SLOTS:
-		if not panels.has(gun_slot.INDEX): continue
-		var panel = panels[gun_slot.INDEX] as Control
-		var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
-		panel.add_child(slot_ui)
-		slot_ui.set_slot_data(gun_slot)
+	for slot in Inventory.SLOTS:
+		if slot.ITEM_DATA is ItemGunData:
+			if not panels.has(slot.ITEM_DATA.INDEX): continue
+			var panel = panels[slot.ITEM_DATA.INDEX] as Control
+			var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
+			panel.add_child(slot_ui)
+			slot_ui.set_slot_data(slot.ITEM_DATA)
 "
 
 [node name="InventoryUI" type="Control"]
@@ -58,6 +76,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_gxcol")
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
 visible = false

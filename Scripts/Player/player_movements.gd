@@ -15,13 +15,10 @@ class_name PlayerMovements
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var aiming = false
 var sprinting = false
-var message_is_open = false
 var input_dir = Vector2()
 var is_stunned = false
 
 func _ready():
-	Events.connect("message_ui", func(_message): message_is_open = true)
-	Events.connect("message_close_ui", func(_message): message_is_open = false)
 	Events.connect('player_take_damage', func(_damage): is_stunned = true)
 
 func get_speed():
@@ -36,7 +33,6 @@ func movement(delta: float):
 	sprinting = GlobalVariables.player_is_runing
 	
 	input_dir = Input.get_vector("left", "right", "top", "bottom")
-	if message_is_open: input_dir = Vector2()
 	
 	var basis = camera.global_transform.basis
 	var direction = (basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

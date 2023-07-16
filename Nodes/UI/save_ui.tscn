@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlcvkcv24x2ro"]
+
+[ext_resource type="PackedScene" uid="uid://n6b5jqbuuxx4" path="res://Nodes/UI/accept_ui.tscn" id="1_y2kgs"]
+[ext_resource type="PackedScene" uid="uid://fkchkki1t0fg" path="res://Nodes/UI/save_btn.tscn" id="2_yc81m"]
+
+[sub_resource type="GDScript" id="GDScript_d28fw"]
+script/source = "extends CanvasLayer
+
+@export var SAVE_MESSAGE: String
+@export var ACCEPT_UI: PackedScene
+@export var SAVE_BTN_UI: PackedScene
+
+@onready var h_box_container = $Control/HBoxContainer
+
+var active_save_index = 0
+
+func _ready():
+	fill_save_buttons()
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().paused = true
+	GlobalVariables.menu_ui_is_open = true
+
+func _exit_tree():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+	GlobalVariables.menu_ui_is_open = false
+
+func _on_button_button_down(index: int):
+	active_save_index = index
+	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
+	accept_ui.accept.connect(_on_accept)
+	accept_ui.MESSAGE = SAVE_MESSAGE
+	add_child(accept_ui)
+
+func _on_accept():
+	GameSave.save(active_save_index)
+	fill_save_buttons()
+
+func fill_save_buttons():
+	for child in h_box_container.get_children():
+		child.queue_free()
+	
+	for index in range(GlobalVariables.save_count):
+		var save_data = GameSave.get_save_data(index)
+		var btn = SAVE_BTN_UI.instantiate() as SaveBtnUI
+		btn.SAVE_INDEX = index
+		
+		if save_data != null:
+			btn.LEVEL_NAME = save_data.level_name
+			btn.DATE = GlobalVariables.get_date_format(save_data.date)
+		else:
+			btn.IS_EMPTY = true
+		
+		h_box_container.add_child(btn)
+		btn.button_down.connect(_on_button_button_down.bind(index))
+
+func _input(_event):
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
+		queue_free()
+"
+
+[node name="SaveUI" type="CanvasLayer"]
+process_mode = 3
+script = SubResource("GDScript_d28fw")
+SAVE_MESSAGE = "Save?"
+ACCEPT_UI = ExtResource("1_y2kgs")
+SAVE_BTN_UI = ExtResource("2_yc81m")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2

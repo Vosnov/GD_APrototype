@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemGunData" load_steps=3 format=3 uid="uid://b6aw1wt4eg03f"]
+
+[ext_resource type="Texture2D" uid="uid://cfryp7yx3r2lt" path="res://Textures/Items/shotgun.svg" id="1_gvam5"]
+[ext_resource type="Script" path="res://Scripts/Data/item_gun_data.gd" id="2_fj584"]
+
+[resource]
+script = ExtResource("2_fj584")
+INDEX = 1
+NAME = "Shotgun"
+DESCRIPTION = "Its my shotgun"
+TEXTURE = ExtResource("1_gvam5")

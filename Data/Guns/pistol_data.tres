@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/Data/guns_data.gd" id="1_0xtv5"]
 [ext_resource type="PackedScene" uid="uid://cdnnhihjtlmf3" path="res://Nodes/Guns/pistol.tscn" id="1_fv27i"]
-[ext_resource type="Resource" uid="uid://dxjixnptkcwmi" path="res://Data/Guns/Slots/pistol_slot_data.tres" id="2_t4xv3"]
+[ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="2_ppphx"]
 
 [resource]
 script = ExtResource("1_0xtv5")
 GUN = ExtResource("1_fv27i")
-GUN_SLOT = ExtResource("2_t4xv3")
+ITEM_GUN_DATA = ExtResource("2_ppphx")

@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://dxoiu11eexkxk"]
+
+[ext_resource type="PackedScene" uid="uid://dlcvkcv24x2ro" path="res://Nodes/UI/save_ui.tscn" id="1_dakaw"]
+[ext_resource type="PackedScene" uid="uid://dtanochifrdyf" path="res://Nodes/Helpers/action_node.tscn" id="1_wobr0"]
+[ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="2_pjif8"]
+[ext_resource type="Texture2D" uid="uid://bdys0eqpecrig" path="res://Textures/prototype_512x512_blue1.png" id="3_ihryl"]
+
+[sub_resource type="GDScript" id="GDScript_ccgm4"]
+script/source = "extends Node3D
+
+@export var LEVEL_NAME: String = ''
+@export var SAVE_UI: PackedScene
+@export_file('*.tscn') var LEVEL_PATH
+
+var save_ui: Node
+var player: Node3D
+
+func _on_active_node_action_pressed():
+	if save_ui != null: return
+	
+	GlobalVariables.save_data.level_name = LEVEL_NAME
+	GlobalVariables.save_data.level_path = LEVEL_PATH
+	GlobalVariables.save_data.player_transform = player.global_transform
+	GlobalVariables.save_data.date = Time.get_datetime_string_from_system()
+	save_ui = SAVE_UI.instantiate()
+	add_child(save_ui)
+
+
+func _on_area_3d_body_entered(body):
+	player = body
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2elru"]
+albedo_texture = ExtResource("3_ihryl")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcrv6"]
+size = Vector3(0.3, 0.3, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5g0l4"]
+radius = 0.6
+
+[node name="SaveNode" type="Node3D"]
+script = SubResource("GDScript_ccgm4")
+SAVE_UI = ExtResource("1_dakaw")
+
+[node name="ActiveNode" parent="." node_paths=PackedStringArray("AREA") instance=ExtResource("1_wobr0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386963, 0)
+SPRITE = ExtResource("2_pjif8")
+AREA = NodePath("../Area3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_2elru")
+mesh = SubResource("BoxMesh_mcrv6")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_5g0l4")
+
+[connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

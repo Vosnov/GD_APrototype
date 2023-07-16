@@ -17,5 +17,9 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("ConvexPolygonShape3D_7iq6t")
 
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -7)
+collision_mask = 5
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

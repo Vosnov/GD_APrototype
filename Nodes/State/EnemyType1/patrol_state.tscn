@@ -74,7 +74,7 @@ func _on_change_path_timer_timeout():
 func _on_player_detect(_body: Node3D):
 	player_is_detect = true
 
-func _on_player_shot(_gun_slot):
+func _on_player_shot():
 	if AGENT.player and player_in_hear_zone:
 		player_is_detect = true
 

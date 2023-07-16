@@ -12,39 +12,35 @@ var current_gun: Node3D
 var input_indexes = [0, 1, 2, 3]
 
 func _ready():
-	var index = GUNS_DATA.find(GlobalVariables.active_gun)
-	if index >= 0: select_active_gun(index)
-	
-	Events.connect('inventory_update', _on_inventory_update)
+	if GlobalVariables.active_gun_index >= 0: 
+		select_active_gun(GlobalVariables.active_gun_index)
+	else:
+		Events.connect('inventory_update', _on_inventory_update)
 
 # Select first gun on pick up when hands is empty
 func _on_inventory_update():
-	if Inventory.GUN_SLOTS.size() == 0: return
-	select_active_gun(Inventory.GUN_SLOTS[0].INDEX)
-
-func select_active_gun(index: int):
-	var gun_slot = find_gun_slot_by_index(index)
-	if gun_slot == null: return
-	
-	for gun in GUNS_DATA:
-		if gun.GUN_SLOT == gun_slot:
-			for child in get_children(): child.queue_free()
-			GlobalVariables.active_gun = gun
-			add_child(GlobalVariables.active_gun.GUN.instantiate())
+	if get_child_count() > 0: return
+	for slot in Inventory.SLOTS:
+		if slot.ITEM_DATA is ItemGunData:
+			select_active_gun(slot.ITEM_DATA.INDEX)
+			Events.disconnect('inventory_update', _on_inventory_update)
 			return
 
-func find_gun_slot_by_index(index: int) -> GunSlotData:
-	for slot in Inventory.GUN_SLOTS:
-		if slot.INDEX == index: return slot
-	return null
+func select_active_gun(index: int):
+	var slot_items = Inventory.SLOTS.map(func(slot: SlotData): return slot.ITEM_DATA)
+	for gun_data in GUNS_DATA:
+		if gun_data.ITEM_GUN_DATA.INDEX == index:
+			if not slot_items.has(gun_data.ITEM_GUN_DATA): continue
+			for child in get_children(): child.queue_free()
+			GlobalVariables.active_gun_index = gun_data.ITEM_GUN_DATA.INDEX
+			add_child(gun_data.GUN.instantiate())
+			return
 
 func _input(_event):
 	for input_index in input_indexes:
 		if Input.is_action_just_pressed(str('gun_', input_index)):
+			if input_index == GlobalVariables.active_gun_index: return
 			select_active_gun(input_index)
-
-func gun_data_map(gun_data: GunData):
-	return gun_data.GUN_SLOT
 "
 
 [node name="GunsComponent" type="Node3D"]

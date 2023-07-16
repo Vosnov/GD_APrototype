@@ -1,23 +1,47 @@
 [gd_scene load_steps=2 format=3 uid="uid://jbuxuquitwqd"]
 
-[sub_resource type="GDScript" id="GDScript_v2ius"]
-script/source = "extends Node2D
+[sub_resource type="GDScript" id="GDScript_ctj8m"]
+script/source = "extends VBoxContainer
 
-@export_file(\"*.tscn\") var START_SCENE
+@export_file(\"*.tscn\") var LOAD_SAVE_MENU
+@export_file(\"*.tscn\") var START_LEVEL
+
+@onready var continue_btn = $Continue
+
+var last_save_data
+var save_index = 0
 
 func _ready():
+	continue_btn.visible = false
+	var unix_date_time = 0
+	for index in range(GlobalVariables.save_count):
+		var save_data = GameSave.get_save_data(index)
+		if save_data != null:
+			continue_btn.visible = true
+			
+			var time = Time.get_unix_time_from_datetime_string(save_data.date)
+			if time >= unix_date_time:
+				unix_date_time = time
+				last_save_data = save_data
+				save_index = index
+	
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-func _on_quit_button_button_down():
+func _on_quit_button_down():
 	get_tree().quit()
 
-func _on_start_button_button_down():
-	SceneTransition.change_scene(START_SCENE)
+func _on_load_button_down():
+	SceneTransition.change_scene(LOAD_SAVE_MENU)
+
+func _on_new_button_down():
+	SceneTransition.change_scene(START_LEVEL)
+
+func _on_continue_button_down():
+	GameSave.load_save(save_index)
+	SceneTransition.change_scene(last_save_data.level_path)
 "
 
 [node name="MainMenu" type="Node2D"]
-script = SubResource("GDScript_v2ius")
-START_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -42,19 +66,33 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_ctj8m")
+LOAD_SAVE_MENU = "res://Scenes/Menu/load_save_menu.tscn"
+START_LEVEL = "res://Scenes/test_scene.tscn"
 
-[node name="StartButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Continue" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Start"
+text = "Continue"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="New" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "New game"
+
+[node name="Load" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Load game
+"
+
+[node name="Settings" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Quit" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 text = "Exit
 "
 
-[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]
-[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Continue" to="CanvasLayer/Control/VBoxContainer" method="_on_continue_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/New" to="CanvasLayer/Control/VBoxContainer" method="_on_new_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Load" to="CanvasLayer/Control/VBoxContainer" method="_on_load_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Quit" to="CanvasLayer/Control/VBoxContainer" method="_on_quit_button_down"]

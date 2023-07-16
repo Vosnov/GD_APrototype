@@ -14,8 +14,8 @@ func _init():
 	randomize()
 
 func _override_shot():
-	var damage = GUN_SLOT_DATA.DAMAGE
-	if GlobalVariables.player_target_is_full: damage = GUN_SLOT_DATA.FULL_DAMAGE
+	var damage = DAMAGE
+	if GlobalVariables.player_target_is_full: damage = FULL_DAMAGE
 	var enemys: Array[Enemy] = []
 	
 	for i in range(FRACTION_COUNT):
