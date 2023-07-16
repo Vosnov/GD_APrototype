@@ -12,10 +12,10 @@ class_name BaseGun
 @export var ITEM_GUN_DATA: ItemGunData
 @export var MUZZLE_FLASH: PackedScene
 
-@onready var shot_timer = $ShotTimer
-@onready var reload_timer = $ReloadTimer
 @onready var muzzle_pos = $MuzzlePos
 
+var is_shotting = false
+var is_reloading = false
 var amount_total = 0
 var target: Enemy
 
@@ -30,14 +30,13 @@ func _ready():
 	Events.connect("enemy_target_remove", _on_aim_component_enemy_target_remove)
 
 func shot():
-	if not shot_timer.is_stopped(): return
+	if is_shotting: return
 	if AMMO_LOADED <= 0: return
 	if AMMO_LOADED < DROP_AMMO: return
 	
+	is_shotting = true
 	AMMO_LOADED -= DROP_AMMO
 	
-	shot_timer.one_shot = true
-	shot_timer.start(SHOT_TIMEOUT)
 	Events.emit_signal("player_shot")
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
 	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
@@ -47,6 +46,9 @@ func shot():
 	
 	_override_shot()
 	
+	await get_tree().create_timer(SHOT_TIMEOUT).timeout
+	is_shotting = false
+	
 func _override_shot():
 	pass
 
@@ -54,17 +56,20 @@ func reload():
 	if amount_total == 0: return
 	if AMMO_LOADED == MAX_AMMO_LOADED: return
 	
+	is_reloading = true
+	
 	var need_amount = MAX_AMMO_LOADED - AMMO_LOADED
-	AMMO_LOADED += min(need_amount, amount_total)
+	AMMO_LOADED = AMMO_LOADED + min(need_amount, amount_total)
 	amount_total -= AMMO_LOADED
-	reload_timer.one_shot = true
-	reload_timer.start(RELOAD_TIMEOUT)
 	Events.emit_signal("player_reload", need_amount)
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
 	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
+	
+	await get_tree().create_timer(RELOAD_TIMEOUT).timeout
+	is_reloading = false
 
 func _input(_event):
-	if not reload_timer.is_stopped(): return
+	if is_reloading: return
 	
 	if Input.is_action_just_pressed("shot") and GlobalVariables.player_is_aim:
 		shot()

@@ -5,9 +5,5 @@
 [node name="BaseGun" type="Node3D"]
 script = ExtResource("1_qqqm5")
 
-[node name="ShotTimer" type="Timer" parent="."]
-
-[node name="ReloadTimer" type="Timer" parent="."]
-
 [node name="MuzzlePos" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.84212)

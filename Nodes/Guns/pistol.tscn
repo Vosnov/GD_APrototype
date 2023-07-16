@@ -19,11 +19,11 @@ SHOT_TIMEOUT = 0.5
 ITEM_GUN_DATA = ExtResource("4_hji00")
 MUZZLE_FLASH = ExtResource("2_tdybi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 transform = Transform3D(0.142, 0, 0, 0, 0.193, 0, 0, 0, 0.621, 0, 0, -0.30005)
 material_override = SubResource("StandardMaterial3D_nvvw1")
 mesh = SubResource("BoxMesh_hvx2b")
 
-[node name="RayCast3D" type="RayCast3D" parent="." index="4"]
+[node name="RayCast3D" type="RayCast3D" parent="." index="2"]
 target_position = Vector3(0, 0, -10)
 collision_mask = 4

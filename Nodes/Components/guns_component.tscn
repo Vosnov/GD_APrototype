@@ -14,14 +14,16 @@ var input_indexes = [0, 1, 2, 3]
 func _ready():
 	if GlobalVariables.active_gun_index >= 0: 
 		select_active_gun(GlobalVariables.active_gun_index)
-	
-	Events.connect('inventory_update', _on_inventory_update)
+	else:
+		Events.connect('inventory_update', _on_inventory_update)
 
 # Select first gun on pick up when hands is empty
 func _on_inventory_update():
+	if get_child_count() > 0: return
 	for slot in Inventory.SLOTS:
 		if slot.ITEM_DATA is ItemGunData:
 			select_active_gun(slot.ITEM_DATA.INDEX)
+			Events.disconnect('inventory_update', _on_inventory_update)
 			return
 
 func select_active_gun(index: int):
@@ -37,6 +39,7 @@ func select_active_gun(index: int):
 func _input(_event):
 	for input_index in input_indexes:
 		if Input.is_action_just_pressed(str('gun_', input_index)):
+			if input_index == GlobalVariables.active_gun_index: return
 			select_active_gun(input_index)
 "
 
