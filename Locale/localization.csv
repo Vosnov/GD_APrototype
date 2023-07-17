@@ -12,3 +12,18 @@ loadSaveMenu.accept.startNewGame,Start a new game?,Начать новую иг�
 loadSaveMenu.accept.loadGame,Load slot %d?,Загрузить слот %d?
 saveBtn.slot,Slot %d,Слот %d
 saveBtn.emptySlot,Empty slot,Пустой слот
+items.take,I picked up the %s,Я подобрал %s
+items.takeAmmo,I picked up the ammo x%d,Я подобрал патроны x%d
+door.close,The door is broken,Дверь сломана
+door.needKey,I need a key for this door,Для этой двери мне нужен ключ
+door.openBy,I used %s,Я использовал %s
+data.ammo.name,Ammo,Патроны
+data.ammo.description,Ammo,Патроны
+data.key.name,Key,Ключ
+data.key.description,Key,Ключ
+data.pistol.name,Pistol,Пистолет
+data.pistol.description,Pistol,Пистолет
+data.shotgun.name,Shotgun,Дробовик
+data.shotgun.description,Shotgun,Дробовик
+level.name.saveRoom,Save room,Комната сохранений
+message.saveGame,Save the game?,Сохранить игру?

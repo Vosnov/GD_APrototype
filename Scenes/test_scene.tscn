@@ -1,32 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://ymyfncjem0fi"]
+[gd_scene load_steps=8 format=3 uid="uid://ymyfncjem0fi"]
 
 [ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="1_i475y"]
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_raqd1"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="2_0qrda"]
 [ext_resource type="Resource" uid="uid://c1f5nhddcsns4" path="res://Data/key_data.tres" id="4_8r63q"]
-[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="6_pcpq6"]
+[ext_resource type="PackedScene" uid="uid://b7do5bwd05b0w" path="res://Nodes/Items/pistol_item.tscn" id="6_lsgla"]
 [ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="7_1ch7u"]
-[ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="7_b3r7h"]
-[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="8_2g34r"]
-[ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="9_e183l"]
-
-[sub_resource type="Resource" id="Resource_l1bxx"]
-script = ExtResource("8_2g34r")
-ITEM_DATA = ExtResource("7_b3r7h")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_124ax"]
-albedo_color = Color(0, 0.376471, 0.411765, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rcw2w"]
-
-[sub_resource type="Resource" id="Resource_6xmej"]
-script = ExtResource("8_2g34r")
-ITEM_DATA = ExtResource("9_e183l")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxj47"]
-albedo_color = Color(0.658824, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_f8fqw"]
+[ext_resource type="PackedScene" uid="uid://dvnmhjqbx6oyh" path="res://Nodes/Items/shotgun_item.tscn" id="7_chgd7"]
 
 [node name="TestScene" type="Node3D"]
 
@@ -92,20 +72,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.0700
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.07001, 1.52476, 9.83544)
 TARGET = NodePath("../Player2")
 
-[node name="PickUpBase" parent="." instance=ExtResource("6_pcpq6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35014, 1.64865, 6.92981)
-SLOT_DATA = SubResource("Resource_l1bxx")
+[node name="PistolItem" parent="." instance=ExtResource("6_lsgla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase"]
-transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_124ax")
-mesh = SubResource("BoxMesh_rcw2w")
-
-[node name="PickUpBase2" parent="." instance=ExtResource("6_pcpq6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5468, 1.61601, 6.88187)
-SLOT_DATA = SubResource("Resource_6xmej")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase2"]
-transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_xxj47")
-mesh = SubResource("BoxMesh_f8fqw")
+[node name="ShotgunItem" parent="." instance=ExtResource("7_chgd7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 7)

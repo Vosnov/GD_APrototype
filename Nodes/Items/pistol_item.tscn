@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7do5bwd05b0w"]
+
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="1_j7cra"]
+[ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="2_6v2tu"]
+[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="3_3eqjc"]
+
+[sub_resource type="Resource" id="Resource_m28v7"]
+script = ExtResource("3_3eqjc")
+ITEM_DATA = ExtResource("2_6v2tu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2afex"]
+albedo_color = Color(0, 0.376471, 0.411765, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1cmn3"]
+
+[node name="PistolItem" instance=ExtResource("1_j7cra")]
+SLOT_DATA = SubResource("Resource_m28v7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_2afex")
+mesh = SubResource("BoxMesh_1cmn3")

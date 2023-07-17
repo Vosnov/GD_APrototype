@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_02ruj")
-NAME = "Ammo"
-DESCRIPTION = "Its AMMO"
+NAME = "data.ammo.name"
+DESCRIPTION = "data.ammo.description"
 TEXTURE = ExtResource("1_1mobl")

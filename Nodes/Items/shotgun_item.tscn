@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvnmhjqbx6oyh"]
+
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="1_bm6bv"]
+[ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="2_6b07s"]
+[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="3_ilpwq"]
+
+[sub_resource type="Resource" id="Resource_5vsln"]
+script = ExtResource("3_ilpwq")
+ITEM_DATA = ExtResource("2_6b07s")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gukwo"]
+albedo_color = Color(0.658824, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2yi30"]
+
+[node name="ShotgunItem" instance=ExtResource("1_bm6bv")]
+SLOT_DATA = SubResource("Resource_5vsln")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.069, 0, 0, 0, 0.092, 0, 0, 0, 0.299, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_gukwo")
+mesh = SubResource("BoxMesh_2yi30")

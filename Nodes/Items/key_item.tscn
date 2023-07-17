@@ -1,0 +1,20 @@
+[gd_scene load_steps=7 format=3 uid="uid://8t6un8bj7dwc"]
+
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="1_ghlso"]
+[ext_resource type="Resource" uid="uid://c1f5nhddcsns4" path="res://Data/key_data.tres" id="2_unqll"]
+[ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="3_bpxw1"]
+[ext_resource type="Material" uid="uid://cy3e66p0m55d0" path="res://Materials/test_mat_4.tres" id="4_fklfo"]
+
+[sub_resource type="Resource" id="Resource_kp74a"]
+script = ExtResource("3_bpxw1")
+ITEM_DATA = ExtResource("2_unqll")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pleoo"]
+
+[node name="KeyItem" instance=ExtResource("1_ghlso")]
+SLOT_DATA = SubResource("Resource_kp74a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+material_override = ExtResource("4_fklfo")
+mesh = SubResource("BoxMesh_pleoo")

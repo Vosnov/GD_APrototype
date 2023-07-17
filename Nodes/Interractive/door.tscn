@@ -24,7 +24,7 @@ var door_opened_message = \"\"
 
 func _ready():
 	if NEED_KEY_DATA:
-		door_opened_message = str(OPENED_MESSAGE, \" \", NEED_KEY_DATA.NAME)
+		door_opened_message = tr(OPENED_MESSAGE) % [NEED_KEY_DATA.NAME]
 	active_node.ACCEPT_STATE = ACCEPT_STATE
 
 func has_key():
@@ -62,9 +62,9 @@ size = Vector3(1, 2, 1)
 
 [node name="Door" type="StaticBody3D"]
 script = SubResource("GDScript_8bmqr")
-CLOSE_MESSAGE = "Door closed"
-NEED_ACCEPT_MESSAGE = "Need key"
-OPENED_MESSAGE = "Door opened by:"
+CLOSE_MESSAGE = "door.close"
+NEED_ACCEPT_MESSAGE = "door.needKey"
+OPENED_MESSAGE = "door.openBy"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_wd37w")

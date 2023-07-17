@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_fj584")
 INDEX = 1
-NAME = "Shotgun"
-DESCRIPTION = "Its my shotgun"
+NAME = "data.shotgun.name"
+DESCRIPTION = "data.shotgun.description"
 TEXTURE = ExtResource("1_gvam5")

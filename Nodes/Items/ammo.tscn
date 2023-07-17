@@ -6,6 +6,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_ijody"]
 
 [node name="Ammo" instance=ExtResource("1_fpl3g")]
+TAKE_MESSAGE = "items.takeAmmo"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

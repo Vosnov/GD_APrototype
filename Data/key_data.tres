@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_44y8d")
-NAME = "Key"
-DESCRIPTION = "Its my KEY"
+NAME = "data.key.name"
+DESCRIPTION = "data.key.description"
 TEXTURE = ExtResource("1_pkv14")

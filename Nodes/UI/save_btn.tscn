@@ -43,6 +43,7 @@ layout_mode = 2
 text = "Test"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 uppercase = true
 
 [node name="Date" type="Label" parent="Control/VBoxContainer"]

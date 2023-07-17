@@ -47,7 +47,7 @@ func fill_save_buttons():
 		btn.SAVE_INDEX = index
 		
 		if save_data != null:
-			btn.LEVEL_NAME = save_data.level_name
+			btn.LEVEL_NAME = tr(save_data.level_name)
 			btn.DATE = GlobalVariables.get_date_format(save_data.date)
 		else:
 			btn.IS_EMPTY = true
@@ -63,7 +63,7 @@ func _input(_event):
 [node name="SaveUI" type="CanvasLayer"]
 process_mode = 3
 script = SubResource("GDScript_d28fw")
-SAVE_MESSAGE = "Save?"
+SAVE_MESSAGE = "message.saveGame"
 ACCEPT_UI = ExtResource("1_y2kgs")
 SAVE_BTN_UI = ExtResource("2_yc81m")
 
