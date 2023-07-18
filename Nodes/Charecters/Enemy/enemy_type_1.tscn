@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bqfcpdoke7pig"]
+[gd_scene load_steps=34 format=3 uid="uid://bqfcpdoke7pig"]
 
 [ext_resource type="Script" path="res://Nodes/Charecters/Enemy/enemy_type_1.gd" id="1_qr7er"]
 [ext_resource type="PackedScene" uid="uid://b2wwrjmr05ak0" path="res://Models/Enemys/Type1/enemyType1.glb" id="1_toxgn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dhi0m65ovhivy" path="res://Nodes/State/EnemyType1/wait_state.tscn" id="6_dth1b"]
 [ext_resource type="PackedScene" uid="uid://cv0cc8jqq173a" path="res://Nodes/State/EnemyType1/attack_state.tscn" id="7_qjda2"]
 [ext_resource type="PackedScene" uid="uid://bxt8aue0ycv7v" path="res://Nodes/State/EnemyType1/stay_state.tscn" id="9_uaegf"]
+[ext_resource type="AudioStream" uid="uid://bmooes84snspq" path="res://SFX/Enemy/EnemyHit.mp3" id="10_f4ls6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xduw"]
 radius = 0.35
@@ -87,7 +88,6 @@ blend_point_4/node = SubResource("AnimationNodeAnimation_abys1")
 blend_point_4/pos = Vector2(0, -1)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xr4ar"]
-graph_offset = Vector2(-695.139, -79.313)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_dnvay")
 nodes/Animation/position = Vector2(-60, 240)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_q2o8k")
@@ -117,7 +117,7 @@ radius = 1.5
 points = PackedVector3Array(0, 0, 0, 3, 2, -6, -3, 2, -6, -3, -2, -6, 3, -2, -6)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b7geb"]
-radius = 0.511102
+radius = 0.324235
 height = 1.11209
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aycqf"]
@@ -125,6 +125,18 @@ radius = 13.01
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_275u1"]
 radius = 4.98596
+
+[sub_resource type="GDScript" id="GDScript_mc5c3"]
+script/source = "extends AudioStreamPlayer3D
+
+func _ready():
+	Events.enemy_take_damage.connect(_on_take_damage)
+	
+func _on_take_damage(enemy: Enemy, _damage):
+	if enemy == owner:
+		play()
+	
+"
 
 [node name="EnemyType1" type="CharacterBody3D"]
 collision_layer = 4
@@ -135,31 +147,31 @@ script = ExtResource("1_qr7er")
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.018329, -0.541742, -0.04592)
-bones/0/rotation = Quaternion(0.213272, -0.198157, -0.00432439, 0.956677)
+bones/0/position = Vector3(0.0414377, -0.536623, -0.228318)
+bones/0/rotation = Quaternion(0.212149, -0.198212, -0.00455877, 0.956914)
 bones/1/rotation = Quaternion(0.24046, -0.181481, 0.0222024, 0.953284)
-bones/2/rotation = Quaternion(0.297714, -0.100423, -0.0126666, 0.949274)
+bones/2/rotation = Quaternion(0.297715, -0.102401, -0.0132443, 0.949055)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120115, 0.939912)
-bones/4/rotation = Quaternion(-0.174974, -0.0639939, -0.00155774, 0.98249)
+bones/4/rotation = Quaternion(-0.0233198, -0.192637, -0.00140775, 0.980992)
 bones/5/position = Vector3(0.207638, 0.920373, 0.199412)
-bones/5/rotation = Quaternion(0.153564, -0.135629, -0.800748, 0.562872)
+bones/5/rotation = Quaternion(0.166869, -0.143526, -0.799768, 0.558504)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.143561, -0.0144758, -0.290743, 0.945859)
-bones/7/rotation = Quaternion(0.238892, -0.00318331, 0.118999, 0.963722)
+bones/6/rotation = Quaternion(0.112678, -0.0241567, -0.239231, 0.9641)
+bones/7/rotation = Quaternion(0.163997, -0.0106173, 0.110003, 0.980251)
 bones/11/position = Vector3(-0.244817, 0.902132, 0.239186)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.162422, 0.387831, 0.843848, -0.333356)
+bones/12/rotation = Quaternion(-0.212076, 0.296347, 0.853116, -0.373356)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.239981, -0.0131152, -0.407823, 0.880862)
+bones/13/rotation = Quaternion(-0.249265, -0.0130091, -0.423563, 0.8708)
 bones/13/scale = Vector3(0.999979, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.290919, 0.21351, 0.903114, 0.232734)
+bones/14/rotation = Quaternion(0.299801, 0.279319, 0.877964, 0.247547)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.18494, -0.0108331, 0.374948, 0.908347)
+bones/15/rotation = Quaternion(-0.20395, -0.0105266, 0.413431, 0.887338)
 bones/15/scale = Vector3(0.99999, 0.999988, 0.999999)
-bones/16/position = Vector3(-0.120068, -1.19653, 1.31233)
-bones/17/position = Vector3(-0.392301, -2.1107, -0.600386)
+bones/16/position = Vector3(0.0422231, -1.19367, 1.22357)
+bones/17/position = Vector3(-0.391108, -2.11056, -0.5988)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.365305, -2.15086, 0.412801)
+bones/19/position = Vector3(0.668971, -2.10861, 0.00543715)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -250,7 +262,6 @@ shape = SubResource("SphereShape3D_wdj30")
 shape = SubResource("ConvexPolygonShape3D_5cjby")
 
 [node name="AttackArea" type="Area3D" parent="."]
-visible = false
 collision_layer = 6
 collision_mask = 6
 
@@ -282,6 +293,16 @@ text = "State: "
 
 [node name="TargetMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107481, 0.131446, -0.277841)
+
+[node name="AnimStream" type="AudioStreamPlayer3D" parent="."]
+max_distance = 4.0
+bus = &"FX"
+
+[node name="HitStream" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("10_f4ls6")
+max_distance = 6.0
+bus = &"FX"
+script = SubResource("GDScript_mc5c3")
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="PlayerFindingArea" to="." method="_on_player_finding_area_body_entered"]
