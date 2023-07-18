@@ -12,7 +12,10 @@ class_name BaseGun
 @export var ITEM_GUN_DATA: ItemGunData
 @export var MUZZLE_FLASH: PackedScene
 
+@onready var reload_stream = $ReloadStream
 @onready var muzzle_pos = $MuzzlePos
+@onready var shot_stream = $ShotStream
+@onready var empty_stram = $EmptyStram
 
 var is_shotting = false
 var is_reloading = false
@@ -31,12 +34,15 @@ func _ready():
 
 func shot():
 	if is_shotting: return
-	if AMMO_LOADED <= 0: return
+	if AMMO_LOADED <= 0:
+		empty_stram.play()
+		return
 	if AMMO_LOADED < DROP_AMMO: return
 	
 	is_shotting = true
 	AMMO_LOADED -= DROP_AMMO
 	
+	shot_stream.play()
 	Events.emit_signal("player_shot")
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
 	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
@@ -61,6 +67,8 @@ func reload():
 	var need_amount = MAX_AMMO_LOADED - AMMO_LOADED
 	AMMO_LOADED = AMMO_LOADED + min(need_amount, amount_total)
 	amount_total -= AMMO_LOADED
+	
+	reload_stream.play()
 	Events.emit_signal("player_reload", need_amount)
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
 	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED

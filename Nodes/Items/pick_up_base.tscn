@@ -18,7 +18,12 @@ func _on_active_node_action_pressed():
 		Events.emit_signal('message_ui', tr(TAKE_MESSAGE) % [SLOT_DATA.AMOUNT])
 	else:
 		Events.emit_signal('message_ui', tr(TAKE_MESSAGE) % [SLOT_DATA.ITEM_DATA.NAME])
+
+	SLOT_DATA.add_to_inventory()
+	GlobalVariables.no_spawn_items.push_back(get_path().get_concatenated_names())
+	Events.emit_signal('inventory_update')
 	Events.emit_signal('item_pick_up', SLOT_DATA, self)
+	queue_free()
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1q38j"]

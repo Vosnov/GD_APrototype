@@ -13,6 +13,7 @@ var player_is_runing = false
 var player_is_aim = false
 var player_target_is_full = false
 var should_spawn_on_player_transform = false
+var door_prev_scene = ''
 
 const save_count = 4
 

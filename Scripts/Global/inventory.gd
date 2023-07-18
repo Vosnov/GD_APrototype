@@ -1,7 +1,8 @@
 extends Node
 
 @export var SLOTS: Array[SlotData] = []
-#@export var GUN_SLOTS: Array[GunSlotData] = []
+
+@onready var pick_up_stream = $PickUpStream
 
 func _ready():
 	Events.emit_signal('inventory_update')
@@ -9,11 +10,8 @@ func _ready():
 	Events.connect('player_reload', _on_player_reload)
 	Events.connect('inventory_remove_item', _on_inventory_remove_item)
 
-func _on_item_pick_up(item: SlotData, body: Node3D):
-	item.add_to_inventory()
-	body.queue_free()
-	GlobalVariables.no_spawn_items.push_back(body.get_path().get_concatenated_names())
-	Events.emit_signal('inventory_update')
+func _on_item_pick_up(_item: SlotData, _body: Node3D):
+	pick_up_stream.play()
 
 func _on_player_reload(amount_drop: int):
 	var amount = amount_drop
