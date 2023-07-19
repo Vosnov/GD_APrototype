@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://jbuxuquitwqd"]
+[gd_scene load_steps=3 format=3 uid="uid://jbuxuquitwqd"]
+
+[ext_resource type="AudioStream" uid="uid://bdogg2xjnr2on" path="res://SFX/UI/UiSelect.mp3" id="1_u7icf"]
 
 [sub_resource type="GDScript" id="GDScript_ctj8m"]
 script/source = "extends VBoxContainer
 
 @export_file(\"*.tscn\") var LOAD_SAVE_MENU
 @export_file(\"*.tscn\") var START_LEVEL
+@export var BUTTON_UI_SOUND: AudioStream
 
 @onready var continue_btn = $Continue
 
@@ -12,6 +15,8 @@ var last_save_data
 var save_index = 0
 
 func _ready():
+	set_button_ui_sound()
+	
 	continue_btn.visible = false
 	var unix_date_time = 0
 	for index in range(GlobalVariables.save_count):
@@ -39,6 +44,11 @@ func _on_new_button_down():
 func _on_continue_button_down():
 	GameSave.load_save(save_index)
 	SceneTransition.change_scene(last_save_data.level_path)
+
+func set_button_ui_sound():
+	for child in get_children():
+		if child is Button:
+			child.button_down.connect(func(): GlobalSound.play_ui(BUTTON_UI_SOUND))
 "
 
 [node name="MainMenu" type="Node2D"]
@@ -69,6 +79,7 @@ grow_vertical = 2
 script = SubResource("GDScript_ctj8m")
 LOAD_SAVE_MENU = "res://Scenes/Menu/load_save_menu.tscn"
 START_LEVEL = "res://Scenes/test_scene.tscn"
+BUTTON_UI_SOUND = ExtResource("1_u7icf")
 
 [node name="Continue" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2

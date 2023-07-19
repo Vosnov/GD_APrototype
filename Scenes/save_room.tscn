@@ -2,9 +2,9 @@
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
-[ext_resource type="PackedScene" uid="uid://dmruxdnqw4rtm" path="res://Nodes/Charecters/player.tscn" id="3_ka1ri"]
+[ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="3_ka1ri"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="4_x7b7k"]
-[ext_resource type="PackedScene" uid="uid://dsbmcxe7n4yyv" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
+[ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 
 [node name="SaveRoom" type="Node3D"]
