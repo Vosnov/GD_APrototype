@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3b84dd3fh6wt"]
+[gd_scene load_steps=2 format=3 uid="uid://d3b84dd3fh6wt"]
 
 [ext_resource type="Script" path="res://Scripts/Global/global_sound.gd" id="1_pvs8n"]
-[ext_resource type="PackedScene" uid="uid://cddixmijhcmvt" path="res://Nodes/SoundStreams/ui_stream.tscn" id="2_dou1v"]
 
 [node name="GlobalSound" type="Node"]
 script = ExtResource("1_pvs8n")
-UI_STREAM = ExtResource("2_dou1v")

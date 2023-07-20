@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://fkchkki1t0fg"]
+[gd_scene load_steps=3 format=3 uid="uid://fkchkki1t0fg"]
 
 [ext_resource type="Script" path="res://Scripts/UI/save_btn_ui.gd" id="1_vfjbs"]
+[ext_resource type="AudioStream" uid="uid://bdogg2xjnr2on" path="res://SFX/UI/UiSelect.mp3" id="2_f55jt"]
 
 [node name="SaveBtn" type="Button"]
 custom_minimum_size = Vector2(150, 200)
 script = ExtResource("1_vfjbs")
 SAVE_NAME = "saveBtn.slot"
+CLICK_STREAM = ExtResource("2_f55jt")
 
 [node name="SlotName" type="Label" parent="."]
 layout_mode = 1

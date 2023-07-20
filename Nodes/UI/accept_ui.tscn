@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://n6b5jqbuuxx4"]
+[gd_scene load_steps=3 format=3 uid="uid://n6b5jqbuuxx4"]
 
 [ext_resource type="Script" path="res://Scripts/UI/accept_ui.gd" id="1_5hk11"]
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="2_4iu6g"]
 
 [node name="AcceptUI" type="Panel"]
 anchors_preset = 15
@@ -47,11 +48,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Accept" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Accept" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_4iu6g")]
 layout_mode = 2
 text = "ok"
 
-[node name="Cancel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Cancel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_4iu6g")]
 layout_mode = 2
 text = "cancel"
 
