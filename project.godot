@@ -22,6 +22,7 @@ SceneTransition="*res://Nodes/Global/scene_transition.tscn"
 Inventory="*res://Nodes/Global/inventory.tscn"
 GlobalVariables="*res://Scripts/Global/global_variables.gd"
 GameSave="*res://Nodes/Global/game_save.tscn"
+GlobalSound="*res://Nodes/Global/global_sound.tscn"
 
 [input]
 

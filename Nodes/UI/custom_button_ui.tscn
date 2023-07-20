@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c35n1fbi4mad4"]
+
+[ext_resource type="AudioStream" uid="uid://bdogg2xjnr2on" path="res://SFX/UI/UiSelect.mp3" id="1_meg0j"]
+
+[sub_resource type="GDScript" id="GDScript_jiopt"]
+script/source = "extends Button
+
+@export var CLICK_STREAM: AudioStream
+
+func _ready():
+	button_down.connect(func(): GlobalSound.play_ui(CLICK_STREAM))
+"
+
+[node name="CustomButtonUI" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = SubResource("GDScript_jiopt")
+CLICK_STREAM = ExtResource("1_meg0j")

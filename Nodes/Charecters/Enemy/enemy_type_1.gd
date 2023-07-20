@@ -14,6 +14,7 @@ signal take_damage()
 @onready var animation_tree = $AnimationTree
 @onready var stering_behavior = $SteeringBehaviorComponent
 @onready var target_marker = $TargetMarker
+@onready var collision_shape_3d = $CollisionShape3D
 
 var player: Node3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -47,6 +48,7 @@ func get_aim_target() -> Node3D:
 
 func die():
 	is_dead = true
+	collision_shape_3d.disabled = true
 	animation_tree.set("parameters/main_trans/transition_request", 'dying')
 	stering_behavior.queue_free()
 	Events.emit_signal('enemy_die', self)

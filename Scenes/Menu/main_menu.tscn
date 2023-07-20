@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://jbuxuquitwqd"]
+[gd_scene load_steps=3 format=3 uid="uid://jbuxuquitwqd"]
+
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="1_eayua"]
 
 [sub_resource type="GDScript" id="GDScript_ctj8m"]
 script/source = "extends VBoxContainer
@@ -70,27 +72,27 @@ script = SubResource("GDScript_ctj8m")
 LOAD_SAVE_MENU = "res://Scenes/Menu/load_save_menu.tscn"
 START_LEVEL = "res://Scenes/test_scene.tscn"
 
-[node name="Continue" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Continue" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
 layout_mode = 2
 text = "menu.continue"
 
-[node name="New" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-text = "menu.newGame"
-
-[node name="Load" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Load" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
 layout_mode = 2
 text = "menu.loadGame"
 
-[node name="Settings" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="New" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
+layout_mode = 2
+text = "menu.newGame"
+
+[node name="Settings" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
 layout_mode = 2
 text = "menu.settings"
 
-[node name="Quit" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="Quit" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
 layout_mode = 2
 text = "menu.exit"
 
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Continue" to="CanvasLayer/Control/VBoxContainer" method="_on_continue_button_down"]
-[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/New" to="CanvasLayer/Control/VBoxContainer" method="_on_new_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Load" to="CanvasLayer/Control/VBoxContainer" method="_on_load_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/New" to="CanvasLayer/Control/VBoxContainer" method="_on_new_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Quit" to="CanvasLayer/Control/VBoxContainer" method="_on_quit_button_down"]

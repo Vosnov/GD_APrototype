@@ -6,6 +6,7 @@ class_name SaveBtnUI
 @export var SAVE_NAME: String
 @export var LEVEL_NAME: String
 @export var DATE: String
+@export var CLICK_STREAM: AudioStream
 
 @onready var v_box_container = $Control/VBoxContainer
 @onready var slot_name = $SlotName
@@ -14,6 +15,8 @@ class_name SaveBtnUI
 @onready var empty_label = $Control/EmptyLabel
 
 func _ready():
+	button_down.connect(func(): GlobalSound.play_ui(CLICK_STREAM))
+	
 	slot_name.text = tr(SAVE_NAME) % [SAVE_INDEX + 1]
 	
 	if IS_EMPTY:

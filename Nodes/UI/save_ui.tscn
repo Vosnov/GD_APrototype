@@ -28,9 +28,11 @@ func _exit_tree():
 
 func _on_button_button_down(index: int):
 	active_save_index = index
+	
 	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
 	accept_ui.accept.connect(_on_accept)
 	accept_ui.MESSAGE = SAVE_MESSAGE
+	
 	add_child(accept_ui)
 
 func _on_accept():

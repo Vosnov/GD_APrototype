@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdnnhihjtlmf3"]
+[gd_scene load_steps=11 format=3 uid="uid://cdnnhihjtlmf3"]
 
 [ext_resource type="Script" path="res://Scripts/Guns/pistol.gd" id="2_rqgru"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="2_tdybi"]
 [ext_resource type="PackedScene" uid="uid://cowxw64vqke8q" path="res://Particles/pistol_hit.tscn" id="3_6ltvh"]
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="3_whdl7"]
 [ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="4_hji00"]
+[ext_resource type="AudioStream" uid="uid://c73smosfc3jau" path="res://SFX/Guns/PistolShot.mp3" id="6_upkw0"]
+[ext_resource type="AudioStream" uid="uid://mfa4jrjmm3rb" path="res://SFX/Guns/PistolReload.mp3" id="7_dvifb"]
+[ext_resource type="AudioStream" uid="uid://vsi3pgpdl0hv" path="res://SFX/Guns/PistolEmpty.mp3" id="8_eka27"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvvw1"]
 albedo_color = Color(0, 0.376471, 0.411765, 1)
@@ -27,3 +30,12 @@ mesh = SubResource("BoxMesh_hvx2b")
 [node name="RayCast3D" type="RayCast3D" parent="." index="2"]
 target_position = Vector3(0, 0, -10)
 collision_mask = 4
+
+[node name="ShotStream" parent="." index="3"]
+stream = ExtResource("6_upkw0")
+
+[node name="ReloadStream" parent="." index="4"]
+stream = ExtResource("7_dvifb")
+
+[node name="EmptyStram" parent="." index="5"]
+stream = ExtResource("8_eka27")

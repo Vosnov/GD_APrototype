@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjoety6t3jgxy"]
+[gd_scene load_steps=11 format=3 uid="uid://cjoety6t3jgxy"]
 
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="1_5uskf"]
 [ext_resource type="Script" path="res://Scripts/Guns/shutgun.gd" id="2_ipkg4"]
 [ext_resource type="PackedScene" uid="uid://cfrc1mhs7087f" path="res://Particles/shotgun_hit.tscn" id="3_1ster"]
 [ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="4_hkqpc"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="4_miaxy"]
+[ext_resource type="AudioStream" uid="uid://djrlgelhrcjof" path="res://SFX/Guns/ShotgunShot.mp3" id="6_c7at1"]
+[ext_resource type="AudioStream" uid="uid://cn857yuu55uk6" path="res://SFX/Guns/ShotgunReload.mp3" id="7_k5us2"]
+[ext_resource type="AudioStream" uid="uid://dc5a42bfg4eyl" path="res://SFX/Guns/ShotgunEmpty.mp3" id="8_v8yym"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oieef"]
 albedo_color = Color(0.658824, 0, 0, 1)
@@ -26,9 +29,18 @@ DROP_AMMO = 2
 ITEM_GUN_DATA = ExtResource("4_hkqpc")
 MUZZLE_FLASH = ExtResource("4_miaxy")
 
+[node name="ShotStream" parent="." index="1"]
+stream = ExtResource("6_c7at1")
+
+[node name="ReloadStream" parent="." index="2"]
+stream = ExtResource("7_k5us2")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
 transform = Transform3D(0.14, 0, 0, 0, 0.187, 0, 0, 0, 0.607, 0, 0, -0.3)
 material_override = SubResource("StandardMaterial3D_oieef")
 mesh = SubResource("BoxMesh_g4bn3")
 
 [node name="LookAtEnemyNode" type="Node3D" parent="." index="4"]
+
+[node name="EmptyStram" parent="." index="5"]
+stream = ExtResource("8_v8yym")

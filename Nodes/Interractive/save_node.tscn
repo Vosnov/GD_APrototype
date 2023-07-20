@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxoiu11eexkxk"]
+[gd_scene load_steps=10 format=3 uid="uid://dxoiu11eexkxk"]
 
 [ext_resource type="PackedScene" uid="uid://dlcvkcv24x2ro" path="res://Nodes/UI/save_ui.tscn" id="1_dakaw"]
 [ext_resource type="PackedScene" uid="uid://dtanochifrdyf" path="res://Nodes/Helpers/action_node.tscn" id="1_wobr0"]
 [ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="2_pjif8"]
 [ext_resource type="Texture2D" uid="uid://bdys0eqpecrig" path="res://Textures/prototype_512x512_blue1.png" id="3_ihryl"]
+[ext_resource type="AudioStream" uid="uid://d32ksk808t6lh" path="res://SFX/UI/Save.mp3" id="5_jrtqb"]
 
 [sub_resource type="GDScript" id="GDScript_ccgm4"]
 script/source = "extends Node3D
@@ -12,11 +13,15 @@ script/source = "extends Node3D
 @export var SAVE_UI: PackedScene
 @export_file('*.tscn') var LEVEL_PATH
 
+@onready var save_stream = $SaveStream
+
 var save_ui: Node
 var player: Node3D
 
 func _on_active_node_action_pressed():
 	if save_ui != null: return
+	
+	save_stream.play()
 	
 	GlobalVariables.save_data.level_name = LEVEL_NAME
 	GlobalVariables.save_data.level_path = LEVEL_PATH
@@ -59,6 +64,11 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_5g0l4")
+
+[node name="SaveStream" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_jrtqb")
+bus = &"UI"
 
 [connection signal="action_pressed" from="ActiveNode" to="." method="_on_active_node_action_pressed"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
