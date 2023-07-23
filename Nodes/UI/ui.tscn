@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=7 format=3 uid="uid://en3g0v7xjkgn"]
 
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_vjmbd"]
+[ext_resource type="PackedScene" uid="uid://8nwcw66m6aqr" path="res://Nodes/UI/pause_ui.tscn" id="1_xbwcd"]
 [ext_resource type="PackedScene" uid="uid://bdvj6pfhtgs1e" path="res://Nodes/UI/dead_screen.tscn" id="2_e8xum"]
 [ext_resource type="PackedScene" uid="uid://drr3ddmpotjgj" path="res://Nodes/UI/message_ui.tscn" id="3_138rf"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
 
+@export var PAUSE_UI: PackedScene
 @export var INVENTORY_UI: PackedScene
 @export var DEAD_SCREEN: PackedScene
 
@@ -15,6 +17,7 @@ script/source = "extends CanvasLayer
 
 var inventory_instance: Node
 var dead_screen_instance: Node
+var pause_instance: Node
 
 func _ready():
 	Events.connect(\"player_dead\", _on_player_dead)
@@ -30,10 +33,15 @@ func _on_player_hp_ui(_hp: float):
 func _input(_event):
 	if dead_screen_instance != null: return
 	if GlobalVariables.menu_ui_is_open: return
+	if inventory_instance != null: return
+	if pause_instance != null: return
 	
-	if Input.is_action_just_pressed('ui_menu') and inventory_instance == null:
+	if Input.is_action_just_pressed('ui_menu'):
 		inventory_instance = INVENTORY_UI.instantiate()
 		add_child(inventory_instance)
+	if Input.is_action_just_pressed('ui_cancel'):
+		pause_instance = PAUSE_UI.instantiate()
+		add_child(pause_instance)
 
 func _on_player_dead():
 	if inventory_instance != null: inventory_instance.queue_free()
@@ -73,6 +81,7 @@ func spawn_message(_message: String):
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
 script = SubResource("GDScript_tkxjl")
+PAUSE_UI = ExtResource("1_xbwcd")
 INVENTORY_UI = ExtResource("1_vjmbd")
 DEAD_SCREEN = ExtResource("2_e8xum")
 

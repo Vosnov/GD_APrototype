@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=3 uid="uid://8nwcw66m6aqr"]
+
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="1_uv55t"]
+[ext_resource type="PackedScene" uid="uid://cq031hijcq0gv" path="res://Nodes/UI/settings_ui.tscn" id="2_xswwo"]
+
+[sub_resource type="GDScript" id="GDScript_ytthh"]
+script/source = "extends Control
+
+@onready var panel = $Panel
+@onready var settings_panel = $SettingsPanel
+
+func _ready():
+	settings_panel.visible = false
+	panel.visible = true
+	
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _exit_tree():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+
+func _input(_event):
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
+		if settings_panel.visible:
+			toggle_settings()
+			return
+		queue_free()
+
+
+func _on_exit_button_down():
+	get_tree().quit()
+
+
+func _on_settings_button_down():
+	toggle_settings()
+
+
+func _on_continue_button_down():
+	queue_free()
+
+func toggle_settings():
+	settings_panel.visible = !settings_panel.visible
+	panel.visible = !panel.visible
+
+
+func _on_settings_ui_on_back():
+	toggle_settings()
+"
+
+[node name="PauseUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ytthh")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -15.5
+offset_right = 97.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Continue" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "Continue"
+
+[node name="Settings" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Exit" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "Exit"
+
+[node name="SettingsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsUI" parent="SettingsPanel" instance=ExtResource("2_xswwo")]
+layout_mode = 1
+
+[connection signal="button_down" from="Panel/HBoxContainer/Continue" to="." method="_on_continue_button_down"]
+[connection signal="button_down" from="Panel/HBoxContainer/Settings" to="." method="_on_settings_button_down"]
+[connection signal="button_down" from="Panel/HBoxContainer/Exit" to="." method="_on_exit_button_down"]
+[connection signal="on_back" from="SettingsPanel/SettingsUI" to="." method="_on_settings_ui_on_back"]
