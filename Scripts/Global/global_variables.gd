@@ -1,6 +1,6 @@
 extends Node
 
-#save var
+#Saved variables
 var no_spawn_items: Array[String] = []
 var no_spawn_enemys: Array[String] = []
 var player_spawn_data: Dictionary = {}
@@ -14,6 +14,8 @@ var player_is_aim = false
 var player_target_is_full = false
 var should_spawn_on_player_transform = false
 var door_prev_scene = ''
+#Settings
+var setting_mouse = 1.0
 
 const save_count = 4
 

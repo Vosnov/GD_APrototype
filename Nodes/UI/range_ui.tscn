@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://do8vqnqm32rj5"]
+
+[sub_resource type="GDScript" id="GDScript_wercy"]
+script/source = "extends HBoxContainer
+
+@export var IS_PERCENT = false
+@export var SETTINGS_SECTION: String
+@export var SETTINGS_KEY: String
+
+@onready var percentage = $Percentage
+@onready var h_slider = $HSlider
+
+func _ready():
+	var config = SettingsSave.get_config()
+	h_slider.value = config.get_value(SETTINGS_SECTION, SETTINGS_KEY, h_slider.value)
+	_on_h_slider_value_changed(h_slider.value)
+
+func reset():
+	_ready()
+
+func _on_h_slider_value_changed(value):
+	Events.settings_change.emit()
+	if SETTINGS_KEY != null && SETTINGS_SECTION != null:
+		var config = SettingsSave.get_config()
+		config.set_value(SETTINGS_SECTION, SETTINGS_KEY, value)
+	
+	if IS_PERCENT:
+		percentage.text = str(calc_percent(value), '%')
+	else:
+		percentage.text = str(value)
+
+func calc_percent(value: float):
+	var _range = h_slider.max_value - h_slider.min_value
+	return ceili((value - h_slider.min_value) / _range * 100)
+"
+
+[node name="RangeUI" type="HBoxContainer" groups=["can_reset"]]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_wercy")
+SETTINGS_SECTION = "Control"
+SETTINGS_KEY = "mouse"
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Master
+"
+horizontal_alignment = 2
+
+[node name="HSlider" type="HSlider" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Percentage" type="Label" parent="."]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "0"
+clip_text = true
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

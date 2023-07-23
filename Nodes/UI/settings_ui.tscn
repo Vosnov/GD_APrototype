@@ -1,0 +1,363 @@
+[gd_scene load_steps=8 format=3 uid="uid://cq031hijcq0gv"]
+
+[ext_resource type="PackedScene" uid="uid://n6b5jqbuuxx4" path="res://Nodes/UI/accept_ui.tscn" id="1_57do8"]
+[ext_resource type="PackedScene" uid="uid://do8vqnqm32rj5" path="res://Nodes/UI/range_ui.tscn" id="2_i64sh"]
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="3_sawli"]
+
+[sub_resource type="GDScript" id="GDScript_d4sa8"]
+script/source = "extends Control
+
+@export var ACCEPT_UI: PackedScene
+@export var ACCEPT_SAVE_MESSAGE: String
+@export var ACCPET_DEFAULT_MESSAGE: String
+
+signal on_back()
+
+@onready var accept = $VBoxContainer/HBoxContainer/Accept
+
+func _ready():
+	accept.visible = false
+	Events.settings_change.connect(func(): accept.visible = true)
+
+func _on_accept_button_down():
+	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
+	accept_ui.MESSAGE = ACCEPT_SAVE_MESSAGE
+	add_child(accept_ui)
+	accept_ui.accept.connect(save)
+
+func _on_back_button_down():
+	on_back.emit()
+
+func _on_by_default_button_down():
+	var accept_ui = ACCEPT_UI.instantiate() as AcceptUI
+	accept_ui.MESSAGE = ACCPET_DEFAULT_MESSAGE
+	add_child(accept_ui)
+	accept_ui.accept.connect(reset_to_default)
+	
+func reset_to_default():
+	SettingsSave.save_settings_by_default()
+	
+	for node in get_tree().get_nodes_in_group('can_reset'):
+		if node.has_method('reset'):
+			node.call('reset')
+			
+	accept.visible = false
+
+func save():
+	SettingsSave.save_settings()
+	accept.visible = false
+"
+
+[sub_resource type="GDScript" id="GDScript_a5ph4"]
+script/source = "extends TabContainer
+
+@export var TAB_TITLES: Array[String] = []
+
+func _ready():
+	if TAB_TITLES.size() != get_tab_count():
+		printerr('Check TAB_TITLES')
+		return
+		
+	for index in get_tab_count():
+		set_tab_title(index, TAB_TITLES[index])
+"
+
+[sub_resource type="GDScript" id="GDScript_x6c3u"]
+script/source = "extends VBoxContainer
+
+var langs: Dictionary = {
+	0: {
+		'text': 'Rus',
+		'value': 'ru'
+	},
+	1: {
+		'text': 'Eng',
+		'value': 'en'
+	},
+}
+
+@onready var lang = $HBoxContainer/Lang
+
+func _ready():
+	lang.clear()
+	
+	for key in langs:
+		lang.add_item(langs[key].text, key)
+	
+	for key in langs:
+		if langs[key].value == TranslationServer.get_locale():
+			lang.selected = key
+			break
+	
+func reset():
+	_ready()
+
+func _on_lang_item_selected(index):
+	Events.settings_change.emit()
+	var config = SettingsSave.get_config()
+	config.set_value('Game', 'lang', langs[index].value)
+"
+
+[sub_resource type="GDScript" id="GDScript_ua6l1"]
+script/source = "extends VBoxContainer
+
+@onready var resolution = $Resolution
+@onready var full_screen = $FullScreen
+
+var resolutions: Dictionary = {
+	0: {
+		'text': '1920x1080',
+		'value': Vector2i(1920, 1080)
+	},
+	1: {
+		'text': '1280x720',
+		'value': Vector2i(1280, 720)
+	},
+	2: {
+		'text': '800x600',
+		'value': Vector2i(800, 600)
+	}
+}
+
+func _ready():
+	resolution.clear()
+	for key in resolutions:
+		resolution.add_item(resolutions[key].text, key)
+	
+	full_screen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+	for key in resolutions:
+		if resolutions[key].value == DisplayServer.window_get_size():
+			resolution.select(key)
+			break
+
+func reset():
+	_ready()
+
+func _on_resolution_item_selected(index):
+	Events.settings_change.emit()
+	
+	var value = resolutions[index]
+	var config = SettingsSave.get_config()
+	config.set_value('Graphics', 'resolution', value.get('value'))
+
+func _on_full_screen_toggled(button_pressed):
+	Events.settings_change.emit()
+	
+	var config = SettingsSave.get_config()
+	if button_pressed:
+		config.set_value('Graphics', 'fullscreen', DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		config.set_value('Graphics', 'fullscreen', DisplayServer.WINDOW_MODE_WINDOWED)
+"
+
+[node name="SettingsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_d4sa8")
+ACCEPT_UI = ExtResource("1_57do8")
+ACCEPT_SAVE_MESSAGE = "Save settings?"
+ACCPET_DEFAULT_MESSAGE = "All settings set by default"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+script = SubResource("GDScript_a5ph4")
+TAB_TITLES = Array[String](["game", "control", "audio", "display"])
+
+[node name="Game" type="Control" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Game" groups=["can_reset"]]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_x6c3u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Game/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Language"
+
+[node name="Lang" type="OptionButton" parent="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Rus"
+popup/item_0/id = 0
+popup/item_1/text = "Eng"
+popup/item_1/id = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RangeUI" parent="VBoxContainer/TabContainer/Control" instance=ExtResource("2_i64sh")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.0
+offset_top = -13.0
+offset_right = 179.0
+offset_bottom = 13.0
+
+[node name="Label" parent="VBoxContainer/TabContainer/Control/RangeUI" index="0"]
+text = "Mouse
+"
+
+[node name="HSlider" parent="VBoxContainer/TabContainer/Control/RangeUI" index="1"]
+min_value = 0.01
+max_value = 4.0
+step = 0.01
+value = 1.0
+
+[node name="Audio" type="Control" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RangeUI" parent="VBoxContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("2_i64sh")]
+layout_mode = 2
+IS_PERCENT = true
+SETTINGS_SECTION = "Audio"
+SETTINGS_KEY = "0"
+
+[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI" index="1"]
+min_value = -30.0
+max_value = 10.0
+
+[node name="RangeUI2" parent="VBoxContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("2_i64sh")]
+layout_mode = 2
+IS_PERCENT = true
+SETTINGS_SECTION = "Audio"
+SETTINGS_KEY = "1"
+
+[node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI2" index="0"]
+text = "Music
+"
+
+[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI2" index="1"]
+min_value = -30.0
+max_value = 10.0
+
+[node name="RangeUI3" parent="VBoxContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("2_i64sh")]
+layout_mode = 2
+IS_PERCENT = true
+SETTINGS_SECTION = "Audio"
+SETTINGS_KEY = "2"
+
+[node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI3" index="0"]
+text = "FX
+"
+
+[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI3" index="1"]
+min_value = -30.0
+max_value = 10.0
+
+[node name="RangeUI4" parent="VBoxContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("2_i64sh")]
+layout_mode = 2
+IS_PERCENT = true
+SETTINGS_SECTION = "Audio"
+SETTINGS_KEY = "3"
+
+[node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI4" index="0"]
+text = "UI"
+
+[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI4" index="1"]
+min_value = -30.0
+max_value = 10.0
+
+[node name="Display" type="Control" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Display" groups=["can_reset"]]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.5
+offset_top = -50.5
+offset_right = 62.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ua6l1")
+
+[node name="Resolution" type="OptionButton" parent="VBoxContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="FullScreen" type="CheckBox" parent="VBoxContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+text = "FullScreen"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Accept" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
+layout_mode = 2
+text = "Accept"
+
+[node name="ByDefault" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
+layout_mode = 2
+text = "By default"
+
+[node name="Back" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
+layout_mode = 2
+text = "Back"
+
+[connection signal="item_selected" from="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer/Lang" to="VBoxContainer/TabContainer/Game/VBoxContainer" method="_on_lang_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/TabContainer/Display/VBoxContainer/Resolution" to="VBoxContainer/TabContainer/Display/VBoxContainer" method="_on_resolution_item_selected"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Display/VBoxContainer/FullScreen" to="VBoxContainer/TabContainer/Display/VBoxContainer" method="_on_full_screen_toggled"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/Accept" to="." method="_on_accept_button_down"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/ByDefault" to="." method="_on_by_default_button_down"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_down"]
+
+[editable path="VBoxContainer/TabContainer/Control/RangeUI"]
+[editable path="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI"]
+[editable path="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI2"]
+[editable path="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI3"]
+[editable path="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI4"]

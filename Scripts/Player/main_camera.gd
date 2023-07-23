@@ -1,11 +1,13 @@
 extends Node3D
 
-@export var ROTATE_SPEED = 0.6
 @export var TARGET: Node3D
 
 @onready var camera_3d = $SpringArm3D/Camera3D
 
+var screen_dpi = 100
+
 func _ready():
+	screen_dpi = DisplayServer.screen_get_dpi()
 	global_rotation.y = TARGET.global_rotation.y
 
 func _physics_process(_delta):
@@ -16,4 +18,5 @@ func _physics_process(_delta):
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		quaternion *= Quaternion(Vector3.UP, -deg_to_rad(event.relative.x) * ROTATE_SPEED)
+		var value = event.relative.x / screen_dpi * GlobalVariables.setting_mouse
+		quaternion *= Quaternion(Vector3.UP, -value)

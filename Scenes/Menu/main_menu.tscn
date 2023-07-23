@@ -7,6 +7,7 @@ script/source = "extends VBoxContainer
 
 @export_file(\"*.tscn\") var LOAD_SAVE_MENU
 @export_file(\"*.tscn\") var START_LEVEL
+@export_file(\"*.tscn\") var SETTINGS_MENU
 
 @onready var continue_btn = $Continue
 
@@ -41,6 +42,9 @@ func _on_new_button_down():
 func _on_continue_button_down():
 	GameSave.load_save(save_index)
 	SceneTransition.change_scene(last_save_data.level_path)
+
+func _on_settings_button_down():
+	SceneTransition.change_scene(SETTINGS_MENU)
 "
 
 [node name="MainMenu" type="Node2D"]
@@ -71,6 +75,7 @@ grow_vertical = 2
 script = SubResource("GDScript_ctj8m")
 LOAD_SAVE_MENU = "res://Scenes/Menu/load_save_menu.tscn"
 START_LEVEL = "res://Scenes/test_scene.tscn"
+SETTINGS_MENU = "res://Scenes/Menu/settings_menu.tscn"
 
 [node name="Continue" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource("1_eayua")]
 layout_mode = 2
@@ -95,4 +100,5 @@ text = "menu.exit"
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Continue" to="CanvasLayer/Control/VBoxContainer" method="_on_continue_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Load" to="CanvasLayer/Control/VBoxContainer" method="_on_load_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/New" to="CanvasLayer/Control/VBoxContainer" method="_on_new_button_down"]
+[connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Settings" to="CanvasLayer/Control/VBoxContainer" method="_on_settings_button_down"]
 [connection signal="button_down" from="CanvasLayer/Control/VBoxContainer/Quit" to="CanvasLayer/Control/VBoxContainer" method="_on_quit_button_down"]

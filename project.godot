@@ -23,6 +23,14 @@ Inventory="*res://Nodes/Global/inventory.tscn"
 GlobalVariables="*res://Scripts/Global/global_variables.gd"
 GameSave="*res://Nodes/Global/game_save.tscn"
 GlobalSound="*res://Nodes/Global/global_sound.tscn"
+SettingsSave="*res://Scripts/Global/settings_save.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="ignore"
 
 [input]
 
