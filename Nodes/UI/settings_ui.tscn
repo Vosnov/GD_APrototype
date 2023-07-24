@@ -45,6 +45,11 @@ func reset_to_default():
 
 func save():
 	SettingsSave.save_settings()
+	
+	for node in get_tree().get_nodes_in_group('can_reset'):
+		if node.has_method('reset'):
+			node.call('reset')
+			
 	accept.visible = false
 "
 
@@ -62,16 +67,16 @@ func _ready():
 		set_tab_title(index, TAB_TITLES[index])
 "
 
-[sub_resource type="GDScript" id="GDScript_x6c3u"]
+[sub_resource type="GDScript" id="GDScript_8c3u3"]
 script/source = "extends VBoxContainer
 
 var langs: Dictionary = {
 	0: {
-		'text': 'Rus',
+		'text': 'lang.rus',
 		'value': 'ru'
 	},
 	1: {
-		'text': 'Eng',
+		'text': 'lang.en',
 		'value': 'en'
 	},
 }
@@ -82,7 +87,7 @@ func _ready():
 	lang.clear()
 	
 	for key in langs:
-		lang.add_item(langs[key].text, key)
+		lang.add_item(tr(langs[key].text), key)
 	
 	for key in langs:
 		if langs[key].value == TranslationServer.get_locale():
@@ -99,7 +104,7 @@ func _on_lang_item_selected(index):
 "
 
 [sub_resource type="GDScript" id="GDScript_ua6l1"]
-script/source = "extends VBoxContainer
+script/source = "extends GridContainer
 
 @onready var resolution = $Resolution
 @onready var full_screen = $FullScreen
@@ -159,8 +164,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_d4sa8")
 ACCEPT_UI = ExtResource("1_57do8")
-ACCEPT_SAVE_MESSAGE = "Save settings?"
-ACCPET_DEFAULT_MESSAGE = "All settings set by default"
+ACCEPT_SAVE_MESSAGE = "settingsUI.applyMessage"
+ACCPET_DEFAULT_MESSAGE = "settingsUI.defaultMessage"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -175,8 +180,9 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
+clip_tabs = false
 script = SubResource("GDScript_a5ph4")
-TAB_TITLES = Array[String](["game", "control", "audio", "display"])
+TAB_TITLES = Array[String](["settingsUI.game", "settingsUI.control", "settingsUI.audio", "settingsUI.display"])
 
 [node name="Game" type="Control" parent="VBoxContainer/TabContainer"]
 layout_mode = 2
@@ -194,23 +200,17 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_x6c3u")
+script = SubResource("GDScript_8c3u3")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Game/VBoxContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Language"
+text = "settingsUI.language"
 
 [node name="Lang" type="OptionButton" parent="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-item_count = 2
-selected = 0
-popup/item_0/text = "Rus"
-popup/item_0/id = 0
-popup/item_1/text = "Eng"
-popup/item_1/id = 1
 
 [node name="Control" type="Control" parent="VBoxContainer/TabContainer"]
 visible = false
@@ -229,8 +229,7 @@ offset_right = 179.0
 offset_bottom = 13.0
 
 [node name="Label" parent="VBoxContainer/TabContainer/Control/RangeUI" index="0"]
-text = "Mouse
-"
+text = "settingsUI.mouseSensitivity"
 
 [node name="HSlider" parent="VBoxContainer/TabContainer/Control/RangeUI" index="1"]
 min_value = 0.01
@@ -262,6 +261,9 @@ IS_PERCENT = true
 SETTINGS_SECTION = "Audio"
 SETTINGS_KEY = "0"
 
+[node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI" index="0"]
+text = "settingsUI.master"
+
 [node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI" index="1"]
 min_value = -30.0
 max_value = 10.0
@@ -273,8 +275,7 @@ SETTINGS_SECTION = "Audio"
 SETTINGS_KEY = "1"
 
 [node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI2" index="0"]
-text = "Music
-"
+text = "settingsUI.music"
 
 [node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI2" index="1"]
 min_value = -30.0
@@ -287,8 +288,7 @@ SETTINGS_SECTION = "Audio"
 SETTINGS_KEY = "2"
 
 [node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI3" index="0"]
-text = "FX
-"
+text = "settingsUI.fx"
 
 [node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI3" index="1"]
 min_value = -30.0
@@ -301,7 +301,7 @@ SETTINGS_SECTION = "Audio"
 SETTINGS_KEY = "3"
 
 [node name="Label" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI4" index="0"]
-text = "UI"
+text = "settingsUI.ui"
 
 [node name="HSlider" parent="VBoxContainer/TabContainer/Audio/VBoxContainer/RangeUI4" index="1"]
 min_value = -30.0
@@ -311,7 +311,7 @@ max_value = 10.0
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Display" groups=["can_reset"]]
+[node name="Grid" type="GridContainer" parent="VBoxContainer/TabContainer/Display" groups=["can_reset"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -324,14 +324,25 @@ offset_right = 62.5
 offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
+columns = 2
 script = SubResource("GDScript_ua6l1")
 
-[node name="Resolution" type="OptionButton" parent="VBoxContainer/TabContainer/Display/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Display/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "settingsUI.resolution"
+horizontal_alignment = 2
+
+[node name="Resolution" type="OptionButton" parent="VBoxContainer/TabContainer/Display/Grid"]
 layout_mode = 2
 
-[node name="FullScreen" type="CheckBox" parent="VBoxContainer/TabContainer/Display/VBoxContainer"]
+[node name="Label2" type="Label" parent="VBoxContainer/TabContainer/Display/Grid"]
 layout_mode = 2
-text = "FullScreen"
+text = "settingsUI.fullscreen"
+horizontal_alignment = 2
+
+[node name="FullScreen" type="CheckBox" parent="VBoxContainer/TabContainer/Display/Grid"]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -339,19 +350,19 @@ size_flags_horizontal = 4
 
 [node name="Accept" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
 layout_mode = 2
-text = "Accept"
+text = "settingsUI.acсept"
 
 [node name="ByDefault" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
 layout_mode = 2
-text = "By default"
+text = "settingsUI.byDefault"
 
 [node name="Back" parent="VBoxContainer/HBoxContainer" instance=ExtResource("3_sawli")]
 layout_mode = 2
-text = "Back"
+text = "back"
 
 [connection signal="item_selected" from="VBoxContainer/TabContainer/Game/VBoxContainer/HBoxContainer/Lang" to="VBoxContainer/TabContainer/Game/VBoxContainer" method="_on_lang_item_selected"]
-[connection signal="item_selected" from="VBoxContainer/TabContainer/Display/VBoxContainer/Resolution" to="VBoxContainer/TabContainer/Display/VBoxContainer" method="_on_resolution_item_selected"]
-[connection signal="toggled" from="VBoxContainer/TabContainer/Display/VBoxContainer/FullScreen" to="VBoxContainer/TabContainer/Display/VBoxContainer" method="_on_full_screen_toggled"]
+[connection signal="item_selected" from="VBoxContainer/TabContainer/Display/Grid/Resolution" to="VBoxContainer/TabContainer/Display/Grid" method="_on_resolution_item_selected"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/Display/Grid/FullScreen" to="VBoxContainer/TabContainer/Display/Grid" method="_on_full_screen_toggled"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/Accept" to="." method="_on_accept_button_down"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/ByDefault" to="." method="_on_by_default_button_down"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_down"]

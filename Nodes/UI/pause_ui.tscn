@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://8nwcw66m6aqr"]
+[gd_scene load_steps=5 format=3 uid="uid://8nwcw66m6aqr"]
 
 [ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="1_uv55t"]
 [ext_resource type="PackedScene" uid="uid://cq031hijcq0gv" path="res://Nodes/UI/settings_ui.tscn" id="2_xswwo"]
@@ -8,8 +8,10 @@ script/source = "extends Control
 
 @onready var panel = $Panel
 @onready var settings_panel = $SettingsPanel
+@onready var accept_ui = $AcceptUI
 
 func _ready():
+	accept_ui.visible = false
 	settings_panel.visible = false
 	panel.visible = true
 	
@@ -21,15 +23,12 @@ func _exit_tree():
 	get_tree().paused = false
 
 func _input(_event):
-	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
-		if settings_panel.visible:
-			toggle_settings()
-			return
+	if Input.is_action_just_pressed('ui_cancel'):
 		queue_free()
 
 
 func _on_exit_button_down():
-	get_tree().quit()
+	accept_ui.visible = true
 
 
 func _on_settings_button_down():
@@ -46,6 +45,21 @@ func toggle_settings():
 
 func _on_settings_ui_on_back():
 	toggle_settings()
+"
+
+[sub_resource type="GDScript" id="GDScript_qvqna"]
+script/source = "extends Panel
+
+@export_file(\"*.tscn\") var MENU_PATH
+
+func _on_exit_to_desktop_button_down():
+	get_tree().quit()
+
+func _on_exit_to_menu_button_down():
+	SceneTransition.change_scene(MENU_PATH)
+
+func _on_cancel_button_down():
+	visible = false
 "
 
 [node name="PauseUI" type="Control"]
@@ -82,16 +96,15 @@ alignment = 1
 
 [node name="Continue" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
 layout_mode = 2
-text = "Continue"
+text = "pauseUI.continue"
 
 [node name="Settings" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
 layout_mode = 2
-text = "Settings
-"
+text = "pauseUI.settings"
 
 [node name="Exit" parent="Panel/HBoxContainer" instance=ExtResource("1_uv55t")]
 layout_mode = 2
-text = "Exit"
+text = "pauseUI.exit"
 
 [node name="SettingsPanel" type="Panel" parent="."]
 visible = false
@@ -105,7 +118,63 @@ grow_vertical = 2
 [node name="SettingsUI" parent="SettingsPanel" instance=ExtResource("2_xswwo")]
 layout_mode = 1
 
+[node name="AcceptUI" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = SubResource("GDScript_qvqna")
+MENU_PATH = "res://Scenes/Menu/main_menu.tscn"
+
+[node name="PanelContainer" type="PanelContainer" parent="AcceptUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -38.5
+offset_right = 60.0
+offset_bottom = 38.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AcceptUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AcceptUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Message" type="Label" parent="AcceptUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "pauseUI.lostProgress"
+horizontal_alignment = 1
+
+[node name="ExitToDesktop" parent="AcceptUI/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "pauseUI.exitToDesktop"
+
+[node name="ExitToMenu" parent="AcceptUI/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "pauseUI.exitToMenu"
+
+[node name="Cancel" parent="AcceptUI/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("1_uv55t")]
+layout_mode = 2
+text = "cancel"
+
 [connection signal="button_down" from="Panel/HBoxContainer/Continue" to="." method="_on_continue_button_down"]
 [connection signal="button_down" from="Panel/HBoxContainer/Settings" to="." method="_on_settings_button_down"]
 [connection signal="button_down" from="Panel/HBoxContainer/Exit" to="." method="_on_exit_button_down"]
 [connection signal="on_back" from="SettingsPanel/SettingsUI" to="." method="_on_settings_ui_on_back"]
+[connection signal="button_down" from="AcceptUI/PanelContainer/MarginContainer/VBoxContainer/ExitToDesktop" to="AcceptUI" method="_on_exit_to_desktop_button_down"]
+[connection signal="button_down" from="AcceptUI/PanelContainer/MarginContainer/VBoxContainer/ExitToMenu" to="AcceptUI" method="_on_exit_to_menu_button_down"]
+[connection signal="button_down" from="AcceptUI/PanelContainer/MarginContainer/VBoxContainer/Cancel" to="AcceptUI" method="_on_cancel_button_down"]

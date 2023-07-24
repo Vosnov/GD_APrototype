@@ -27,3 +27,27 @@ data.shotgun.name,Shotgun,Дробовик
 data.shotgun.description,Shotgun,Дробовик
 level.name.saveRoom,Save room,Комната сохранений
 message.saveGame,Save the game?,Сохранить игру?
+pauseUI.continue,Continue,Продолжить
+pauseUI.settings,Settings,Настройки
+pauseUI.exit,Exit,Выход
+pauseUI.lostProgress,Unsaved progress will be lost,Несохраненный прогресс будет утерян
+pauseUI.exitToDesktop,Exit to desktop,Выйти на рабочий стол
+pauseUI.exitToMenu,Exit to menu,Выйти в меню
+settingsUI.game,Game,Игра
+settingsUI.control,Control,Управление
+settingsUI.audio,Audio,Звуки
+settingsUI.display,Display,Экарн
+settingsUI.language,Language,Язык
+settingsUI.acсept,Acсept,Принять
+settingsUI.byDefault,By default,По умолчанию
+settingsUI.mouseSensitivity,Mouse sensitivity,Чувстивтельность мыши
+settingsUI.master,Master,Общая
+settingsUI.music,Music,Музыка
+settingsUI.fx,SFX,Эффекты
+settingsUI.ui,UI,Интерфейс
+settingsUI.fullscreen,Fullscreen,Полный экран
+settingsUI.resolution,Resolution,Разрешение
+settingsUI.applyMessage,Apply settings?,Применить настройки?
+settingsUI.defaultMessage,All settings will be set to default,Все настройки будут установлены по умолчанию
+lang.rus,Russian,Русский
+lang.en,English,Английский

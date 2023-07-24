@@ -47,6 +47,7 @@ SETTINGS_KEY = "mouse"
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Master
 "
 horizontal_alignment = 2
