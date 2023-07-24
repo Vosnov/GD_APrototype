@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="GunData" load_steps=4 format=3 uid="uid://b1avnq0g3bspp"]
 
-[ext_resource type="PackedScene" uid="uid://cjoety6t3jgxy" path="res://Nodes/Guns/shotgun.tscn" id="1_duaij"]
 [ext_resource type="Script" path="res://Scripts/Data/guns_data.gd" id="1_lhfnc"]
+[ext_resource type="PackedScene" uid="uid://d2fumggo4c2m7" path="res://Nodes/Guns/shotgun.tscn" id="1_x16jg"]
 [ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="2_gfefi"]
 
 [resource]
 script = ExtResource("1_lhfnc")
-GUN = ExtResource("1_duaij")
+GUN = ExtResource("1_x16jg")
 ITEM_GUN_DATA = ExtResource("2_gfefi")

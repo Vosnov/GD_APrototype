@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjoety6t3jgxy"]
+[gd_scene load_steps=11 format=3 uid="uid://d2fumggo4c2m7"]
 
 [ext_resource type="PackedScene" uid="uid://fgy3u75rkh4s" path="res://Nodes/Guns/base_gun.tscn" id="1_5uskf"]
-[ext_resource type="Script" path="res://Scripts/Guns/shutgun.gd" id="2_ipkg4"]
 [ext_resource type="PackedScene" uid="uid://cfrc1mhs7087f" path="res://Particles/shotgun_hit.tscn" id="3_1ster"]
 [ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="4_hkqpc"]
 [ext_resource type="PackedScene" uid="uid://rth81jaj34mp" path="res://Nodes/Guns/muzzle_flash.tscn" id="4_miaxy"]
@@ -9,19 +8,74 @@
 [ext_resource type="AudioStream" uid="uid://cn857yuu55uk6" path="res://SFX/Guns/ShotgunReload.mp3" id="7_k5us2"]
 [ext_resource type="AudioStream" uid="uid://dc5a42bfg4eyl" path="res://SFX/Guns/ShotgunEmpty.mp3" id="8_v8yym"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oieef"]
+[sub_resource type="GDScript" id="GDScript_imh3i"]
+script/source = "extends Node3D
+
+@export var FRACTION_COUNT = 6
+@export var V_RANGE = 0.2
+@export var H_RANGE = 0.4
+@export var RAY_DISTANCE = 8.0
+@export_flags_3d_physics var RAY_COLLISION
+@export var HIT_PARTICLE: PackedScene
+
+@onready var space_state = get_world_3d().direct_space_state
+@onready var look_at_enemy_node = $LookAtEnemyNode
+@onready var base_gun = $BaseGun as BaseGun
+
+func _init():
+	randomize()
+
+func shot():
+	var damage = base_gun.DAMAGE
+	if GlobalVariables.player_target_is_full: damage = base_gun.FULL_DAMAGE
+	var enemys: Array[Enemy] = []
+	
+	for i in range(FRACTION_COUNT):
+		var dir = Vector3(randf_range(-H_RANGE, H_RANGE), randf_range(-V_RANGE, V_RANGE), -1) * RAY_DISTANCE
+		var to = (look_at_enemy_node.global_transform.basis * dir) + global_position
+		
+		var ray = PhysicsRayQueryParameters3D.new()
+		ray.from = global_position
+		ray.to = to
+		ray.collision_mask = RAY_COLLISION
+		var hit = space_state.intersect_ray(ray)
+		var collider = hit.get('collider')
+		if collider:
+			if !enemys.has(collider): enemys.push_back(collider)
+			Events.enemy_take_damage.emit(collider, damage)
+	
+	for enemy in enemys:
+		var hit_particle = HIT_PARTICLE.instantiate() as Node3D
+		enemy.add_child(hit_particle)
+		hit_particle.global_position = enemy.get_aim_target().global_position
+		hit_particle.look_at(global_position, hit_particle.basis.y)
+
+func _physics_process(_delta):
+	var target = base_gun.target
+	if target != null: look_at_enemy_node.look_at(
+		target.global_position,
+		look_at_enemy_node.global_transform.basis.y
+	)
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkdxf"]
 albedo_color = Color(0.658824, 0, 0, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_g4bn3"]
+[sub_resource type="BoxMesh" id="BoxMesh_7g6ii"]
 
-[node name="Shotgun" instance=ExtResource("1_5uskf")]
-script = ExtResource("2_ipkg4")
-FRACTION_COUNT = 8
-V_RANGE = 0.2
-H_RANGE = 0.4
-RAY_DISTANCE = 8.0
+[node name="Shotgun" type="Node3D"]
+script = SubResource("GDScript_imh3i")
 RAY_COLLISION = 4
 HIT_PARTICLE = ExtResource("3_1ster")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.14, 0, 0, 0, 0.187, 0, 0, 0, 0.607, 0, 0, -0.3)
+material_override = SubResource("StandardMaterial3D_kkdxf")
+mesh = SubResource("BoxMesh_7g6ii")
+
+[node name="LookAtEnemyNode" type="Node3D" parent="."]
+
+[node name="BaseGun" parent="." instance=ExtResource("1_5uskf")]
 FULL_DAMAGE = 1.5
 AMMO_LOADED = 6
 MAX_AMMO_LOADED = 6
@@ -29,18 +83,15 @@ DROP_AMMO = 2
 ITEM_GUN_DATA = ExtResource("4_hkqpc")
 MUZZLE_FLASH = ExtResource("4_miaxy")
 
-[node name="ShotStream" parent="." index="1"]
+[node name="ShotStream" parent="BaseGun" index="1"]
 stream = ExtResource("6_c7at1")
 
-[node name="ReloadStream" parent="." index="2"]
+[node name="ReloadStream" parent="BaseGun" index="2"]
 stream = ExtResource("7_k5us2")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
-transform = Transform3D(0.14, 0, 0, 0, 0.187, 0, 0, 0, 0.607, 0, 0, -0.3)
-material_override = SubResource("StandardMaterial3D_oieef")
-mesh = SubResource("BoxMesh_g4bn3")
-
-[node name="LookAtEnemyNode" type="Node3D" parent="." index="4"]
-
-[node name="EmptyStram" parent="." index="5"]
+[node name="EmptyStram" parent="BaseGun" index="3"]
 stream = ExtResource("8_v8yym")
+
+[connection signal="on_shot" from="BaseGun" to="." method="shot"]
+
+[editable path="BaseGun"]

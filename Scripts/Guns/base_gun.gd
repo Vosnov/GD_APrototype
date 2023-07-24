@@ -1,6 +1,8 @@
 extends Node3D
 class_name BaseGun
 
+signal on_shot()
+
 @export var FULL_DAMAGE = 1.0
 @export var DAMAGE = 1.0
 @export var AMMO_LOADED = 9
@@ -50,13 +52,10 @@ func shot():
 	var muzzle = MUZZLE_FLASH.instantiate()
 	muzzle_pos.add_child(muzzle)
 	
-	_override_shot()
+	on_shot.emit()
 	
 	await get_tree().create_timer(SHOT_TIMEOUT).timeout
 	is_shotting = false
-	
-func _override_shot():
-	pass
 
 func reload():
 	if amount_total == 0: return
