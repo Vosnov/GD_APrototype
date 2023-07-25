@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b08yftpcev0nj"]
+[gd_scene load_steps=15 format=3 uid="uid://b08yftpcev0nj"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_a51ut"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="2_2o045"]
@@ -8,11 +8,75 @@
 [ext_resource type="PackedScene" uid="uid://dl5l6q0c4saxy" path="res://Nodes/Items/ammo.tscn" id="7_ecjkj"]
 [ext_resource type="Script" path="res://Scripts/Data/stackable_slot_data.gd" id="7_yy6d1"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="8_mlrs1"]
+[ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="9_cttfe"]
+[ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="10_080dy"]
 
 [sub_resource type="Resource" id="Resource_1rupo"]
 script = ExtResource("7_yy6d1")
 AMOUNT = 4
 ITEM_DATA = ExtResource("6_h1xfl")
+
+[sub_resource type="Animation" id="Animation_jk8qt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpotLight3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, -1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpotLight3D2:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_0k51j"]
+resource_name = "room1"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpotLight3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.5708, -1.5708, 0), Vector3(-1.38316, -1.94469, 0.379954), Vector3(-1.5708, -1.5708, 0), Vector3(-1.74533, -1.5708, 0), Vector3(-1.5708, -1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpotLight3D2:light_energy")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.4, 1.5, 1.6, 1.7, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.5, 0.0, 0.5, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g4wrn"]
+_data = {
+"RESET": SubResource("Animation_jk8qt"),
+"room1": SubResource("Animation_0k51j")
+}
 
 [node name="Room1" type="Node3D"]
 
@@ -40,9 +104,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.904209, 0.847611, -2.56137
 size = Vector3(3.97409, 1.06335, 1.55412)
 material = ExtResource("2_hnljr")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
-
 [node name="Player2" parent="." instance=ExtResource("2_2o045")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.111892, 1.45736, 2.36333)
 
@@ -57,3 +118,26 @@ SLOT_DATA = SubResource("Resource_1rupo")
 [node name="Door" parent="." instance=ExtResource("8_mlrs1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("9_cttfe")
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-3.61999e-06, 1, 3.61999e-06, 0, -3.61999e-06, 1, 1, 3.61999e-06, 1.31043e-11, 0, 4.009, -2.42758)
+shadow_enabled = true
+spot_angle = 30.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 0.452232, 0.8919, 0, -0.8919, 0.452232, 0, 3.43631, 3.38215)
+shadow_enabled = true
+spot_range = 6.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Lights")
+autoplay = "room1"
+libraries = {
+"": SubResource("AnimationLibrary_g4wrn")
+}
+script = ExtResource("10_080dy")

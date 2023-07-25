@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ymyfncjem0fi"]
+[gd_scene load_steps=13 format=3 uid="uid://ymyfncjem0fi"]
 
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="1_i475y"]
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_raqd1"]
@@ -7,6 +7,70 @@
 [ext_resource type="PackedScene" uid="uid://b7do5bwd05b0w" path="res://Nodes/Items/pistol_item.tscn" id="6_lsgla"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="7_1ch7u"]
 [ext_resource type="PackedScene" uid="uid://dvnmhjqbx6oyh" path="res://Nodes/Items/shotgun_item.tscn" id="7_chgd7"]
+[ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="8_sd8b3"]
+[ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="9_ukn3b"]
+
+[sub_resource type="Animation" id="Animation_3qnia"]
+resource_name = "testSceneManagerAnim"
+length = 7.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights/SpotLight3D2:light_energy")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 2, 2.1, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.5, 0.0, 1.0, 1.0, 0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Lights/SpotLight3D4:light_energy")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 2, 2.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.5, 1.0, 1.0, 0.0, 0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_l75js"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights/SpotLight3D2:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Lights/SpotLight3D4:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eavdn"]
+_data = {
+"RESET": SubResource("Animation_l75js"),
+"testSceneManagerAnim": SubResource("Animation_3qnia")
+}
 
 [node name="TestScene" type="Node3D"]
 
@@ -35,9 +99,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 1
 operation = 2
 size = Vector3(2, 5, 19)
 material = ExtResource("1_raqd1")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
 [node name="Door" parent="." instance=ExtResource("7_1ch7u")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.55, 1.5, 3.5)
@@ -77,3 +138,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7)
 
 [node name="ShotgunItem" parent="." instance=ExtResource("7_chgd7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 7)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("8_sd8b3")
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 10)
+spot_angle = 42.6349
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 1)
+light_bake_mode = 1
+spot_angle = 42.6349
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights/SpotLight3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 1)
+light_energy = 0.0
+light_bake_mode = 1
+spot_angle = 42.6349
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, -9)
+spot_angle = 42.6349
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 8.49527, 5, -9)
+spot_angle = 42.6349
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights/SpotLight3D4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 1)
+light_energy = 0.0
+light_bake_mode = 1
+spot_angle = 42.6349
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -8, 5, -9)
+spot_angle = 42.6349
+
+[node name="SpotLight3D6" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44064, 1.91821, 7.08054)
+light_cull_mask = 4294967293
+omni_range = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "testSceneManagerAnim"
+libraries = {
+"": SubResource("AnimationLibrary_eavdn")
+}
+script = ExtResource("9_ukn3b")

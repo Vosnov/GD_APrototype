@@ -152,31 +152,31 @@ HP = 4.0
 transform = Transform3D(-0.4, 0, -3.49691e-08, 0, 0.4, 0, 3.49691e-08, 0, -0.4, 0, 0, 0)
 
 [node name="Skeleton3D" parent="enemyType1/Armature" index="0"]
-bones/0/position = Vector3(0.150811, -0.536374, -0.0881422)
+bones/0/position = Vector3(0.149741, -0.521015, 0.0142982)
 bones/0/rotation = Quaternion(0.210478, -0.198277, -0.00490383, 0.957268)
 bones/1/rotation = Quaternion(0.24046, -0.181481, 0.0222024, 0.953284)
-bones/2/rotation = Quaternion(0.298169, -0.097154, -0.0113279, 0.949488)
+bones/2/rotation = Quaternion(0.300467, -0.0995765, -0.00909427, 0.948536)
 bones/3/rotation = Quaternion(-0.192146, 0.282214, -0.00120115, 0.939912)
-bones/4/rotation = Quaternion(-0.0488731, 0.0522051, 2.1729e-05, 0.99744)
+bones/4/rotation = Quaternion(-0.0263918, -0.0546886, -0.00071538, 0.998154)
 bones/5/position = Vector3(0.207638, 0.920373, 0.199412)
-bones/5/rotation = Quaternion(0.104613, -0.110102, -0.760356, 0.631501)
+bones/5/rotation = Quaternion(0.0981259, -0.0502927, -0.780799, 0.614976)
 bones/6/position = Vector3(0.0189716, 0.456808, 0.0756623)
-bones/6/rotation = Quaternion(0.21731, 0.000133576, -0.334982, 0.916822)
-bones/7/rotation = Quaternion(0.415237, 0.0118985, 0.15383, 0.896534)
+bones/6/rotation = Quaternion(0.196403, 0.0215011, -0.381579, 0.902974)
+bones/7/rotation = Quaternion(0.425087, 0.0166688, 0.126655, 0.896093)
 bones/11/position = Vector3(-0.244817, 0.902132, 0.239186)
 bones/11/rotation = Quaternion(0.2106, 0.00167757, 0.868786, 0.448169)
-bones/12/rotation = Quaternion(-0.25876, 0.375166, 0.80319, -0.383639)
+bones/12/rotation = Quaternion(-0.273427, 0.356631, 0.817892, -0.359312)
 bones/12/scale = Vector3(1.00004, 0.999996, 1.00007)
-bones/13/rotation = Quaternion(-0.231854, -0.0130685, -0.394178, 0.889211)
+bones/13/rotation = Quaternion(-0.233759, -0.0131481, -0.397303, 0.887318)
 bones/13/scale = Vector3(0.999979, 0.999987, 1.00001)
-bones/14/rotation = Quaternion(0.237339, 0.313033, 0.878801, 0.270904)
+bones/14/rotation = Quaternion(0.21403, 0.276444, 0.910357, 0.221403)
 bones/14/scale = Vector3(1.00003, 0.999999, 1.00006)
-bones/15/rotation = Quaternion(-0.174657, -0.0110257, 0.354151, 0.918668)
+bones/15/rotation = Quaternion(-0.160916, -0.011111, 0.32624, 0.931424)
 bones/15/scale = Vector3(0.99999, 0.999988, 0.999999)
-bones/16/position = Vector3(-0.233315, -0.998526, 1.43625)
-bones/17/position = Vector3(-0.492043, -2.16847, -0.239619)
+bones/16/position = Vector3(-0.0386018, -1.01038, 1.30457)
+bones/17/position = Vector3(-0.341361, -2.20062, -0.224274)
 bones/18/position = Vector3(-1.07797, -1.1141, 0.842318)
-bones/19/position = Vector3(0.632553, -2.13389, 0.493534)
+bones/19/position = Vector3(0.623997, -2.13322, 0.461149)
 bones/20/position = Vector3(0.139478, -1.10786, 1.13867)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -201,12 +201,10 @@ parameters/walk_iwr/blend_position = Vector2(-0.033871, 0.0317461)
 
 [node name="SteeringBehaviorComponent" parent="." instance=ExtResource("3_jc71t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.202351)
-SHOW_DEBUG_LINES = true
 RAY_RANGE = 0.7
 COLLISION_MASK = 4
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("AGENT")]
@@ -297,6 +295,7 @@ shape = SubResource("SphereShape3D_275u1")
 
 [node name="StateLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83258, 0)
+visible = false
 billboard = 1
 double_sided = false
 text = "State: "

@@ -13,3 +13,8 @@ transform = Transform3D(0.313, 0, 0, 0, 0.313, 0, 0, 0, 0.313, 0, 0, 0)
 billboard = 1
 double_sided = false
 texture = ExtResource("2_lv8qg")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2"]
+light_energy = 0.5
+omni_range = 1.0
+omni_attenuation = 1.1487

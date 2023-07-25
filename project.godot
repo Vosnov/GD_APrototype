@@ -147,6 +147,8 @@ locale/translations=PackedStringArray("res://Locale/localization.en.translation"
 
 [layer_names]
 
+3d_render/layer_1="Main"
+3d_render/layer_2="Player"
 3d_physics/layer_1="Main"
 3d_physics/layer_2="Player"
 3d_physics/layer_3="Enemy"

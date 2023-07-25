@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=12 format=3 uid="uid://d1176uscfh47u"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
@@ -6,6 +6,48 @@
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="4_x7b7k"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
+[ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
+size = Vector3(3, 0.1, 0.3)
+
+[sub_resource type="Animation" id="Animation_acegq"]
+resource_name = "saveRoom"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_74egj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o555u"]
+_data = {
+"RESET": SubResource("Animation_74egj"),
+"saveRoom": SubResource("Animation_acegq")
+}
 
 [node name="SaveRoom" type="Node3D"]
 
@@ -28,9 +70,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -2.53171)
 size = Vector3(2, 2, 2)
 material = ExtResource("2_k1qyr")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
-
 [node name="Player2" parent="." instance=ExtResource("3_ka1ri")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
 
@@ -46,3 +85,54 @@ NEXT_SCENE = "res://Scenes/test_scene.tscn"
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.639866, 1.56396, -1.81688)
 LEVEL_NAME = "level.name.saveRoom"
 LEVEL_PATH = "res://Scenes/save_room.tscn"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("7_0ubmk")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0991561, 3.6289, -0.287325)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../../Lights")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../../Lights")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../../Lights")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../../Lights")
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0.0855963, 4.70964, -0.830465)
+light_energy = 2.0
+shadow_enabled = true
+spot_range = 10.0
+spot_angle = 50.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 0.466973, 0.884271, 0, -0.884271, 0.466973, 0.0855963, 4.13971, 3.31524)
+light_energy = 2.0
+shadow_enabled = true
+spot_range = 10.0
+spot_angle = 50.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "saveRoom"
+libraries = {
+"": SubResource("AnimationLibrary_o555u")
+}

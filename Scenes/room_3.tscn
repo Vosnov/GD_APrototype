@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bekqfj12terc0"]
+[gd_scene load_steps=10 format=3 uid="uid://bekqfj12terc0"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_q0tqy"]
 [ext_resource type="PackedScene" uid="uid://8t6un8bj7dwc" path="res://Nodes/Items/key_item.tscn" id="3_v7qhv"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="4_hj3s7"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="5_jafbj"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="6_kg5le"]
+[ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="8_fm3wb"]
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="10_adyxq"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="10_b48wn"]
 
@@ -15,9 +16,6 @@ cell_size = 0.2
 agent_radius = 0.2
 
 [node name="Room3" type="Node3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.57524, -0.817295, -0.0335911, 0.509323, 0.325741, 0.796544, -0.640069, -0.475313, 0.603646, 0, 7.97113, 0)
 
 [node name="Player2" parent="." instance=ExtResource("5_jafbj")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 0.111892, 1.45736, 4.36333)
@@ -109,3 +107,22 @@ material = ExtResource("4_hj3s7")
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="."]
 size = Vector3(40, 1, 40)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("8_fm3wb")
+
+[node name="Lights" type="Node" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.455189, 4.02605, -4.23193)
+shadow_enabled = true
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -3.15383, 4.02605, -12.2319)
+shadow_enabled = true
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(0.961444, -1.20206e-08, 0.275, -0.275, -4.20261e-08, 0.961444, 0, -1, -4.37114e-08, 4.84618, 4.02605, -5.23193)
+light_energy = 1.5
+shadow_enabled = true
+spot_range = 7.0
