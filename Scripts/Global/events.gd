@@ -9,6 +9,7 @@ signal enemy_die(enemy: Enemy)
 signal player_shot()
 signal player_reload(amount_drop: int)
 signal player_take_damage(damage: float)
+signal player_take_health(hp_recover: int)
 signal player_dead()
 #UI
 signal player_hp_ui(hp: float)

@@ -25,6 +25,7 @@ script/source = "extends HBoxContainer
 @export var SLOT: PackedScene
 
 func _ready():
+	Events.inventory_update.connect(func(): fill_grid(Inventory.SLOTS))
 	fill_grid(Inventory.SLOTS)
 
 func fill_grid(slots: Array[SlotData]):
@@ -35,10 +36,10 @@ func fill_grid(slots: Array[SlotData]):
 	for slot in slots:
 		if slot.ITEM_DATA is ItemGunData: continue
 		var slot_instance = SLOT.instantiate() as SlotUI
+		slot_instance.SLOT = slot
 		add_child(slot_instance)
 		if index == 0:
 			slot_instance.grab_focus()
-		slot_instance.set_slot_data(slot)
 		index += 1
 "
 
@@ -137,6 +138,7 @@ script = SubResource("GDScript_cyvqe")
 SLOT = ExtResource("1_211y0")
 
 [node name="GunContainer2" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_top = 200.0
 offset_right = 40.0

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="HealthData" load_steps=3 format=3 uid="uid://dkh3a1gxe3h0p"]
+
+[ext_resource type="Script" path="res://Scripts/Data/health_data.gd" id="1_ejg8n"]
+[ext_resource type="Texture2D" uid="uid://bygpg0odo7dwa" path="res://Textures/Items/bandage.svg" id="1_u0b5r"]
+
+[resource]
+script = ExtResource("1_ejg8n")
+HP_RECOVERY = 2
+NAME = "Medkit"
+DESCRIPTION = "Its medkit"
+TEXTURE = ExtResource("1_u0b5r")
+CAN_USE = true

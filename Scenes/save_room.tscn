@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=18 format=3 uid="uid://d1176uscfh47u"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
@@ -7,9 +7,27 @@
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="8_8mhto"]
+[ext_resource type="Resource" uid="uid://dkh3a1gxe3h0p" path="res://Data/small_medkit.tres" id="9_en0nq"]
+[ext_resource type="Script" path="res://Scripts/Data/stackable_slot_data.gd" id="10_3qced"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
 size = Vector3(3, 0.1, 0.3)
+
+[sub_resource type="Animation" id="Animation_74egj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_acegq"]
 resource_name = "saveRoom"
@@ -28,26 +46,24 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_74egj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o555u"]
 _data = {
 "RESET": SubResource("Animation_74egj"),
 "saveRoom": SubResource("Animation_acegq")
 }
+
+[sub_resource type="Resource" id="Resource_2p0ky"]
+script = ExtResource("10_3qced")
+AMOUNT = 1
+ITEM_DATA = ExtResource("9_en0nq")
+
+[sub_resource type="BoxMesh" id="BoxMesh_d6kl2"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="Resource" id="Resource_4dnqs"]
+script = ExtResource("10_3qced")
+AMOUNT = 1
+ITEM_DATA = ExtResource("9_en0nq")
 
 [node name="SaveRoom" type="Node3D"]
 
@@ -136,3 +152,20 @@ autoplay = "saveRoom"
 libraries = {
 "": SubResource("AnimationLibrary_o555u")
 }
+
+[node name="PickUpBase" parent="." instance=ExtResource("8_8mhto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34437, 0)
+SLOT_DATA = SubResource("Resource_2p0ky")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase"]
+mesh = SubResource("BoxMesh_d6kl2")
+
+[node name="PickUpBase2" parent="." instance=ExtResource("8_8mhto")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.34437, 0)
+SLOT_DATA = SubResource("Resource_4dnqs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickUpBase2"]
+mesh = SubResource("BoxMesh_d6kl2")
+
+[editable path="PickUpBase"]
+[editable path="PickUpBase2"]

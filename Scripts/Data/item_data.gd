@@ -8,3 +8,7 @@ class_name ItemData
 	get:
 		return tr(DESCRIPTION)
 @export var TEXTURE: Texture2D
+@export var CAN_USE = false
+
+func use():
+	pass

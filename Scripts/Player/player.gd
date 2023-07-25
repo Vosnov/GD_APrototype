@@ -1,12 +1,14 @@
 extends CharacterBody3D
 class_name Player
 
+@export var MAX_HP = 6
 @export var HP = 6
 
 func _ready():
 	update_ui()
 	check_spawn_pos()
 	Events.connect('player_take_damage', _on_take_damage)
+	Events.connect('player_take_health', _on_take_health)
 
 func _init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -40,3 +42,7 @@ func _input(_event):
 	var is_aim = Input.is_action_pressed("aim") and GlobalVariables.active_gun_index != -1
 	GlobalVariables.player_is_aim = is_aim
 	GlobalVariables.player_is_runing = Input.is_action_pressed("sprint")
+
+func _on_take_health(hp: int):
+	HP = clamp(HP + hp, 0, MAX_HP)
+	update_ui()
