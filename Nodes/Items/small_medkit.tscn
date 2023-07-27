@@ -1,0 +1,21 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7pwkeixpxqiq"]
+
+[ext_resource type="PackedScene" uid="uid://cgiy16ss3fg6n" path="res://Nodes/Items/pick_up_base.tscn" id="1_lk782"]
+[ext_resource type="Resource" uid="uid://dkh3a1gxe3h0p" path="res://Data/small_medkit.tres" id="2_fb8o0"]
+[ext_resource type="Script" path="res://Scripts/Data/stackable_slot_data.gd" id="3_6l1ui"]
+[ext_resource type="Material" uid="uid://cy3e66p0m55d0" path="res://Materials/test_mat_4.tres" id="4_coxxr"]
+
+[sub_resource type="Resource" id="Resource_uwhig"]
+script = ExtResource("3_6l1ui")
+AMOUNT = 1
+ITEM_DATA = ExtResource("2_fb8o0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_gdpvl"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="SmallMedkit" instance=ExtResource("1_lk782")]
+SLOT_DATA = SubResource("Resource_uwhig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+material_override = ExtResource("4_coxxr")
+mesh = SubResource("BoxMesh_gdpvl")

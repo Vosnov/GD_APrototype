@@ -7,7 +7,7 @@
 [sub_resource type="GDScript" id="GDScript_roli5"]
 script/source = "extends Control
 
-signal select(index: int)
+signal select(index: SlotData)
 
 @export var SPEED = 1000
 @export var SLOT_UI: PackedScene
@@ -19,7 +19,7 @@ var current_index = 0:
 	set(value):
 		current_index = value
 		pos_x = -(current_index * item_size)
-		select.emit(value)
+		select.emit(slots[value])
 
 var pos_x = 0
 var item_size = 0
@@ -33,16 +33,18 @@ func _ready():
 
 func _on_inventory_update():
 	slots = Inventory.get_slots_without_guns()
+		
+	if current_index > slots.size() - 1: 
+		current_index = slots.size() - 1
+		
 	fill()
+	select.emit(slots[current_index])
 
 func fill():
 	for child in container.get_children():
 		child.queue_free()
 	
 	var empty_count = floor(container.COUNT / 2)
-	
-	if current_index > slots.size() - 1: 
-		current_index = slots.size() - 1
 	
 	for i in range(empty_count):
 		add_empty_slot_ui()

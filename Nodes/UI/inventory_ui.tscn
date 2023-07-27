@@ -52,23 +52,17 @@ script/source = "extends PanelContainer
 
 @onready var use = $MarginContainer/VBoxContainer/Use
 
-var select_index = 0
-var item_slots: Array[SlotData] = []
+var select_slot: SlotData
 
 func _ready():
 	visible = false
+	if Inventory.SLOTS.size() > 0:
+		_on_items_select(Inventory.SLOTS[0])
+
+func _on_items_select(slot: SlotData):
+	if is_node_ready() == false: return
 	
-	Events.inventory_update.connect(_on_inventory_update)
-	_on_inventory_update()
-
-func _on_inventory_update():
-	item_slots = Inventory.get_slots_without_guns()
-	_on_items_select(select_index)
-
-func _on_items_select(index: int):
-	if index < 0: return
-	select_index = index
-	var select_slot = item_slots[index]
+	select_slot = slot
 	
 	if select_slot.ITEM_DATA.CAN_USE:
 		visible = true
@@ -80,7 +74,6 @@ func _on_items_select(index: int):
 func _on_use_button_down():
 	if visible == false: return
 	
-	var select_slot = item_slots[select_index]
 	if select_slot == null: return
 	select_slot.ITEM_DATA.use()
 "

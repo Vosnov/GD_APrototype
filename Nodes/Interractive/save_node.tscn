@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dxoiu11eexkxk"]
 
 [ext_resource type="PackedScene" uid="uid://dlcvkcv24x2ro" path="res://Nodes/UI/save_ui.tscn" id="1_dakaw"]
-[ext_resource type="PackedScene" uid="uid://dtanochifrdyf" path="res://Nodes/Helpers/action_node.tscn" id="1_wobr0"]
+[ext_resource type="Script" path="res://Scripts/Helpers/active_node.gd" id="2_0hyy5"]
 [ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="2_pjif8"]
 [ext_resource type="Texture2D" uid="uid://bdys0eqpecrig" path="res://Textures/prototype_512x512_blue1.png" id="3_ihryl"]
 [ext_resource type="AudioStream" uid="uid://d32ksk808t6lh" path="res://SFX/UI/Save.mp3" id="5_jrtqb"]
@@ -49,8 +49,9 @@ radius = 0.6
 script = SubResource("GDScript_ccgm4")
 SAVE_UI = ExtResource("1_dakaw")
 
-[node name="ActiveNode" parent="." node_paths=PackedStringArray("AREA") instance=ExtResource("1_wobr0")]
+[node name="ActiveNode" type="Node3D" parent="." node_paths=PackedStringArray("AREA")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386963, 0)
+script = ExtResource("2_0hyy5")
 SPRITE = ExtResource("2_pjif8")
 AREA = NodePath("../Area3D")
 

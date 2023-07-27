@@ -133,12 +133,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.0700
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.07001, 1.52476, 9.83544)
 TARGET = NodePath("../Player2")
 
-[node name="PistolItem" parent="." instance=ExtResource("6_lsgla")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7)
-
-[node name="ShotgunItem" parent="." instance=ExtResource("7_chgd7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 7)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_sd8b3")
 
@@ -188,3 +182,9 @@ libraries = {
 "": SubResource("AnimationLibrary_eavdn")
 }
 script = ExtResource("9_ukn3b")
+
+[node name="ShotgunItem" parent="." instance=ExtResource("7_chgd7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7)
+
+[node name="PistolItem" parent="." instance=ExtResource("6_lsgla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.606128, 2, 7)
