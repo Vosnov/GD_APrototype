@@ -182,7 +182,7 @@ HP = 2
 [node name="UI" parent="." instance=ExtResource("8_xdrrl")]
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.191823, -0.140763, -0.321542, 0.349113, 0.114496, 0.158148, 0.0363848, -0.356478, 0.177763, 0.136728, 0.456471, -0.608512)
+transform = Transform3D(-0.479558, 0.351908, 0.803856, 0.872782, 0.286242, 0.395369, -0.0909636, 0.891194, -0.444409, -0.341821, 1.14118, 1.52128)
 bone_name = "Bone.011.R"
 bone_idx = 14
 use_external_skeleton = true

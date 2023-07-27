@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=12 format=3 uid="uid://d1176uscfh47u"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
-[ext_resource type="PackedScene" uid="uid://c7pwkeixpxqiq" path="res://Nodes/Items/small_medkit.tscn" id="8_3y00h"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
 size = Vector3(3, 0.1, 0.3)
@@ -137,9 +136,3 @@ autoplay = "saveRoom"
 libraries = {
 "": SubResource("AnimationLibrary_o555u")
 }
-
-[node name="SmallMedkit" parent="." instance=ExtResource("8_3y00h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="SmallMedkit2" parent="." instance=ExtResource("8_3y00h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49128, 1, 0)

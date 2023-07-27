@@ -22,7 +22,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Empty"
+text = "inventoryUI.empty"
 horizontal_alignment = 1
 
 [node name="Content" type="Control" parent="Panel/VBoxContainer"]
@@ -36,6 +36,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Empty"
+text = "inventoryUI.empty"
 horizontal_alignment = 1
 vertical_alignment = 1

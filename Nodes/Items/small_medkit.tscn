@@ -11,9 +11,10 @@ AMOUNT = 1
 ITEM_DATA = ExtResource("2_fb8o0")
 
 [sub_resource type="BoxMesh" id="BoxMesh_gdpvl"]
-size = Vector3(0.3, 0.3, 0.3)
+size = Vector3(0.2, 0.2, 0.2)
 
 [node name="SmallMedkit" instance=ExtResource("1_lk782")]
+TAKE_MESSAGE = "items.takeSmallMedkit"
 SLOT_DATA = SubResource("Resource_uwhig")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]

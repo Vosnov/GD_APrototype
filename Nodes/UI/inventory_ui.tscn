@@ -167,7 +167,7 @@ layout_mode = 2
 
 [node name="Use" parent="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer" instance=ExtResource("3_tura4")]
 layout_mode = 2
-text = "Use"
+text = "inventoryUI.use"
 
 [connection signal="select" from="VBoxContainer/Items" to="VBoxContainer/ActionsMenu" method="_on_items_select"]
 [connection signal="button_down" from="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer/Use" to="VBoxContainer/ActionsMenu" method="_on_use_button_down"]

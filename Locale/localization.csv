@@ -14,9 +14,12 @@ saveBtn.slot,Slot %d,Слот %d
 saveBtn.emptySlot,Empty slot,Пустой слот
 items.take,I picked up the %s,Я подобрал %s
 items.takeAmmo,I picked up the ammo x%d,Я подобрал патроны x%d
+items.takeSmallMedkit,I picked up the bandage x%d,Я подобрал бинты x%d
 door.close,The door is broken,Дверь сломана
 door.needKey,I need a key for this door,Для этой двери мне нужен ключ
 door.openBy,I used %s,Я использовал %s
+data.smallMedkit.name,Bandage,Бинты
+data.smallMedkit.description,Bandage,Бинты
 data.ammo.name,Ammo,Патроны
 data.ammo.description,Ammo,Патроны
 data.key.name,Key,Ключ
@@ -49,5 +52,7 @@ settingsUI.fullscreen,Fullscreen,Полный экран
 settingsUI.resolution,Resolution,Разрешение
 settingsUI.applyMessage,Apply settings?,Применить настройки?
 settingsUI.defaultMessage,All settings will be set to default,Все настройки будут установлены по умолчанию
+inventoryUI.use,Use,Использовать
+inventoryUI.empty,Empty,Пусто
 lang.rus,Russian,Русский
 lang.en,English,Английский

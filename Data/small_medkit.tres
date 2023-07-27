@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_ejg8n")
 HP_RECOVERY = 2
-NAME = "Medkit"
+NAME = "data.smallMedkit.name"
 DESCRIPTION = "Its medkit"
 TEXTURE = ExtResource("1_u0b5r")
 CAN_USE = true

@@ -73,7 +73,7 @@ func _physics_process(_delta):
 	if pos_x < c_pos_x:
 		container.position.x = clamp(c_pos_x - _delta * SPEED, pos_x, c_pos_x)
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed('ui_right'):
 		if current_index + 1 < slots.size():
 			current_index += 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bekqfj12terc0"]
+[gd_scene load_steps=11 format=3 uid="uid://bekqfj12terc0"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_q0tqy"]
 [ext_resource type="PackedScene" uid="uid://8t6un8bj7dwc" path="res://Nodes/Items/key_item.tscn" id="3_v7qhv"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="5_jafbj"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="6_kg5le"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="8_fm3wb"]
+[ext_resource type="PackedScene" uid="uid://c7pwkeixpxqiq" path="res://Nodes/Items/small_medkit.tscn" id="9_7g4ci"]
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="10_adyxq"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="10_b48wn"]
 
@@ -126,3 +127,6 @@ transform = Transform3D(0.961444, -1.20206e-08, 0.275, -0.275, -4.20261e-08, 0.9
 light_energy = 1.5
 shadow_enabled = true
 spot_range = 7.0
+
+[node name="SmallMedkit" parent="." instance=ExtResource("9_7g4ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.68295, 1.56736, -5.95378)
