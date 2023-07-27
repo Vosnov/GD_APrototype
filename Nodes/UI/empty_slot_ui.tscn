@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3tcd52wyjkjl"]
+[gd_scene format=3 uid="uid://dp1swfvp485xl"]
 
-[ext_resource type="Script" path="res://Scripts/UI/item_slot.gd" id="1_4dknp"]
-[ext_resource type="Texture2D" uid="uid://bygpg0odo7dwa" path="res://Textures/Items/bandage.svg" id="2_h5u2m"]
-
-[node name="SlotUI" type="MarginContainer"]
+[node name="EmptySlotUI" type="MarginContainer"]
 custom_minimum_size = Vector2(164, 164)
 offset_right = 164.0
 offset_bottom = 164.0
@@ -11,7 +8,6 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
-script = ExtResource("1_4dknp")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -26,32 +22,20 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Hello"
+text = "Empty"
 horizontal_alignment = 1
 
 [node name="Content" type="Control" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AmountLabel" type="Label" parent="Panel/VBoxContainer/Content"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -26.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "0"
-horizontal_alignment = 2
-
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/Content"]
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_h5u2m")
-expand_mode = 2
-stretch_mode = 5
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1

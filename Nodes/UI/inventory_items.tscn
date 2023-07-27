@@ -1,0 +1,127 @@
+[gd_scene load_steps=6 format=3 uid="uid://4u66jdl33sow"]
+
+[ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_85kxf"]
+[ext_resource type="PackedScene" uid="uid://dp1swfvp485xl" path="res://Nodes/UI/empty_slot_ui.tscn" id="2_s8ed5"]
+[ext_resource type="Script" path="res://Scripts/UI/limit_container.gd" id="3_a08ok"]
+
+[sub_resource type="GDScript" id="GDScript_roli5"]
+script/source = "extends Control
+
+signal select(index: int)
+
+@export var SPEED = 1000
+@export var SLOT_UI: PackedScene
+@export var EMPTY_SLOT_UI: PackedScene
+
+@onready var container = $LimitContainer as LimitContainer
+
+var current_index = 0:
+	set(value):
+		current_index = value
+		pos_x = -(current_index * item_size)
+		select.emit(value)
+
+var pos_x = 0
+var item_size = 0
+var slots: Array[SlotData] = []
+
+func _ready():
+	item_size = floor(size.x / container.COUNT)
+	_on_inventory_update()
+	
+	Events.inventory_update.connect(_on_inventory_update)
+
+func _on_inventory_update():
+	slots = Inventory.get_slots_without_guns()
+	fill()
+
+func fill():
+	for child in container.get_children():
+		child.queue_free()
+	
+	var empty_count = floor(container.COUNT / 2)
+	
+	if current_index > slots.size() - 1: 
+		current_index = slots.size() - 1
+	
+	for i in range(empty_count):
+		add_empty_slot_ui()
+	
+	if slots.size() == 0:
+		add_empty_slot_ui()
+	else:
+		for slot in slots:
+			add_slot_ui(slot)
+		
+	for i in range(container.COUNT):
+		add_empty_slot_ui()
+	
+func add_slot_ui(slot: SlotData):
+	var slot_ui = SLOT_UI.instantiate() as SlotUI
+	slot_ui.SLOT = slot
+	container.add_child(slot_ui)
+	
+func add_empty_slot_ui():
+	container.add_child(EMPTY_SLOT_UI.instantiate())
+	
+func _physics_process(_delta):
+	var c_pos_x = container.position.x
+	if pos_x > c_pos_x:
+		container.position.x = clamp(c_pos_x + _delta * SPEED, c_pos_x, pos_x)
+	if pos_x < c_pos_x:
+		container.position.x = clamp(c_pos_x - _delta * SPEED, pos_x, c_pos_x)
+
+func _input(event):
+	if Input.is_action_just_pressed('ui_right'):
+		if current_index + 1 < slots.size():
+			current_index += 1
+
+	if Input.is_action_just_pressed('ui_left'):
+		if current_index > 0:
+			current_index -= 1
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_we57u"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[node name="Items" type="Control"]
+custom_minimum_size = Vector2(0, 164)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 80.0
+offset_bottom = 80.0
+grow_horizontal = 2
+script = SubResource("GDScript_roli5")
+SLOT_UI = ExtResource("1_85kxf")
+EMPTY_SLOT_UI = ExtResource("2_s8ed5")
+
+[node name="LimitContainer" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("3_a08ok")
+
+[node name="LimitContainer2" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("3_a08ok")
+
+[node name="Control" type="Control" parent="LimitContainer2"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="LimitContainer2"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="LimitContainer2"]
+custom_minimum_size = Vector2(164, 164)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_we57u")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwhdypbxa1gl7"]
+[gd_scene load_steps=7 format=3 uid="uid://dwhdypbxa1gl7"]
 
-[ext_resource type="PackedScene" uid="uid://d3tcd52wyjkjl" path="res://Nodes/UI/slot_ui.tscn" id="1_211y0"]
+[ext_resource type="PackedScene" uid="uid://4u66jdl33sow" path="res://Nodes/UI/inventory_items.tscn" id="2_4hto5"]
 [ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="3_tura4"]
 
 [sub_resource type="GDScript" id="GDScript_gxcol"]
 script/source = "extends Control
@@ -19,32 +20,8 @@ func _input(_event):
 		queue_free()
 "
 
-[sub_resource type="GDScript" id="GDScript_cyvqe"]
-script/source = "extends HBoxContainer
-
-@export var SLOT: PackedScene
-
-func _ready():
-	Events.inventory_update.connect(func(): fill_grid(Inventory.SLOTS))
-	fill_grid(Inventory.SLOTS)
-
-func fill_grid(slots: Array[SlotData]):
-	for child in get_children():
-		child.queue_free()
-	
-	var index = 0
-	for slot in slots:
-		if slot.ITEM_DATA is ItemGunData: continue
-		var slot_instance = SLOT.instantiate() as SlotUI
-		slot_instance.SLOT = slot
-		add_child(slot_instance)
-		if index == 0:
-			slot_instance.grab_focus()
-		index += 1
-"
-
 [sub_resource type="GDScript" id="GDScript_ovlbg"]
-script/source = "extends GridContainer
+script/source = "extends VBoxContainer
 
 @export var SLOT_GUN_UI: PackedScene
 
@@ -70,6 +47,44 @@ func _ready():
 			slot_ui.set_slot_data(slot.ITEM_DATA)
 "
 
+[sub_resource type="GDScript" id="GDScript_0w7jy"]
+script/source = "extends PanelContainer
+
+@onready var use = $MarginContainer/VBoxContainer/Use
+
+var select_index = 0
+var item_slots: Array[SlotData] = []
+
+func _ready():
+	visible = false
+	
+	Events.inventory_update.connect(_on_inventory_update)
+	_on_inventory_update()
+
+func _on_inventory_update():
+	item_slots = Inventory.get_slots_without_guns()
+	_on_items_select(select_index)
+
+func _on_items_select(index: int):
+	if index < 0: return
+	select_index = index
+	var select_slot = item_slots[index]
+	
+	if select_slot.ITEM_DATA.CAN_USE:
+		visible = true
+		use.visible = true
+		use.grab_focus()
+	else:
+		visible = false
+
+func _on_use_button_down():
+	if visible == false: return
+	
+	var select_slot = item_slots[select_index]
+	if select_slot == null: return
+	select_slot.ITEM_DATA.use()
+"
+
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -79,134 +94,87 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_gxcol")
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
-visible = false
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-offset_left = 99.0
-offset_top = 194.0
-offset_right = 238.0
-offset_bottom = 295.0
-size_flags_horizontal = 4
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer2"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2/MarginContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="PanelContainer2/MarginContainer/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../Button3")
-focus_neighbor_bottom = NodePath("../Button2")
-text = "Test"
-
-[node name="Button2" type="Button" parent="PanelContainer2/MarginContainer/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../Button")
-focus_neighbor_bottom = NodePath("../Button3")
-text = "Test"
-
-[node name="Button3" type="Button" parent="PanelContainer2/MarginContainer/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../Button2")
-focus_neighbor_bottom = NodePath("../Button")
-text = "Test"
-
-[node name="ItemContainer" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 40.0
-offset_bottom = 176.0
-grow_horizontal = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ItemContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="GridContainer" type="HBoxContainer" parent="ItemContainer/MarginContainer"]
-layout_mode = 2
-script = SubResource("GDScript_cyvqe")
-SLOT = ExtResource("1_211y0")
-
-[node name="GunContainer2" type="Control" parent="."]
-visible = false
-anchors_preset = 0
-offset_top = 200.0
-offset_right = 40.0
-offset_bottom = 240.0
-
-[node name="GridContainer" type="GridContainer" parent="GunContainer2"]
+[node name="Guns" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-columns = 3
+offset_top = 260.0
+offset_right = 64.0
+offset_bottom = 528.0
 script = SubResource("GDScript_ovlbg")
 SLOT_GUN_UI = ExtResource("2_wnedq")
 
-[node name="Control" type="Control" parent="GunContainer2/GridContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-
-[node name="SlotContainer1" type="PanelContainer" parent="GunContainer2/GridContainer"]
+[node name="SlotContainer1" type="PanelContainer" parent="Guns"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer1"]
+[node name="Label" type="Label" parent="Guns/SlotContainer1"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "1
 "
 
-[node name="Control2" type="Control" parent="GunContainer2/GridContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-
-[node name="SlotContainer4" type="PanelContainer" parent="GunContainer2/GridContainer"]
+[node name="SlotContainer2" type="PanelContainer" parent="Guns"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer4"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "4
-"
-
-[node name="Control3" type="Control" parent="GunContainer2/GridContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-
-[node name="SlotContainer2" type="PanelContainer" parent="GunContainer2/GridContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer2"]
+[node name="Label" type="Label" parent="Guns/SlotContainer2"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "2
 "
 
-[node name="Control4" type="Control" parent="GunContainer2/GridContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-
-[node name="SlotContainer3" type="PanelContainer" parent="GunContainer2/GridContainer"]
+[node name="SlotContainer3" type="PanelContainer" parent="Guns"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GunContainer2/GridContainer/SlotContainer3"]
+[node name="Label" type="Label" parent="Guns/SlotContainer3"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "3"
+
+[node name="SlotContainer4" type="PanelContainer" parent="Guns"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Guns/SlotContainer4"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "4
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 80.0
+offset_bottom = 244.0
+grow_horizontal = 2
+
+[node name="Items" parent="VBoxContainer" instance=ExtResource("2_4hto5")]
+layout_mode = 2
+
+[node name="ActionsMenu" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource("GDScript_0w7jy")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ActionsMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ActionsMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="Use" parent="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer" instance=ExtResource("3_tura4")]
+layout_mode = 2
+text = "Use"
+
+[connection signal="select" from="VBoxContainer/Items" to="VBoxContainer/ActionsMenu" method="_on_items_select"]
+[connection signal="button_down" from="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer/Use" to="VBoxContainer/ActionsMenu" method="_on_use_button_down"]

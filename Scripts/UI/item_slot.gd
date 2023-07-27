@@ -1,19 +1,14 @@
-extends Button
+extends MarginContainer
 class_name SlotUI
 
 @export var SLOT: SlotData
 
-@onready var texture_rect = $MarginContainer/TextureRect
-@onready var label = $Label
-@onready var amount_label = $AmountLabel
-@onready var action_menu = $ActionMenu
-@onready var use = $ActionMenu/PanelContainer2/MarginContainer/VBoxContainer/Use
+@onready var label = $Panel/VBoxContainer/Label
+@onready var amount_label = $Panel/VBoxContainer/Content/AmountLabel
+@onready var texture_rect = $Panel/VBoxContainer/Content/TextureRect
 
 func _ready():
 	amount_label.visible = false
-	action_menu.visible = false
-	
-	use.visible = SLOT.ITEM_DATA.CAN_USE
 	
 	label.text = SLOT.ITEM_DATA.NAME
 	texture_rect.texture = SLOT.ITEM_DATA.TEXTURE
@@ -21,12 +16,3 @@ func _ready():
 	if SLOT is StackableSlotData:
 		amount_label.visible = true
 		amount_label.text = str(SLOT.AMOUNT)
-
-func _on_button_down():
-	if not SLOT.ITEM_DATA.CAN_USE: return 
-	action_menu.visible = true
-
-
-func _on_use_button_down():
-	SLOT.ITEM_DATA.use()
-	action_menu.visible = false

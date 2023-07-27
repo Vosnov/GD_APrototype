@@ -31,3 +31,10 @@ func _on_inventory_remove_item(item: ItemData):
 			SLOTS.erase(slot)
 			Events.emit_signal('inventory_update')
 			return
+
+func get_slots_without_guns():
+	var slots: Array[SlotData] = []
+	for slot in SLOTS:
+		if slot.ITEM_DATA is ItemGunData: continue
+		slots.push_back(slot)
+	return slots
