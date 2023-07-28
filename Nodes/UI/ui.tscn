@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://en3g0v7xjkgn"]
+[gd_scene load_steps=8 format=3 uid="uid://en3g0v7xjkgn"]
 
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_vjmbd"]
 [ext_resource type="PackedScene" uid="uid://8nwcw66m6aqr" path="res://Nodes/UI/pause_ui.tscn" id="1_xbwcd"]
 [ext_resource type="PackedScene" uid="uid://bdvj6pfhtgs1e" path="res://Nodes/UI/dead_screen.tscn" id="2_e8xum"]
 [ext_resource type="PackedScene" uid="uid://drr3ddmpotjgj" path="res://Nodes/UI/message_ui.tscn" id="3_138rf"]
+[ext_resource type="PackedScene" uid="uid://b2uh3a51dh3xl" path="res://Maps/test_map.tscn" id="5_80uli"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
@@ -97,3 +98,15 @@ offset_bottom = 63.0
 [node name="MessageContainer" type="Node" parent="."]
 script = SubResource("GDScript_py8tj")
 MESSAGE_UI = ExtResource("3_138rf")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 367.0
+offset_bottom = 645.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(367, 645)
+render_target_update_mode = 4
+
+[node name="TestMap" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_80uli")]

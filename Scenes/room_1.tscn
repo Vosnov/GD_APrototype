@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b08yftpcev0nj"]
+[gd_scene load_steps=16 format=3 uid="uid://b08yftpcev0nj"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_a51ut"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="2_2o045"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="8_mlrs1"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="9_cttfe"]
 [ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="10_080dy"]
+[ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="11_30bfs"]
 
 [sub_resource type="Resource" id="Resource_1rupo"]
 script = ExtResource("7_yy6d1")
@@ -79,6 +80,7 @@ _data = {
 }
 
 [node name="Room1" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -141,3 +143,10 @@ libraries = {
 "": SubResource("AnimationLibrary_g4wrn")
 }
 script = ExtResource("10_080dy")
+
+[node name="Center" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.5)
+
+[node name="RoomConfig" parent="." node_paths=PackedStringArray("CENTER") instance=ExtResource("11_30bfs")]
+CENTER = NodePath("../Center")
+NAME = "testLevel.room1"

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://biub747vk5dad"]
+
+[ext_resource type="Script" path="res://Scripts/Helpers/room_config.gd" id="1_wpyia"]
+
+[node name="RoomConfig" type="Node" groups=["room_config"]]
+script = ExtResource("1_wpyia")
