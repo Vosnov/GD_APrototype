@@ -16,9 +16,9 @@ script/source = "extends Node3D
 @export var ACCEPT_STATE = DoorActiveNode.AcceptState.ACCEPT
 @export_file(\"*.tscn\") var NEXT_SCENE
 @export var NEED_KEY_DATA: ItemData
-@export_multiline var CLOSE_MESSAGE: String
-@export_multiline var NEED_ACCEPT_MESSAGE: String
-@export_multiline var OPENED_MESSAGE: String
+@export var CLOSE_MESSAGE: String
+@export var NEED_ACCEPT_MESSAGE: String
+@export var OPENED_MESSAGE: String
 
 @export var CLOSING_AUDIO: AudioStream
 @export var OPEN_AUDIO: AudioStream

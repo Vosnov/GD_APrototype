@@ -51,9 +51,9 @@ _data = {
 }
 
 [node name="SaveRoom" type="Node3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.897524, 0, 0.364431)
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
@@ -73,18 +73,18 @@ size = Vector3(2, 2, 2)
 material = ExtResource("2_k1qyr")
 
 [node name="Player2" parent="." instance=ExtResource("3_ka1ri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
 
 [node name="CameraController2" parent="." node_paths=PackedStringArray("TARGET") instance=ExtResource("4_x7b7k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
 TARGET = NodePath("../Player2")
 
 [node name="Door" parent="." instance=ExtResource("5_lcrnd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.45)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.55248, 1.5, 0.364431)
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="SaveNode" parent="." instance=ExtResource("6_0p0iw")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.639866, 1.56396, -2.41186)
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 3.30938, 1.56396, -0.275435)
 LEVEL_NAME = "level.name.saveRoom"
 LEVEL_PATH = "res://Scenes/save_room.tscn"
 
@@ -92,7 +92,7 @@ LEVEL_PATH = "res://Scenes/save_room.tscn"
 environment = ExtResource("7_0ubmk")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.629, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897524, 3.629, 0.364431)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
 cast_shadow = 3
@@ -120,14 +120,14 @@ skeleton = NodePath("../../Lights")
 [node name="Lights" type="Node" parent="."]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 4.71, 0)
+transform = Transform3D(-4.37114e-08, 1, 2.98023e-08, 0, -2.98023e-08, 1, 1, 4.37114e-08, 1.3027e-15, 0.95985, 4.71, 0.377173)
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 10.0
 spot_angle = 50.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.466973, 0.884271, 0, -0.884271, 0.466973, 0.086, 4.14, 2.815)
+transform = Transform3D(-4.37114e-08, 0.884271, -0.466973, 0, 0.466973, 0.884271, 1, 3.86527e-08, -2.0412e-08, -1.94586, 4.14, 0.983524)
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 6.0
@@ -139,9 +139,9 @@ libraries = {
 "": SubResource("AnimationLibrary_o555u")
 }
 
-[node name="Center" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.58729, 0)
-
 [node name="RoomConfig" parent="." node_paths=PackedStringArray("CENTER") instance=ExtResource("8_btf6x")]
-CENTER = NodePath("../Center")
+CENTER = NodePath("Center")
 NAME = "testLevel.saveRoom"
+
+[node name="Center" type="Marker3D" parent="RoomConfig"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.892534, 0.740546, 0.451831)
