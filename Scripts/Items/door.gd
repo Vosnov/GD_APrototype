@@ -74,5 +74,5 @@ func play_audio(stream: AudioStream):
 	audio_stream_player_3d.play()
 
 func touch_door():
-	var name = str(owner.scene_file_path, '_', NAME)
-	GlobalVariables.touched_doors[name] = ACCEPT_STATE
+	var touch_door_name = str(owner.scene_file_path, '_', NAME)
+	GlobalVariables.touched_doors[touch_door_name] = ACCEPT_STATE

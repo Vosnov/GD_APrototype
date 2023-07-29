@@ -8,6 +8,7 @@ var player_ammo_load: Dictionary = {}
 var active_gun_index = -1
 var save_data: Dictionary = {}
 var touched_doors: Dictionary = {}
+var visited_rooms: Array[String] = []
 
 var menu_ui_is_open = false
 var player_is_runing = false

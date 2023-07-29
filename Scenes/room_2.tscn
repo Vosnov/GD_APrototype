@@ -131,7 +131,7 @@ size = Vector3(40, 1, 40)
 [node name="Lights" type="Node" parent="."]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(-2.98023e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 2.98023e-08, 1.3027e-15, 0.300593, 4.22199, -1.45224)
+transform = Transform3D(-2.98023e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 2.98023e-08, 1.3027e-15, 3.80559, 4.22199, -2.03161)
 shadow_enabled = true
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
@@ -148,9 +148,7 @@ libraries = {
 "": SubResource("AnimationLibrary_s5d28")
 }
 
-[node name="RoomConfig" parent="." node_paths=PackedStringArray("CENTER") instance=ExtResource("11_xulbk")]
-CENTER = NodePath("Center")
-NAME = "testLevel.room2"
+[node name="RoomConfig" parent="." instance=ExtResource("11_xulbk")]
 
 [node name="Center" type="Marker3D" parent="RoomConfig"]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.553789, 1.213, -3.75736)

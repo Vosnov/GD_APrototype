@@ -11,9 +11,15 @@ script/source = "extends Node2D
 
 var player: Node3D
 var room_config: RoomConfig
-var map_room_center = Vector2()
 
 func _ready():
+	for child in get_children():
+		if child is MapRoom:
+			if GlobalVariables.visited_rooms.has(child.SCENE_PATH):
+				child.visible = true
+			else:
+				child.visible = false
+	
 	player = get_tree().get_first_node_in_group('player')
 	room_config = get_tree().get_first_node_in_group('room_config')
 	
@@ -24,12 +30,6 @@ func _ready():
 	if room_config == null:
 		printerr('Room config not found')
 		return
-	
-	for child in get_children():
-		if child is MapRoom:
-			if room_config.get_scene_path() == child.SCENE_PATH:
-				map_room_center = child.get_center_pos()
-				break
 
 	set_player_sprite_pos()
 	global_position += (DisplayServer.window_get_size() / 2.0) - player_sprite.global_position 
@@ -38,6 +38,14 @@ func _ready():
 func set_player_sprite_pos():
 	if player == null: return
 	if room_config == null: return
+	
+	var map_room_center = Vector2()
+	
+	for child in get_children():
+		if child is MapRoom:
+			if room_config.get_scene_path() == child.SCENE_PATH:
+				map_room_center = child.get_center_pos()
+				break
 	
 	var new_player_pos = player.global_position - room_config.get_center_pos()
 	var player_pos = Vector2(new_player_pos.x, new_player_pos.z)
@@ -79,24 +87,30 @@ layer_0/tile_data = PackedInt32Array(589824, 0, 3, 589825, 65536, 3, 589826, 655
 position = Vector2(128, 496)
 rotation = 1.57079
 NAME = "Room1"
-STATE = 3
 
 [node name="Room2" parent="MainRoom" instance=ExtResource("4_fkv2a")]
 position = Vector2(128, 384)
 rotation = 1.57079
 NAME = "Room2"
-STATE = 3
 
 [node name="SaveRoom" parent="MainRoom" instance=ExtResource("4_fkv2a")]
 position = Vector2(288, 304)
 rotation = 1.57079
 NAME = "SaveRoom"
-STATE = 3
 
 [node name="Room3" parent="MainRoom" instance=ExtResource("4_fkv2a")]
 position = Vector2(224, 288)
 NAME = "Room3"
-STATE = 3
+
+[node name="Close1" parent="MainRoom" instance=ExtResource("4_fkv2a")]
+position = Vector2(96, 464)
+rotation = 1.57079
+NAME = "Close1"
+
+[node name="Test" parent="MainRoom" instance=ExtResource("4_fkv2a")]
+position = Vector2(0, 304)
+rotation = 1.57079
+NAME = "Test"
 
 [node name="Room1" parent="." instance=ExtResource("1_3w1i8")]
 SCENE_PATH = "res://Scenes/room_1.tscn"

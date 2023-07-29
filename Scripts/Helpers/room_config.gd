@@ -3,6 +3,10 @@ class_name RoomConfig
 
 @onready var center = $Center
 
+func _ready():
+	if not GlobalVariables.visited_rooms.has(owner.scene_file_path):
+		GlobalVariables.visited_rooms.push_back(owner.scene_file_path)
+
 func get_doors() -> Array[Door]:
 	var doors: Array[Door] = []
 	
