@@ -13,10 +13,8 @@ func _ready():
 	
 	GlobalVariables.menu_ui_is_open = true
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _exit_tree():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().paused = false
 	GlobalVariables.menu_ui_is_open = false
 

@@ -12,12 +12,18 @@ script/source = "extends Node2D
 var player: Node3D
 
 func _ready():
+	var no_visited_rooms = true
+	
 	for child in get_children():
 		if child is MapRoom:
 			if GlobalVariables.visited_rooms.has(child.SCENE_PATH):
 				child.visible = true
+				no_visited_rooms = false
 			else:
 				child.visible = false
+	
+	if no_visited_rooms:
+		Events.map_floor_empty.emit(FLOOR_INDEX)
 	
 	player = get_tree().get_first_node_in_group('player')
 	
