@@ -49,15 +49,23 @@ func set_player_sprite_pos():
 [sub_resource type="GDScript" id="GDScript_kikvk"]
 script/source = "extends Camera2D
 
+var move_mode = false
+
+func _init():
+	Events.map_set_move_mode.connect(func(mode): move_mode = mode)
+
 func _physics_process(delta):
+	if not move_mode: return
 	var input_dir = Input.get_vector(\"left\", \"right\", \"top\", \"bottom\")
 	position += input_dir * delta * 2000
 	
 func _input(_event):
-	if Input.is_action_just_pressed('shot'):
+	if move_mode: return
+	
+	if Input.is_action_just_pressed('top'):
 		var new_zoom = zoom + Vector2(0.5, 0.5)
 		zoom = clamp(new_zoom, Vector2(0.5, 0.5), Vector2(3, 3))
-	if Input.is_action_just_pressed('aim'):
+	if Input.is_action_just_pressed('bottom'):
 		var new_zoom = zoom - Vector2(0.5, 0.5)
 		zoom = clamp(new_zoom, Vector2(0.5, 0.5), Vector2(3, 3))
 	

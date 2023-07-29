@@ -56,3 +56,5 @@ inventoryUI.use,Use,Использовать
 inventoryUI.empty,Empty,Пусто
 lang.rus,Russian,Русский
 lang.en,English,Английский
+playerMenu.inventory,Inventory,Инвентарь
+playerMenu.map,Map,Карта

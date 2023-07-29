@@ -1,55 +1,51 @@
 [gd_scene load_steps=4 format=3 uid="uid://5t4rmu1n0533"]
 
+[ext_resource type="Script" path="res://Nodes/UI/player_menu_ui.gd" id="1_6778d"]
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_cy3mg"]
-
-[sub_resource type="GDScript" id="GDScript_bkayh"]
-script/source = "extends TabContainer
-
-func _ready():
-	GlobalVariables.menu_ui_is_open = true
-	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-func _exit_tree():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	get_tree().paused = false
-	GlobalVariables.menu_ui_is_open = false
-
-func _input(_event):
-	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
-		queue_free()
-"
 
 [sub_resource type="GDScript" id="GDScript_h4ou5"]
 script/source = "extends SubViewport
 
+var move_mode = false
+
 var current_floor_index = 0:
 	set(value):
-		var max_floors = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS.size()
+		var max_floors = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS.size() - 1
 		current_floor_index = clamp(value, 0, max_floors)
 
 var floor_instance: Node
+var last_index = -1
 
 func _ready():
+	Events.map_set_move_mode.emit(move_mode)
+	Events.map_set_move_mode.connect(func(mode): move_mode = mode)
+	
 	if GlobalVariables.current_room_config == null: return
 	
 	current_floor_index = GlobalVariables.current_room_config.CURRENT_FLOOR_INDEX
 	show_floor(current_floor_index)
 
 func _input(_event):
-	if Input.is_action_just_pressed('gun_0'):
+	if Input.is_action_just_pressed('action'):
+		Events.map_set_move_mode.emit(!move_mode)
+	
+	
+	if move_mode == true: return
+	if Input.is_action_just_pressed('left'):
 		current_floor_index -= 1
 		show_floor(current_floor_index)
-	if Input.is_action_just_pressed(\"gun_1\"):
+	if Input.is_action_just_pressed('right'):
 		current_floor_index += 1
 		show_floor(current_floor_index)
 
 func show_floor(index: int):
+	if index == last_index: return
 	if floor_instance != null:
 		floor_instance.queue_free()
 	
 	floor_instance = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS[index].instantiate()
 	add_child(floor_instance)
+	last_index = index
 "
 
 [node name="PlayerMenu" type="TabContainer"]
@@ -59,9 +55,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 tab_alignment = 1
-script = SubResource("GDScript_bkayh")
+script = ExtResource("1_6778d")
+TAB_TITLES = Array[String](["playerMenu.inventory", "playerMenu.map"])
+
+[node name="InventoryUI" parent="." instance=ExtResource("1_cy3mg")]
+layout_mode = 2
 
 [node name="Map" type="Control" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Map"]
@@ -79,9 +80,5 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(1280, 689)
-render_target_update_mode = 4
+render_target_update_mode = 0
 script = SubResource("GDScript_h4ou5")
-
-[node name="InventoryUI" parent="." instance=ExtResource("1_cy3mg")]
-visible = false
-layout_mode = 2
