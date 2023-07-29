@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://5t4rmu1n0533"]
+
+[ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_cy3mg"]
+[ext_resource type="PackedScene" uid="uid://b2uh3a51dh3xl" path="res://Maps/test_map.tscn" id="2_xcci4"]
+
+[sub_resource type="GDScript" id="GDScript_bkayh"]
+script/source = "extends TabContainer
+
+func _ready():
+	GlobalVariables.menu_ui_is_open = true
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _exit_tree():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+	GlobalVariables.menu_ui_is_open = false
+
+func _input(_event):
+	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
+		queue_free()
+"
+
+[sub_resource type="GDScript" id="GDScript_palox"]
+script/source = "extends SubViewportContainer
+
+"
+
+[node name="PlayerMenu" type="TabContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_bkayh")
+
+[node name="Map" type="Control" parent="."]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = SubResource("GDScript_palox")
+
+[node name="SubViewport" type="SubViewport" parent="Map/SubViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="TestMap" parent="Map/SubViewportContainer/SubViewport" instance=ExtResource("2_xcci4")]
+
+[node name="InventoryUI" parent="." instance=ExtResource("1_cy3mg")]
+visible = false
+layout_mode = 2

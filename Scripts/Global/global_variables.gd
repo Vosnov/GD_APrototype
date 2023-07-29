@@ -7,6 +7,7 @@ var player_spawn_data: Dictionary = {}
 var player_ammo_load: Dictionary = {}
 var active_gun_index = -1
 var save_data: Dictionary = {}
+var touched_doors: Dictionary = {}
 
 var menu_ui_is_open = false
 var player_is_runing = false

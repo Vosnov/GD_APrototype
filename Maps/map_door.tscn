@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://lch86o4fih33"]
+
+[ext_resource type="Script" path="res://Scripts/Map/map_door.gd" id="1_heytq"]
+[ext_resource type="Texture2D" uid="uid://ep65t4ppndw7" path="res://Textures/Map/VDoor.png" id="2_twlmm"]
+
+[node name="MapDoor" type="Node2D"]
+script = ExtResource("1_heytq")
+STATE = 0
+
+[node name="Open" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+z_index = 1
+texture = ExtResource("2_twlmm")
+
+[node name="NeedKey" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 0, 1)
+z_index = 1
+texture = ExtResource("2_twlmm")
+
+[node name="Close" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 1)
+z_index = 1
+texture = ExtResource("2_twlmm")
+
+[node name="None" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.121569, 0.121569, 0.121569, 1)
+z_index = 1
+texture = ExtResource("2_twlmm")

@@ -7,11 +7,13 @@ script/source = "extends Control
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
+	GlobalVariables.menu_ui_is_open = true
 	get_tree().paused = true
 	animation_player.play(\"dead_screen_anim\")
 
 func _exit_tree():
 	get_tree().paused = false
+	GlobalVariables.menu_ui_is_open = false
 
 func _on_animation_player_animation_finished(_anim_name):
 	get_tree().change_scene_to_file(MENU_SCENE)

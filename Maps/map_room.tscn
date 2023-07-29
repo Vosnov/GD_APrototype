@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://deesr7gvdxugc"]
+
+[ext_resource type="TileSet" uid="uid://bc2uvjxqmuhqd" path="res://Maps/map_tile_set.tres" id="1_6gthp"]
+[ext_resource type="Script" path="res://Scripts/Map/map_room.gd" id="1_war6m"]
+
+[node name="MapRoom" type="Node2D"]
+script = ExtResource("1_war6m")
+
+[node name="Center" type="Marker2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_6gthp")
+format = 2

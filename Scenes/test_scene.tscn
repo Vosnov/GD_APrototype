@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="7_1ch7u"]
 [ext_resource type="PackedScene" uid="uid://dvnmhjqbx6oyh" path="res://Nodes/Items/shotgun_item.tscn" id="7_chgd7"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="8_sd8b3"]
+[ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_t0enw"]
 [ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="9_ukn3b"]
-[ext_resource type="Script" path="res://Scripts/Helpers/room_config.gd" id="10_5lxwl"]
 
 [sub_resource type="Animation" id="Animation_l75js"]
 length = 0.001
@@ -101,32 +101,6 @@ operation = 2
 size = Vector3(2, 5, 18)
 material = ExtResource("1_raqd1")
 
-[node name="Door" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.55, 1.5, 3.5)
-NEXT_SCENE = "res://Scenes/room_1.tscn"
-
-[node name="Door5" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3.45, 1.5, 0.5)
-ACCEPT_STATE = 2
-
-[node name="Door2" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.55, 1.5, -2.5)
-NEXT_SCENE = "res://Scenes/room_2.tscn"
-
-[node name="Door3" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -9.45, 1.5, -9)
-ACCEPT_STATE = 1
-NEXT_SCENE = "res://main.tscn"
-NEED_KEY_DATA = ExtResource("4_8r63q")
-
-[node name="Door4" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 1.5, -10.45)
-NEXT_SCENE = "res://Scenes/room_3.tscn"
-
-[node name="Door6" parent="." instance=ExtResource("7_1ch7u")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.45, 1.5, -9)
-NEXT_SCENE = "res://Scenes/save_room.tscn"
-
 [node name="Player2" parent="." instance=ExtResource("1_i475y")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.07001, 1.52476, 9.83544)
 
@@ -148,24 +122,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5,
 light_bake_mode = 1
 spot_angle = 42.6349
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="Lights/SpotLight3D2"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 1)
-light_energy = 0.0
-light_bake_mode = 1
-spot_angle = 42.6349
-
 [node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, -9)
 spot_angle = 42.6349
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 7.49527, 5, -9)
-spot_angle = 42.6349
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="Lights/SpotLight3D4"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 5, 1)
-light_energy = 0.0
-light_bake_mode = 1
 spot_angle = 42.6349
 
 [node name="SpotLight3D5" type="SpotLight3D" parent="Lights"]
@@ -190,10 +152,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7)
 [node name="PistolItem" parent="." instance=ExtResource("6_lsgla")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.606128, 2, 7)
 
-[node name="Marker3D" type="Marker3D" parent="."]
+[node name="RoomConfig" parent="." instance=ExtResource("8_t0enw")]
+
+[node name="Center" parent="RoomConfig" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.202, 9)
 
-[node name="RoomConfig" type="Node" parent="." node_paths=PackedStringArray("CENTER") groups=["room_config"]]
-script = ExtResource("10_5lxwl")
-CENTER = NodePath("../Marker3D")
-NAME = "testScene"
+[node name="Room1" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.55, 1.5, 3.5)
+NAME = "Room1"
+NEXT_SCENE = "res://Scenes/room_1.tscn"
+
+[node name="Close1" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -3.45, 1.5, 0.5)
+NAME = "Close1"
+ACCEPT_STATE = 2
+
+[node name="Room2" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.55, 1.5, -2.5)
+NAME = "Room2"
+NEXT_SCENE = "res://Scenes/room_2.tscn"
+
+[node name="Test" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -9.45, 1.5, -9)
+NAME = "Test"
+ACCEPT_STATE = 1
+NEXT_SCENE = "res://main.tscn"
+NEED_KEY_DATA = ExtResource("4_8r63q")
+
+[node name="Room3" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 1.5, -10.45)
+NAME = "Room3"
+NEXT_SCENE = "res://Scenes/room_3.tscn"
+
+[node name="SaveRoom" parent="RoomConfig" instance=ExtResource("7_1ch7u")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.45, 1.5, -9)
+NAME = "SaveRoom"
+NEXT_SCENE = "res://Scenes/save_room.tscn"
+
+[editable path="RoomConfig"]

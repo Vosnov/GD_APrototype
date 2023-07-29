@@ -81,6 +81,7 @@ TARGET = NodePath("../Player2")
 
 [node name="Door" parent="." instance=ExtResource("5_lcrnd")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.55248, 1.5, 0.364431)
+NAME = "Door:<StaticBody3D#2382666727365>"
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="SaveNode" parent="." instance=ExtResource("6_0p0iw")]
@@ -139,9 +140,9 @@ libraries = {
 "": SubResource("AnimationLibrary_o555u")
 }
 
-[node name="RoomConfig" parent="." node_paths=PackedStringArray("CENTER") instance=ExtResource("8_btf6x")]
-CENTER = NodePath("Center")
-NAME = "testLevel.saveRoom"
+[node name="RoomConfig" parent="." instance=ExtResource("8_btf6x")]
 
-[node name="Center" type="Marker3D" parent="RoomConfig"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.892534, 0.740546, 0.451831)
+[node name="Center" parent="RoomConfig" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999082, -0.0411243, 0.212128)
+
+[editable path="RoomConfig"]

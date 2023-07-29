@@ -1,82 +1,15 @@
 [gd_scene load_steps=14 format=3 uid="uid://b3vkk1qyqod6g"]
 
-[ext_resource type="AudioStream" uid="uid://cdujunlftjd2c" path="res://SFX/Interractive/Door/CloseDoor2.mp3" id="1_tvk3s"]
+[ext_resource type="Script" path="res://Scripts/Items/door.gd" id="1_v1o0o"]
 [ext_resource type="Material" uid="uid://d0p81ue363vha" path="res://Materials/test_mat_2.tres" id="1_wd37w"]
-[ext_resource type="AudioStream" uid="uid://damk3nqqkpmq0" path="res://SFX/Interractive/Door/OpenDoor3.mp3" id="2_lpv0w"]
+[ext_resource type="AudioStream" uid="uid://bwk0yegenmim4" path="res://SFX/Interractive/Door/CloseDoor.mp3" id="2_crc27"]
 [ext_resource type="Script" path="res://Scripts/Helpers/door_active_node.gd" id="2_s6rgp"]
 [ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="3_0fx7q"]
 [ext_resource type="AudioStream" uid="uid://b4tlt6oxose46" path="res://SFX/Interractive/Door/BrokenDoor1.mp3" id="3_igjkq"]
+[ext_resource type="AudioStream" uid="uid://d13ty8j1amui3" path="res://SFX/Interractive/Door/OpenDoor.mp3" id="3_nw20s"]
 [ext_resource type="PackedScene" uid="uid://ds5hlv1fie0sv" path="res://Nodes/ActiveSprites/door_need_accept_sprite.tscn" id="3_pj662"]
 [ext_resource type="PackedScene" uid="uid://dxkrx5vqri5e4" path="res://Nodes/ActiveSprites/door_close_sprite.tscn" id="4_201g0"]
 [ext_resource type="AudioStream" uid="uid://wfeygk2txhqp" path="res://SFX/Interractive/Door/KeyOpenDoor.mp3" id="4_u2ohf"]
-
-[sub_resource type="GDScript" id="GDScript_8bmqr"]
-script/source = "extends Node3D
-
-@export var ACCEPT_STATE = DoorActiveNode.AcceptState.ACCEPT
-@export_file(\"*.tscn\") var NEXT_SCENE
-@export var NEED_KEY_DATA: ItemData
-@export var CLOSE_MESSAGE: String
-@export var NEED_ACCEPT_MESSAGE: String
-@export var OPENED_MESSAGE: String
-
-@export var CLOSING_AUDIO: AudioStream
-@export var OPEN_AUDIO: AudioStream
-@export var BROKEN_AUDIO: AudioStream
-@export var KEY_OPEN_DOOR: AudioStream
-
-@onready var active_node = $DoorActiveNode as DoorActiveNode
-@onready var spawn_point = $SpawnPoint
-@onready var audio_stream_player_3d = $AudioStreamPlayer3D
-
-var is_accepted = false
-var door_opened_message = \"\"
-
-func _ready():
-	if GlobalVariables.door_prev_scene == NEXT_SCENE:
-		audio_stream_player_3d.stream = CLOSING_AUDIO
-		audio_stream_player_3d.play()
-	
-	if NEED_KEY_DATA:
-		door_opened_message = tr(OPENED_MESSAGE) % [NEED_KEY_DATA.NAME]
-	active_node.ACCEPT_STATE = ACCEPT_STATE
-
-func has_key():
-	var items = Inventory.SLOTS.map(func(slot: SlotData): return slot.ITEM_DATA)
-	return items.has(NEED_KEY_DATA)
-
-func _on_door_active_node_action_pressed():
-	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
-		play_audio(BROKEN_AUDIO)
-		
-		Events.emit_signal('message_ui', CLOSE_MESSAGE)
-		return
-		
-	if ACCEPT_STATE == DoorActiveNode.AcceptState.NEED_ACCEPT and !is_accepted:
-		if has_key():
-			play_audio(KEY_OPEN_DOOR)
-			
-			active_node.change_sprite(DoorActiveNode.AcceptState.ACCEPT)
-			Events.emit_signal('inventory_remove_item', NEED_KEY_DATA)
-			Events.emit_signal('message_ui', door_opened_message)
-			is_accepted = true
-			return
-		else:
-			play_audio(BROKEN_AUDIO)
-			
-			Events.emit_signal('message_ui', NEED_ACCEPT_MESSAGE)
-			return
-	
-	play_audio(OPEN_AUDIO)
-	GlobalVariables.player_spawn_data[owner.scene_file_path] = spawn_point.global_transform
-	GlobalVariables.door_prev_scene = owner.scene_file_path
-	SceneTransition.change_scene(NEXT_SCENE)
-
-func play_audio(stream: AudioStream):
-	if audio_stream_player_3d.playing: return
-	audio_stream_player_3d.stream = stream
-	audio_stream_player_3d.play()
-"
 
 [sub_resource type="BoxMesh" id="BoxMesh_jb30f"]
 size = Vector3(1, 2, 1)
@@ -88,12 +21,12 @@ size = Vector3(1, 2, 1)
 size = Vector3(1, 2, 1)
 
 [node name="Door" type="StaticBody3D"]
-script = SubResource("GDScript_8bmqr")
+script = ExtResource("1_v1o0o")
 CLOSE_MESSAGE = "door.close"
 NEED_ACCEPT_MESSAGE = "door.needKey"
 OPENED_MESSAGE = "door.openBy"
-CLOSING_AUDIO = ExtResource("1_tvk3s")
-OPEN_AUDIO = ExtResource("2_lpv0w")
+CLOSING_AUDIO = ExtResource("2_crc27")
+OPEN_AUDIO = ExtResource("3_nw20s")
 BROKEN_AUDIO = ExtResource("3_igjkq")
 KEY_OPEN_DOOR = ExtResource("4_u2ohf")
 

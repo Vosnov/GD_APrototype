@@ -4,3 +4,5 @@
 
 [node name="RoomConfig" type="Node" groups=["room_config"]]
 script = ExtResource("1_wpyia")
+
+[node name="Center" type="Marker3D" parent="."]
