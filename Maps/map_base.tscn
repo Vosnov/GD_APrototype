@@ -5,13 +5,13 @@
 [sub_resource type="GDScript" id="GDScript_7i7bg"]
 script/source = "extends Node2D
 
+@export var FLOOR_INDEX = 0
+
 @onready var player_sprite = $Player
 
 var player: Node3D
-var room_config: RoomConfig
 
 func _ready():
-	player_sprite.visible = false
 	for child in get_children():
 		if child is MapRoom:
 			if GlobalVariables.visited_rooms.has(child.SCENE_PATH):
@@ -20,34 +20,26 @@ func _ready():
 				child.visible = false
 	
 	player = get_tree().get_first_node_in_group('player')
-	room_config = get_tree().get_first_node_in_group('room_config')
 	
 	if player == null:
 		printerr('Player not found')
 		return
+	if GlobalVariables.current_room_config == null: return
 	
-	if room_config == null:
-		printerr('Room config not found')
-		return
-
+	player_sprite.visible = GlobalVariables.current_room_config.CURRENT_FLOOR_INDEX == FLOOR_INDEX
 	set_player_sprite_pos()
 	global_position += (DisplayServer.window_get_size() / 2.0) - player_sprite.global_position 
-	player_sprite.visible = true
-
 
 func set_player_sprite_pos():
-	if player == null: return
-	if room_config == null: return
-	
 	var map_room_center = Vector2()
 	
 	for child in get_children():
 		if child is MapRoom:
-			if room_config.get_scene_path() == child.SCENE_PATH:
+			if GlobalVariables.current_room_config.get_scene_path() == child.SCENE_PATH:
 				map_room_center = child.get_center_pos()
 				break
 	
-	var new_player_pos = player.global_position - room_config.get_center_pos()
+	var new_player_pos = player.global_position - GlobalVariables.current_room_config.get_center_pos()
 	var player_pos = Vector2(new_player_pos.x, new_player_pos.z)
 	player_pos = player_pos * 32 / 2
 	

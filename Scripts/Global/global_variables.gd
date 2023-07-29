@@ -17,6 +17,11 @@ var player_target_is_full = false
 var should_spawn_on_player_transform = false
 var door_prev_scene = '' # Need for plaing close door stream
 var pick_up_in_area: Array[Node] = []
+var current_room_config: RoomConfig:
+	get:
+		if current_room_config == null:
+			printerr('Room config not found')
+		return current_room_config
 #Settings
 var setting_mouse = 1.0
 

@@ -25,20 +25,15 @@ script/source = "extends SubViewport
 
 var current_floor_index = 0:
 	set(value):
-		var max_floors = room_config.FLOOR_MAPS_DATA.FLOORS.size()
+		var max_floors = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS.size()
 		current_floor_index = clamp(value, 0, max_floors)
 
-var room_config: RoomConfig
 var floor_instance: Node
 
 func _ready():
-	room_config = get_tree().get_first_node_in_group('room_config') as RoomConfig
+	if GlobalVariables.current_room_config == null: return
 	
-	if room_config == null:
-		printerr('Room config not found')
-		return
-	
-	current_floor_index = room_config.CURRENT_FLOOR_INDEX
+	current_floor_index = GlobalVariables.current_room_config.CURRENT_FLOOR_INDEX
 	show_floor(current_floor_index)
 
 func _input(_event):
@@ -53,7 +48,7 @@ func show_floor(index: int):
 	if floor_instance != null:
 		floor_instance.queue_free()
 	
-	floor_instance = room_config.FLOOR_MAPS_DATA.FLOORS[index].instantiate()
+	floor_instance = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS[index].instantiate()
 	add_child(floor_instance)
 "
 

@@ -11,6 +11,7 @@ class_name RoomConfig
 @onready var center = $Center
 
 func _ready():
+	GlobalVariables.current_room_config = self
 	if not GlobalVariables.visited_rooms.has(owner.scene_file_path):
 		GlobalVariables.visited_rooms.push_back(owner.scene_file_path)
 

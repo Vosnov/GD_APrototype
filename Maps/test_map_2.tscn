@@ -6,6 +6,7 @@
 [node name="TestMap2" type="Node2D"]
 
 [node name="MapBase" parent="." instance=ExtResource("2_2vuph")]
+FLOOR_INDEX = 1
 
 [node name="MapRoom" parent="MapBase" instance=ExtResource("2_jeftg")]
 SCENE_PATH = "res://main.tscn"
