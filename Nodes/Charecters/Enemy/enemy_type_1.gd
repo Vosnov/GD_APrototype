@@ -23,8 +23,9 @@ var is_dead = false
 var is_stunned = false
 
 func _ready():
-	if GlobalVariables.no_spawn_enemys.has(get_path().get_concatenated_names()):
+	if GlobalVariables.destroyed_objects.has(to_string()):
 		queue_free()
+		return
 	Events.connect('enemy_take_damage', _on_take_damage)
 
 func _physics_process(delta):
@@ -52,7 +53,7 @@ func die():
 	animation_tree.set("parameters/main_trans/transition_request", 'dying')
 	stering_behavior.queue_free()
 	Events.emit_signal('enemy_die', self)
-	GlobalVariables.no_spawn_enemys.push_back(get_path().get_concatenated_names())
+	GlobalVariables.destroyed_objects.push_back(to_string())
 
 func get_init_state():
 	return INIT_STATE

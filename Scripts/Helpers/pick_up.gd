@@ -9,8 +9,9 @@ var is_active = true
 var player: Player
 
 func _ready():
-	if GlobalVariables.no_spawn_items.has(get_path().get_concatenated_names()):
+	if GlobalVariables.destroyed_objects.has(to_string()):
 		queue_free()
+		return
 
 func _on_active_node_action_pressed():
 	if GlobalVariables.pick_up_in_area.size() == 0: return
@@ -22,7 +23,7 @@ func _on_active_node_action_pressed():
 		Events.emit_signal('message_ui', tr(TAKE_MESSAGE) % [SLOT_DATA.ITEM_DATA.NAME])
 
 	SLOT_DATA.add_to_inventory()
-	GlobalVariables.no_spawn_items.push_back(get_path().get_concatenated_names())
+	GlobalVariables.destroyed_objects.push_back(to_string())
 	Events.emit_signal('inventory_update')
 	Events.emit_signal('item_pick_up', SLOT_DATA, self)
 	queue_free()

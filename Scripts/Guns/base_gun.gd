@@ -25,8 +25,8 @@ var amount_total = 0
 var target: Enemy
 
 func _ready():
-	if GlobalVariables.player_ammo_load.has(ITEM_GUN_DATA.NAME):
-		AMMO_LOADED = GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME]
+	if GlobalVariables.player_ammo_load.has(ITEM_GUN_DATA.item_name):
+		AMMO_LOADED = GlobalVariables.player_ammo_load[ITEM_GUN_DATA.item_name]
 	
 	_on_inventory_update()
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
@@ -47,7 +47,7 @@ func shot():
 	shot_stream.play()
 	Events.emit_signal("player_shot")
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
-	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
+	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.item_name] = AMMO_LOADED
 	
 	var muzzle = MUZZLE_FLASH.instantiate()
 	muzzle_pos.add_child(muzzle)
@@ -70,7 +70,7 @@ func reload():
 	reload_stream.play()
 	Events.emit_signal("player_reload", need_amount)
 	Events.emit_signal("player_reload_data_ui", AMMO_LOADED, amount_total)
-	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.NAME] = AMMO_LOADED
+	GlobalVariables.player_ammo_load[ITEM_GUN_DATA.item_name] = AMMO_LOADED
 	
 	await get_tree().create_timer(RELOAD_TIMEOUT).timeout
 	is_reloading = false

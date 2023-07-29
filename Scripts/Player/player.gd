@@ -14,18 +14,19 @@ func _init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func check_spawn_pos():
+	await get_tree().process_frame #Wait until the doors are ready
+	
+	var y_pos = global_position.y
+	for node in get_tree().get_nodes_in_group('door'):
+		if node is Door:
+			if node.NEXT_SCENE == GlobalVariables.door_prev_scene:
+				global_transform = node.spawn_point.global_transform
+				global_position.y = y_pos
+				break
+	
 	if GlobalVariables.should_spawn_on_player_transform:
 		global_transform = GlobalVariables.save_data.player_transform
 		GlobalVariables.should_spawn_on_player_transform = false
-		return
-	
-	var key = owner.scene_file_path
-	if not GlobalVariables.player_spawn_data.has(key): return
-	var point = GlobalVariables.player_spawn_data.get(key) as Transform3D
-	
-	var y_pos = global_position.y
-	global_transform = point
-	global_position.y = y_pos
 
 func update_ui():
 	Events.emit_signal("player_hp_ui", HP)

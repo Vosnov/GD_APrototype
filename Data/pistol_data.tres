@@ -9,3 +9,4 @@ INDEX = 0
 NAME = "data.pistol.name"
 DESCRIPTION = "data.pistol.description"
 TEXTURE = ExtResource("1_ufqia")
+CAN_USE = false

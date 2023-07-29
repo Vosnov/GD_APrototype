@@ -20,7 +20,7 @@ size = Vector3(1, 2, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vk8t2"]
 size = Vector3(1, 2, 1)
 
-[node name="Door" type="StaticBody3D"]
+[node name="Door" type="StaticBody3D" groups=["door"]]
 script = ExtResource("1_v1o0o")
 CLOSE_MESSAGE = "door.close"
 NEED_ACCEPT_MESSAGE = "door.needKey"

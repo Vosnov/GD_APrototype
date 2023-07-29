@@ -15,7 +15,7 @@ class_name Door
 @export var KEY_OPEN_DOOR: AudioStream
 
 @onready var active_node = $DoorActiveNode as DoorActiveNode
-@onready var spawn_point = $SpawnPoint
+@onready var spawn_point = $SpawnPoint as Node3D
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 var is_accepted = false
@@ -63,7 +63,6 @@ func _on_door_active_node_action_pressed():
 			return
 	
 	play_audio(OPEN_AUDIO)
-	GlobalVariables.player_spawn_data[owner.scene_file_path] = spawn_point.global_transform
 	GlobalVariables.door_prev_scene = owner.scene_file_path
 	touch_door()
 	SceneTransition.change_scene(NEXT_SCENE)
