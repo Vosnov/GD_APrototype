@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://5t4rmu1n0533"]
+[gd_scene load_steps=4 format=3 uid="uid://5t4rmu1n0533"]
 
 [ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_cy3mg"]
-[ext_resource type="PackedScene" uid="uid://b2uh3a51dh3xl" path="res://Maps/test_map.tscn" id="2_xcci4"]
 
 [sub_resource type="GDScript" id="GDScript_bkayh"]
 script/source = "extends TabContainer
@@ -21,9 +20,41 @@ func _input(_event):
 		queue_free()
 "
 
-[sub_resource type="GDScript" id="GDScript_palox"]
-script/source = "extends SubViewportContainer
+[sub_resource type="GDScript" id="GDScript_h4ou5"]
+script/source = "extends SubViewport
 
+var current_floor_index = 0:
+	set(value):
+		var max_floors = room_config.FLOOR_MAPS_DATA.FLOORS.size()
+		current_floor_index = clamp(value, 0, max_floors)
+
+var room_config: RoomConfig
+var floor_instance: Node
+
+func _ready():
+	room_config = get_tree().get_first_node_in_group('room_config') as RoomConfig
+	
+	if room_config == null:
+		printerr('Room config not found')
+		return
+	
+	current_floor_index = room_config.CURRENT_FLOOR_INDEX
+	show_floor(current_floor_index)
+
+func _input(_event):
+	if Input.is_action_just_pressed('gun_0'):
+		current_floor_index -= 1
+		show_floor(current_floor_index)
+	if Input.is_action_just_pressed(\"gun_1\"):
+		current_floor_index += 1
+		show_floor(current_floor_index)
+
+func show_floor(index: int):
+	if floor_instance != null:
+		floor_instance.queue_free()
+	
+	floor_instance = room_config.FLOOR_MAPS_DATA.FLOORS[index].instantiate()
+	add_child(floor_instance)
 "
 
 [node name="PlayerMenu" type="TabContainer"]
@@ -32,6 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tab_alignment = 1
 script = SubResource("GDScript_bkayh")
 
 [node name="Map" type="Control" parent="."]
@@ -45,17 +77,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-script = SubResource("GDScript_palox")
 
 [node name="SubViewport" type="SubViewport" parent="Map/SubViewportContainer"]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(2, 2)
-render_target_update_mode = 0
-
-[node name="TestMap" parent="Map/SubViewportContainer/SubViewport" instance=ExtResource("2_xcci4")]
+size = Vector2i(1280, 689)
+render_target_update_mode = 4
+script = SubResource("GDScript_h4ou5")
 
 [node name="InventoryUI" parent="." instance=ExtResource("1_cy3mg")]
 visible = false

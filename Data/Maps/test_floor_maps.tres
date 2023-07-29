@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FloorMapsData" load_steps=4 format=3 uid="uid://c730xco70xo26"]
+
+[ext_resource type="PackedScene" uid="uid://b2uh3a51dh3xl" path="res://Maps/test_map.tscn" id="1_miw4d"]
+[ext_resource type="PackedScene" uid="uid://0cc7hjr4kj2y" path="res://Maps/test_map_2.tscn" id="2_8e6c5"]
+[ext_resource type="Script" path="res://Scripts/Data/floor_maps_data.gd" id="2_txpqs"]
+
+[resource]
+script = ExtResource("2_txpqs")
+FLOORS = Array[PackedScene]([ExtResource("1_miw4d"), ExtResource("2_8e6c5")])

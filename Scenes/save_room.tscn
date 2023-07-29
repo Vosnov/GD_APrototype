@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=14 format=3 uid="uid://d1176uscfh47u"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
 [ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_btf6x"]
+[ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="9_1rjxq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
 size = Vector3(3, 0.1, 0.3)
@@ -141,6 +142,7 @@ libraries = {
 }
 
 [node name="RoomConfig" parent="." instance=ExtResource("8_btf6x")]
+FLOOR_MAPS_DATA = ExtResource("9_1rjxq")
 
 [node name="Center" parent="RoomConfig" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999082, -0.0411243, 0.212128)

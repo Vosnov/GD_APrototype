@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ymyfncjem0fi"]
+[gd_scene load_steps=15 format=3 uid="uid://ymyfncjem0fi"]
 
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="1_i475y"]
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_raqd1"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dvnmhjqbx6oyh" path="res://Nodes/Items/shotgun_item.tscn" id="7_chgd7"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="8_sd8b3"]
 [ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_t0enw"]
+[ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="9_lh4ah"]
 [ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="9_ukn3b"]
 
 [sub_resource type="Animation" id="Animation_l75js"]
@@ -153,6 +154,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.606128, 2, 7)
 
 [node name="RoomConfig" parent="." instance=ExtResource("8_t0enw")]
+FLOOR_MAPS_DATA = ExtResource("9_lh4ah")
 
 [node name="Center" parent="RoomConfig" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.202, 9)

@@ -1,6 +1,13 @@
 extends Node
 class_name RoomConfig
 
+@export var FLOOR_MAPS_DATA: FloorMapsData:
+	get:
+		if FLOOR_MAPS_DATA == null:
+			printerr('FLOOR_MAPS_DATA is require')
+		return FLOOR_MAPS_DATA
+@export var CURRENT_FLOOR_INDEX = 0
+
 @onready var center = $Center
 
 func _ready():

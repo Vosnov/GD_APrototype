@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c0psydh1fjawf"]
+[gd_scene load_steps=18 format=3 uid="uid://c0psydh1fjawf"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_ft7tw"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="4_33aen"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bqfcpdoke7pig" path="res://Nodes/Charecters/Enemy/enemy_type_1.tscn" id="9_4lyey"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="10_yn8ft"]
 [ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="11_xulbk"]
+[ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="12_kcn7t"]
 
 [sub_resource type="Resource" id="Resource_siga7"]
 script = ExtResource("5_0wapc")
@@ -149,6 +150,7 @@ libraries = {
 }
 
 [node name="RoomConfig" parent="." instance=ExtResource("11_xulbk")]
+FLOOR_MAPS_DATA = ExtResource("12_kcn7t")
 
 [node name="Center" type="Marker3D" parent="RoomConfig"]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.553789, 1.213, -3.75736)
