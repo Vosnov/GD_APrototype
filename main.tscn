@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=32 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
@@ -11,6 +11,8 @@
 [ext_resource type="Resource" uid="uid://d0sjep38cxp8q" path="res://Data/pistol_data.tres" id="9_ydhjh"]
 [ext_resource type="Script" path="res://Scripts/Data/slot_data.gd" id="10_pwn1y"]
 [ext_resource type="Resource" uid="uid://b6aw1wt4eg03f" path="res://Data/shotgun_data.tres" id="11_bnidm"]
+[ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="12_j2yro"]
+[ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="13_3oekm"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_v30gr"]
 vertices = PackedVector3Array(-9.5, 0, -19.25, -19.25, 0, -19.25, -19.25, 0, -9.75, -19.25, 0, 0, -1.75, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -1.75, 0.25, 0, -19.25, -19.25, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -19.25, -9.5, 0, -19.25, -19.25, 0, -9.75, 19.25, 0, -9.75, 19.25, 0, -19.25, 9.75, 0, -19.25, 2, 0, -1.25, 2, 0, 0, 19.25, 0, 0, 0.25, 0, -19.25, 0.25, 0, -1.75, 1.5, 0, -1.75, 1.5, 0, -1.75, 2, 0, -1.25, 19.25, 0, 0, 19.25, 0, -9.75, 9.75, 0, -19.25, 0.25, 0, -19.25, -0.25, 1.5, -0.25, -0.25, 1.5, 0.5, 0.5, 1.5, 0.5, 0.5, 1.5, -0.25, -19.25, 0, 9.5, -19.25, 0, 19.25, -9.75, 0, 19.25, 0, 0, 19.25, 0, 0, 2, -1.25, 0, 2, -1.75, 0, 1.5, -1.75, 0, 0, -19.25, 0, 0, 0, 0, 19.25, -1.25, 0, 2, -1.75, 0, 1.5, -19.25, 0, 0, -19.25, 0, 9.5, -9.75, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 19.25, 19.25, 0, 9.5, 19.25, 0, 0, 2, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 2, 0, 0, 19.25, 19.25, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 9.5)
@@ -164,3 +166,7 @@ mesh = SubResource("BoxMesh_xgiww")
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 size = Vector3(40, 1, 40)
+
+[node name="RoomConfig" parent="." instance=ExtResource("12_j2yro")]
+FLOOR_MAPS_DATA = ExtResource("13_3oekm")
+CURRENT_FLOOR_INDEX = 1

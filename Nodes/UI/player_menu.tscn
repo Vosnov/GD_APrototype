@@ -1,0 +1,131 @@
+[gd_scene load_steps=4 format=3 uid="uid://5t4rmu1n0533"]
+
+[ext_resource type="Script" path="res://Nodes/UI/player_menu_ui.gd" id="1_6778d"]
+[ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_cy3mg"]
+
+[sub_resource type="GDScript" id="GDScript_gto4h"]
+script/source = "extends Control
+
+@onready var label = $Label
+@onready var sub_viewport = $SubViewportContainer/SubViewport
+@onready var no_data_floor = $NoDataFloor
+
+var move_mode = false:
+	set(value):
+		move_mode = value
+		label.visible = value
+
+var current_floor_index = 0:
+	set(value):
+		var max_floors = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS.size() - 1
+		var clumped_value = clamp(value, 0, max_floors)
+		
+		if current_floor_index == clumped_value and floor_instance != null:
+			return
+			
+		no_data_floor.visible = false
+		current_floor_index = clumped_value
+		show_floor(current_floor_index)
+
+var floor_instance: Node
+
+func _ready():
+	if GlobalVariables.current_room_config == null: return
+		
+	no_data_floor.visible = false
+	label.visible = false
+	current_floor_index = GlobalVariables.current_room_config.CURRENT_FLOOR_INDEX
+	
+	Events.map_set_move_mode.emit(move_mode)
+	Events.map_set_move_mode.connect(func(mode): move_mode = mode)
+	Events.map_floor_empty.connect(func(floor_index): no_data_floor.visible = floor_index)
+	
+	if not visible: return
+	show_floor(current_floor_index)
+
+func _input(_event):
+	if not visible: return
+	if Input.is_action_just_pressed('action'):
+		Events.map_set_move_mode.emit(!move_mode)
+	
+	if move_mode == true: return
+	if Input.is_action_just_pressed('left'):
+		current_floor_index -= 1
+	if Input.is_action_just_pressed('right'):
+		current_floor_index += 1
+
+func show_floor(index: int):
+	if floor_instance != null:
+		floor_instance.queue_free()
+	
+	floor_instance = GlobalVariables.current_room_config.FLOOR_MAPS_DATA.FLOORS[index].instantiate()
+	sub_viewport.add_child(floor_instance)
+
+func _on_visibility_changed():
+	if visible:
+		sub_viewport.process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		sub_viewport.process_mode = Node.PROCESS_MODE_DISABLED
+"
+
+[node name="PlayerMenu" type="TabContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+script = ExtResource("1_6778d")
+TAB_TITLES = Array[String](["playerMenu.inventory", "playerMenu.map"])
+
+[node name="InventoryUI" parent="." instance=ExtResource("1_cy3mg")]
+layout_mode = 2
+
+[node name="Map" type="Control" parent="."]
+visible = false
+layout_mode = 2
+script = SubResource("GDScript_gto4h")
+
+[node name="Label" type="Label" parent="Map"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -99.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "MOVE MODE"
+horizontal_alignment = 2
+
+[node name="NoDataFloor" type="Label" parent="Map"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -13.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "NO DATA FLOOR"
+horizontal_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Map/SubViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[connection signal="visibility_changed" from="Map" to="Map" method="_on_visibility_changed"]

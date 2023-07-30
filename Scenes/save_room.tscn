@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=14 format=3 uid="uid://d1176uscfh47u"]
 
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
 [ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
+[ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_btf6x"]
+[ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="9_1rjxq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
 size = Vector3(3, 0.1, 0.3)
@@ -52,10 +54,11 @@ _data = {
 [node name="SaveRoom" type="Node3D"]
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.897524, 0, 0.364431)
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.5)
 size = Vector3(15, 5, 15)
 material = ExtResource("1_0371a")
 
@@ -66,23 +69,24 @@ size = Vector3(6, 5, 6)
 material = ExtResource("1_0371a")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -2.53171)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -3.17337)
 size = Vector3(2, 2, 2)
 material = ExtResource("2_k1qyr")
 
 [node name="Player2" parent="." instance=ExtResource("3_ka1ri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
 
 [node name="CameraController2" parent="." node_paths=PackedStringArray("TARGET") instance=ExtResource("4_x7b7k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111892, 1.45736, 2.36333)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
 TARGET = NodePath("../Player2")
 
 [node name="Door" parent="." instance=ExtResource("5_lcrnd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 3.95)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.55248, 1.5, 0.364431)
+NAME = "Back"
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="SaveNode" parent="." instance=ExtResource("6_0p0iw")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.639866, 1.56396, -1.81688)
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 3.30938, 1.56396, -0.275435)
 LEVEL_NAME = "level.name.saveRoom"
 LEVEL_PATH = "res://Scenes/save_room.tscn"
 
@@ -90,7 +94,7 @@ LEVEL_PATH = "res://Scenes/save_room.tscn"
 environment = ExtResource("7_0ubmk")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0991561, 3.6289, -0.287325)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897524, 3.629, 0.364431)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
 cast_shadow = 3
@@ -118,17 +122,17 @@ skeleton = NodePath("../../Lights")
 [node name="Lights" type="Node" parent="."]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0.0855963, 4.70964, -0.830465)
+transform = Transform3D(-4.37114e-08, 1, 2.98023e-08, 0, -2.98023e-08, 1, 1, 4.37114e-08, 1.3027e-15, 0.95985, 4.71, 0.377173)
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 10.0
 spot_angle = 50.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 0.466973, 0.884271, 0, -0.884271, 0.466973, 0.0855963, 4.13971, 3.31524)
+transform = Transform3D(-4.37114e-08, 0.884271, -0.466973, 0, 0.466973, 0.884271, 1, 3.86527e-08, -2.0412e-08, -1.94586, 4.14, 0.983524)
 light_energy = 2.0
 shadow_enabled = true
-spot_range = 10.0
+spot_range = 6.0
 spot_angle = 50.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -136,3 +140,11 @@ autoplay = "saveRoom"
 libraries = {
 "": SubResource("AnimationLibrary_o555u")
 }
+
+[node name="RoomConfig" parent="." instance=ExtResource("8_btf6x")]
+FLOOR_MAPS_DATA = ExtResource("9_1rjxq")
+
+[node name="Center" parent="RoomConfig" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999082, -0.0411243, 0.212128)
+
+[editable path="RoomConfig"]

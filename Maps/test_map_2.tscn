@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://0cc7hjr4kj2y"]
+
+[ext_resource type="PackedScene" uid="uid://mqmoonr7bg2x" path="res://Maps/map_base.tscn" id="2_2vuph"]
+[ext_resource type="PackedScene" uid="uid://deesr7gvdxugc" path="res://Maps/map_room.tscn" id="2_jeftg"]
+
+[node name="TestMap2" type="Node2D"]
+
+[node name="MapBase" parent="." instance=ExtResource("2_2vuph")]
+FLOOR_INDEX = 1
+
+[node name="MapRoom" parent="MapBase" instance=ExtResource("2_jeftg")]
+SCENE_PATH = "res://main.tscn"
+
+[node name="Center" parent="MapBase/MapRoom" index="0"]
+position = Vector2(128, 128)
+
+[node name="TileMap" parent="MapBase/MapRoom" index="1"]
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65537, 65536, 1, 131074, 65536, 1, 131075, 65536, 1, 196612, 65536, 1, 196613, 65536, 1, 196614, 131072, 1, 131077, 65536, 1, 131076, 65536, 1, 65539, 65536, 1, 65538, 65536, 1, 1, 65536, 0, 65536, 0, 1, 131073, 65536, 1, 131072, 0, 1, 2, 65536, 0, 3, 65536, 0, 4, 65536, 0, 5, 65536, 0, 6, 131072, 0, 65542, 131072, 1, 131078, 131072, 1, 65541, 65536, 1, 65540, 65536, 1, 196608, 0, 1, 196609, 65536, 1, 196610, 65536, 1, 196611, 65536, 1, 262145, 65536, 1, 262144, 0, 1, 262146, 65536, 1, 262147, 65536, 1, 262148, 65536, 1, 262149, 65536, 1, 262150, 131072, 1, 327686, 131072, 1, 327685, 65536, 1, 327684, 65536, 1, 327683, 65536, 1, 327682, 65536, 1, 327681, 65536, 1, 327680, 0, 1, 393216, 0, 2, 393217, 65536, 2, 393218, 65536, 2, 393219, 65536, 2, 393220, 65536, 2, 393221, 65536, 2, 393222, 131072, 2)
+
+[editable path="MapBase/MapRoom"]

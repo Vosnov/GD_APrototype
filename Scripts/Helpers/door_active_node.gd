@@ -4,7 +4,8 @@ class_name DoorActiveNode
 enum AcceptState {
 	ACCEPT,
 	NEED_ACCEPT,
-	CLOSE
+	CLOSE,
+	NONE
 }
 
 @export var ACCEPT_SPRITE: PackedScene

@@ -1,24 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwhdypbxa1gl7"]
+[gd_scene load_steps=6 format=3 uid="uid://dwhdypbxa1gl7"]
 
 [ext_resource type="PackedScene" uid="uid://4u66jdl33sow" path="res://Nodes/UI/inventory_items.tscn" id="2_4hto5"]
 [ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
 [ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="3_tura4"]
-
-[sub_resource type="GDScript" id="GDScript_gxcol"]
-script/source = "extends Control
-
-func _ready():
-	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-func _exit_tree():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	get_tree().paused = false
-
-func _input(_event):
-	if Input.is_action_just_pressed('ui_cancel') or Input.is_action_just_pressed('ui_menu'):
-		queue_free()
-"
 
 [sub_resource type="GDScript" id="GDScript_ovlbg"]
 script/source = "extends VBoxContainer
@@ -85,13 +69,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_gxcol")
 
 [node name="Guns" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_top = 260.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -134.0
 offset_right = 64.0
-offset_bottom = 528.0
+offset_bottom = 134.0
+grow_vertical = 2
 script = SubResource("GDScript_ovlbg")
 SLOT_GUN_UI = ExtResource("2_wnedq")
 
@@ -142,8 +129,7 @@ text = "4
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 80.0
-offset_bottom = 244.0
+offset_bottom = 207.0
 grow_horizontal = 2
 
 [node name="Items" parent="VBoxContainer" instance=ExtResource("2_4hto5")]

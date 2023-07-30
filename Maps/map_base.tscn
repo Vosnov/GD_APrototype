@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://mqmoonr7bg2x"]
+
+[ext_resource type="Texture2D" uid="uid://bc0wd7e2kwdmm" path="res://icon.svg" id="1_d3fyh"]
+
+[sub_resource type="GDScript" id="GDScript_7i7bg"]
+script/source = "extends Node2D
+
+@export var FLOOR_INDEX = 0
+
+@onready var player_sprite = $Player
+
+var player: Node3D
+
+func _ready():
+	var no_visited_rooms = true
+	
+	for child in get_children():
+		if child is MapRoom:
+			if GlobalVariables.visited_rooms.has(child.SCENE_PATH):
+				child.visible = true
+				no_visited_rooms = false
+			else:
+				child.visible = false
+	
+	if no_visited_rooms:
+		Events.map_floor_empty.emit(FLOOR_INDEX)
+	
+	player = get_tree().get_first_node_in_group('player')
+	
+	if player == null:
+		printerr('Player not found')
+		return
+	if GlobalVariables.current_room_config == null: return
+	
+	player_sprite.visible = GlobalVariables.current_room_config.CURRENT_FLOOR_INDEX == FLOOR_INDEX
+	set_player_sprite_pos()
+	global_position += (DisplayServer.window_get_size() / 2.0) - player_sprite.global_position 
+
+func set_player_sprite_pos():
+	var map_room_center = Vector2()
+	
+	for child in get_children():
+		if child is MapRoom:
+			if GlobalVariables.current_room_config.get_scene_path() == child.SCENE_PATH:
+				map_room_center = child.get_center_pos()
+				break
+	
+	var new_player_pos = player.global_position - GlobalVariables.current_room_config.get_center_pos()
+	var player_pos = Vector2(new_player_pos.x, new_player_pos.z)
+	player_pos = player_pos * 32 / 2
+	
+	player_sprite.global_position = player_pos + map_room_center
+"
+
+[sub_resource type="GDScript" id="GDScript_kikvk"]
+script/source = "extends Camera2D
+
+var move_mode = false
+
+func _init():
+	Events.map_set_move_mode.connect(func(mode): move_mode = mode)
+
+func _physics_process(delta):
+	if not move_mode: return
+	var input_dir = Input.get_vector(\"left\", \"right\", \"top\", \"bottom\")
+	position += input_dir * delta * 2000
+	
+func _input(_event):
+	if move_mode: return
+	
+	if Input.is_action_just_pressed('top'):
+		var new_zoom = zoom + Vector2(0.5, 0.5)
+		zoom = clamp(new_zoom, Vector2(0.5, 0.5), Vector2(3, 3))
+	if Input.is_action_just_pressed('bottom'):
+		var new_zoom = zoom - Vector2(0.5, 0.5)
+		zoom = clamp(new_zoom, Vector2(0.5, 0.5), Vector2(3, 3))
+	
+"
+
+[node name="MapBase" type="Node2D"]
+script = SubResource("GDScript_7i7bg")
+
+[node name="Player" type="Sprite2D" parent="."]
+z_index = 2
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_d3fyh")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+script = SubResource("GDScript_kikvk")

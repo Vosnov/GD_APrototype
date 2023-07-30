@@ -1,20 +1,25 @@
 extends Node
 
 #Saved variables
-var no_spawn_items: Array[String] = []
-var no_spawn_enemys: Array[String] = []
-var player_spawn_data: Dictionary = {}
+var destroyed_objects: Array[String] = []
 var player_ammo_load: Dictionary = {}
 var active_gun_index = -1
 var save_data: Dictionary = {}
+var touched_doors: Dictionary = {}
+var visited_rooms: Array[String] = []
 
 var menu_ui_is_open = false
 var player_is_runing = false
 var player_is_aim = false
 var player_target_is_full = false
 var should_spawn_on_player_transform = false
-var door_prev_scene = '' # Need for plaing close door stream
+var door_prev_scene = ''
 var pick_up_in_area: Array[Node] = []
+var current_room_config: RoomConfig:
+	get:
+		if current_room_config == null:
+			printerr('Room config not found')
+		return current_room_config
 #Settings
 var setting_mouse = 1.0
 
@@ -22,21 +27,21 @@ const save_count = 4
 
 func get_data() -> Dictionary:
 	return {
-		'no_spawn_items': no_spawn_items,
-		'no_spawn_enemys': no_spawn_enemys,
-		'player_spawn_data': player_spawn_data,
+		'destroyed_objects': destroyed_objects,
 		'player_ammo_load': player_ammo_load,
 		'active_gun_index': active_gun_index,
 		'save_data': save_data,
+		'touched_doors': touched_doors,
+		'visited_rooms': visited_rooms
 	}
 
 func set_data(dict: Dictionary):
-	no_spawn_items = dict.no_spawn_items
-	no_spawn_enemys = dict.no_spawn_enemys
-	player_spawn_data = dict.player_spawn_data
+	destroyed_objects = dict.destroyed_objects
 	player_ammo_load = dict.player_ammo_load
 	active_gun_index = dict.active_gun_index
 	save_data = dict.save_data
+	touched_doors = dict.touched_doors
+	visited_rooms = dict.visited_rooms
 
 func get_date_format(date_string: String) -> String:
 	var date = Time.get_datetime_dict_from_datetime_string(date_string, false)

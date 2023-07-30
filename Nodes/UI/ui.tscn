@@ -1,23 +1,19 @@
 [gd_scene load_steps=7 format=3 uid="uid://en3g0v7xjkgn"]
 
-[ext_resource type="PackedScene" uid="uid://dwhdypbxa1gl7" path="res://Nodes/UI/inventory_ui.tscn" id="1_vjmbd"]
 [ext_resource type="PackedScene" uid="uid://8nwcw66m6aqr" path="res://Nodes/UI/pause_ui.tscn" id="1_xbwcd"]
 [ext_resource type="PackedScene" uid="uid://bdvj6pfhtgs1e" path="res://Nodes/UI/dead_screen.tscn" id="2_e8xum"]
+[ext_resource type="PackedScene" uid="uid://5t4rmu1n0533" path="res://Nodes/UI/player_menu.tscn" id="2_m3r0j"]
 [ext_resource type="PackedScene" uid="uid://drr3ddmpotjgj" path="res://Nodes/UI/message_ui.tscn" id="3_138rf"]
 
 [sub_resource type="GDScript" id="GDScript_tkxjl"]
 script/source = "extends CanvasLayer
 
 @export var PAUSE_UI: PackedScene
-@export var INVENTORY_UI: PackedScene
+@export var PLAYER_MENU: PackedScene
 @export var DEAD_SCREEN: PackedScene
 
 @onready var reload_label = $ReloadData
 @onready var hp_label = $HP
-
-var inventory_instance: Node
-var dead_screen_instance: Node
-var pause_instance: Node
 
 func _ready():
 	Events.connect(\"player_dead\", _on_player_dead)
@@ -31,22 +27,20 @@ func _on_player_hp_ui(_hp: float):
 	hp_label.text = str('HP: ', _hp)
 
 func _input(_event):
-	if dead_screen_instance != null: return
 	if GlobalVariables.menu_ui_is_open: return
-	if inventory_instance != null: return
-	if pause_instance != null: return
 	
-	if Input.is_action_just_pressed('ui_menu'):
-		inventory_instance = INVENTORY_UI.instantiate()
-		add_child(inventory_instance)
+	if Input.is_action_just_pressed('ui_menu') or Input.is_action_just_pressed('map'):
+		var player_menu_ui = PLAYER_MENU.instantiate() as PlayerMenuUI
+		add_child(player_menu_ui)
+		player_menu_ui.current_tab = 0
+		if Input.is_action_just_pressed('map'):
+			player_menu_ui.current_tab = 1
+		
 	if Input.is_action_just_pressed('ui_cancel'):
-		pause_instance = PAUSE_UI.instantiate()
-		add_child(pause_instance)
+		add_child(PAUSE_UI.instantiate())
 
 func _on_player_dead():
-	if inventory_instance != null: inventory_instance.queue_free()
-	dead_screen_instance = DEAD_SCREEN.instantiate()
-	add_child(dead_screen_instance)
+	add_child(DEAD_SCREEN.instantiate())
 "
 
 [sub_resource type="GDScript" id="GDScript_py8tj"]
@@ -82,7 +76,7 @@ func spawn_message(_message: String):
 process_mode = 3
 script = SubResource("GDScript_tkxjl")
 PAUSE_UI = ExtResource("1_xbwcd")
-INVENTORY_UI = ExtResource("1_vjmbd")
+PLAYER_MENU = ExtResource("2_m3r0j")
 DEAD_SCREEN = ExtResource("2_e8xum")
 
 [node name="ReloadData" type="Label" parent="."]
