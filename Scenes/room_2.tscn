@@ -53,6 +53,7 @@ SLOT_DATA = SubResource("Resource_siga7")
 
 [node name="Door" parent="." instance=ExtResource("8_2lmr8")]
 transform = Transform3D(1.39091e-08, 0, -1, 0, 1, 0, 1, 0, 1.39091e-08, -5.70736, 1.5, 0.553789)
+NAME = "Back"
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="EnemyType1" parent="." instance=ExtResource("9_4lyey")]

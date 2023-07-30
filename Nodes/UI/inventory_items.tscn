@@ -17,16 +17,17 @@ signal select(index: SlotData)
 
 var current_index = 0:
 	set(value):
-		current_index = value
-		pos_x = -(current_index * item_size)
-		select.emit(slots[value])
+		current_index = clamp(value, 0, slots.size() - 1)
+		pos_x = -(current_index * get_item_size())
+		select.emit(slots[current_index])
 
 var pos_x = 0
-var item_size = 0
 var slots: Array[SlotData] = []
 
+func get_item_size():
+	return floor(size.x / container.COUNT)
+
 func _ready():
-	item_size = floor(size.x / container.COUNT)
 	_on_inventory_update()
 	
 	Events.inventory_update.connect(_on_inventory_update)
@@ -68,6 +69,7 @@ func add_empty_slot_ui():
 	
 func _physics_process(_delta):
 	var c_pos_x = container.position.x
+
 	if pos_x > c_pos_x:
 		container.position.x = clamp(c_pos_x + _delta * SPEED, c_pos_x, pos_x)
 	if pos_x < c_pos_x:
@@ -75,12 +77,10 @@ func _physics_process(_delta):
 
 func _input(_event):
 	if Input.is_action_just_pressed('ui_right'):
-		if current_index + 1 < slots.size():
-			current_index += 1
+		current_index += 1
 
 	if Input.is_action_just_pressed('ui_left'):
-		if current_index > 0:
-			current_index -= 1
+		current_index -= 1
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_we57u"]
@@ -96,8 +96,6 @@ custom_minimum_size = Vector2(0, 164)
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 80.0
-offset_bottom = 80.0
 grow_horizontal = 2
 script = SubResource("GDScript_roli5")
 SLOT_UI = ExtResource("1_85kxf")

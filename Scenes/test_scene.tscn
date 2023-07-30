@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ymyfncjem0fi"]
+[gd_scene load_steps=16 format=3 uid="uid://ymyfncjem0fi"]
 
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="1_i475y"]
 [ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_raqd1"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_t0enw"]
 [ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="9_lh4ah"]
 [ext_resource type="Script" path="res://Scripts/Helpers/anim_random_seek.gd" id="9_ukn3b"]
+[ext_resource type="PackedScene" uid="uid://c7pwkeixpxqiq" path="res://Nodes/Items/small_medkit.tscn" id="12_5iapq"]
 
 [sub_resource type="Animation" id="Animation_l75js"]
 length = 0.001
@@ -136,7 +137,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -8, 5,
 spot_angle = 42.6349
 
 [node name="SpotLight3D6" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44064, 1.91821, 7.08054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44064, 2.52179, 7.08054)
 light_cull_mask = 4294967293
 omni_range = 1.0
 
@@ -190,5 +191,8 @@ NEXT_SCENE = "res://Scenes/room_3.tscn"
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.45, 1.5, -9)
 NAME = "SaveRoom"
 NEXT_SCENE = "res://Scenes/save_room.tscn"
+
+[node name="SmallMedkit" parent="." instance=ExtResource("12_5iapq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07573, 2.013, 7.01091)
 
 [editable path="RoomConfig"]
