@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://w33jnbedk4n5"]
+[gd_scene load_steps=30 format=3 uid="uid://w33jnbedk4n5"]
 
 [ext_resource type="Texture2D" uid="uid://ck0ukv5tkw3v" path="res://Textures/prototype_512x512_orange.png" id="1_oqjwu"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="2_v1y33"]
@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="13_3oekm"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_v30gr"]
-vertices = PackedVector3Array(-9.5, 0, -19.25, -19.25, 0, -19.25, -19.25, 0, -9.75, -19.25, 0, 0, -1.75, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -1.75, 0.25, 0, -19.25, -19.25, 0, 0, -1.75, 0, -1.25, -1.25, 0, -1.75, 0.25, 0, -19.25, -9.5, 0, -19.25, -19.25, 0, -9.75, 19.25, 0, -9.75, 19.25, 0, -19.25, 9.75, 0, -19.25, 2, 0, -1.25, 2, 0, 0, 19.25, 0, 0, 0.25, 0, -19.25, 0.25, 0, -1.75, 1.5, 0, -1.75, 1.5, 0, -1.75, 2, 0, -1.25, 19.25, 0, 0, 19.25, 0, -9.75, 9.75, 0, -19.25, 0.25, 0, -19.25, -0.25, 1.5, -0.25, -0.25, 1.5, 0.5, 0.5, 1.5, 0.5, 0.5, 1.5, -0.25, -19.25, 0, 9.5, -19.25, 0, 19.25, -9.75, 0, 19.25, 0, 0, 19.25, 0, 0, 2, -1.25, 0, 2, -1.75, 0, 1.5, -1.75, 0, 0, -19.25, 0, 0, 0, 0, 19.25, -1.25, 0, 2, -1.75, 0, 1.5, -19.25, 0, 0, -19.25, 0, 9.5, -9.75, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 19.25, 19.25, 0, 9.5, 19.25, 0, 0, 2, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 2, 0, 0, 19.25, 19.25, 0, 0, 2, 0, 1.25, 1.25, 0, 2, 0, 0, 19.25, 9.5, 0, 19.25, 19.25, 0, 9.5)
+vertices = PackedVector3Array(-9.5, 0.5, -19.25, -19.25, 0.5, -19.25, -19.25, 0.5, -9.75, -19.25, 0.5, 0, -1.75, 0.5, 0, -1.75, 0.5, -1.25, -1.25, 0.5, -1.75, 0.25, 0.5, -1.75, 0.25, 0.5, -19.25, -19.25, 0.5, 0, -1.75, 0.5, -1.25, -1.25, 0.5, -1.75, 0.25, 0.5, -19.25, -9.5, 0.5, -19.25, -19.25, 0.5, -9.75, 19.25, 0.5, -9.75, 19.25, 0.5, -19.25, 9.75, 0.5, -19.25, 2, 0.5, -1.25, 2, 0.5, 0, 19.25, 0.5, 0, 0.25, 0.5, -19.25, 0.25, 0.5, -1.75, 1.5, 0.5, -1.75, 1.5, 0.5, -1.75, 2, 0.5, -1.25, 19.25, 0.5, 0, 19.25, 0.5, -9.75, 9.75, 0.5, -19.25, 0.25, 0.5, -19.25, -0.25, 2, -0.25, -0.25, 2, 0.25, 0.25, 2, 0.25, 0.25, 2, -0.25, -19.25, 0.5, 9.5, -19.25, 0.5, 19.25, -9.75, 0.5, 19.25, 0, 0.5, 19.25, 0, 0.5, 2, -1.25, 0.5, 2, -1.75, 0.5, 1.5, -1.75, 0.5, 0, -19.25, 0.5, 0, 0, 0.5, 19.25, -1.25, 0.5, 2, -1.75, 0.5, 1.5, -19.25, 0.5, 0, -19.25, 0.5, 9.5, -9.75, 0.5, 19.25, 9.5, 0.5, 19.25, 19.25, 0.5, 19.25, 19.25, 0.5, 9.5, 19.25, 0.5, 0, 2, 0.5, 0, 2, 0.5, 1.25, 1.25, 0.5, 2, 0, 0.5, 2, 0, 0.5, 19.25, 19.25, 0.5, 0, 2, 0.5, 1.25, 1.25, 0.5, 2, 0, 0.5, 19.25, 9.5, 0.5, 19.25, 19.25, 0.5, 9.5)
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(8, 7, 6), PackedInt32Array(10, 9, 11), PackedInt32Array(11, 9, 14), PackedInt32Array(11, 14, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(17, 16, 15), PackedInt32Array(20, 19, 18), PackedInt32Array(23, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(28, 24, 29), PackedInt32Array(33, 32, 30), PackedInt32Array(30, 32, 31), PackedInt32Array(36, 35, 34), PackedInt32Array(39, 38, 37), PackedInt32Array(42, 41, 40), PackedInt32Array(44, 43, 45), PackedInt32Array(45, 43, 48), PackedInt32Array(45, 48, 47), PackedInt32Array(45, 47, 46), PackedInt32Array(51, 50, 49), PackedInt32Array(54, 53, 52), PackedInt32Array(57, 56, 55), PackedInt32Array(59, 58, 60), PackedInt32Array(60, 58, 63), PackedInt32Array(60, 63, 62), PackedInt32Array(60, 62, 61)]
 agent_radius = 0.75
 
@@ -36,12 +36,6 @@ uv1_scale = Vector3(20, 20, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7dn26"]
 size = Vector3(40, 0.1, 40)
-
-[sub_resource type="BoxMesh" id="BoxMesh_3jlas"]
-size = Vector3(1, 6, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_kny0l"]
-size = Vector3(1, 6, 20)
 
 [sub_resource type="Resource" id="Resource_latk4"]
 script = ExtResource("7_idykb")
@@ -121,17 +115,6 @@ mesh = SubResource("PlaneMesh_frnof")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_7dn26")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="NavigationRegion3D"]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.89141, 0.051697, 0)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D3"]
-mesh = SubResource("BoxMesh_3jlas")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D3"]
-shape = SubResource("BoxShape3D_kny0l")
 
 [node name="Ammo" parent="." instance=ExtResource("6_iygk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.34425, 0.746136)
