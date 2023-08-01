@@ -1,14 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1176uscfh47u"]
+[gd_scene load_steps=16 format=3 uid="uid://d1176uscfh47u"]
 
-[ext_resource type="Material" uid="uid://bnqe3hv7a5mjc" path="res://Materials/test_mat_1.tres" id="1_0371a"]
-[ext_resource type="Material" uid="uid://dwxhp3awetry4" path="res://Materials/test_mat_3.tres" id="2_k1qyr"]
 [ext_resource type="PackedScene" uid="uid://csw7n1a3otnlc" path="res://Nodes/Charecters/player.tscn" id="3_ka1ri"]
 [ext_resource type="PackedScene" uid="uid://728vxpr147if" path="res://Nodes/MainCamera.tscn" id="4_x7b7k"]
 [ext_resource type="PackedScene" uid="uid://b3vkk1qyqod6g" path="res://Nodes/Interractive/door.tscn" id="5_lcrnd"]
 [ext_resource type="PackedScene" uid="uid://dxoiu11eexkxk" path="res://Nodes/Interractive/save_node.tscn" id="6_0p0iw"]
 [ext_resource type="Environment" uid="uid://gdlq5pc8nbfm" path="res://Env/test_scene.tres" id="7_0ubmk"]
 [ext_resource type="PackedScene" uid="uid://biub747vk5dad" path="res://Nodes/Helpers/room_config.tscn" id="8_btf6x"]
+[ext_resource type="PackedScene" uid="uid://cpy35egbnp8ao" path="res://Models/TestModels/Floor/floor.glb" id="8_huusw"]
 [ext_resource type="Resource" uid="uid://c730xco70xo26" path="res://Data/Maps/test_floor_maps.tres" id="9_1rjxq"]
+[ext_resource type="PackedScene" uid="uid://drku7n1fhjc6h" path="res://Models/TestModels/Wall/wall.glb" id="9_xp03i"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_42bvi"]
 size = Vector3(3, 0.1, 0.3)
@@ -18,7 +18,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:rotation")
+tracks/0/path = NodePath("Lights/Node3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -35,7 +35,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:rotation")
+tracks/0/path = NodePath("Lights/Node3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,89 +51,68 @@ _data = {
 "saveRoom": SubResource("Animation_acegq")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pkik7"]
+size = Vector3(8, 0.1, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jk0g8"]
+size = Vector3(0.1, 4, 6)
+
 [node name="SaveRoom" type="Node3D"]
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.897524, 0, 0.364431)
-use_collision = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.5)
-size = Vector3(15, 5, 15)
-material = ExtResource("1_0371a")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.500655)
-operation = 2
-size = Vector3(6, 5, 6)
-material = ExtResource("1_0371a")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -3.17337)
-size = Vector3(2, 2, 2)
-material = ExtResource("2_k1qyr")
-
-[node name="Player2" parent="." instance=ExtResource("3_ka1ri")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
-
-[node name="CameraController2" parent="." node_paths=PackedStringArray("TARGET") instance=ExtResource("4_x7b7k")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.46581, 1.45736, 0.476323)
-TARGET = NodePath("../Player2")
-
 [node name="Door" parent="." instance=ExtResource("5_lcrnd")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.55248, 1.5, 0.364431)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5, 1, 0)
 NAME = "Back"
 NEXT_SCENE = "res://Scenes/test_scene.tscn"
 
 [node name="SaveNode" parent="." instance=ExtResource("6_0p0iw")]
-transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 3.30938, 1.56396, -0.275435)
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 3, 1, 0)
 LEVEL_NAME = "level.name.saveRoom"
 LEVEL_PATH = "res://Scenes/save_room.tscn"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("7_0ubmk")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897524, 3.629, 0.364431)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-cast_shadow = 3
-mesh = SubResource("BoxMesh_42bvi")
-skeleton = NodePath("../../Lights")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-cast_shadow = 3
-mesh = SubResource("BoxMesh_42bvi")
-skeleton = NodePath("../../Lights")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
-cast_shadow = 3
-mesh = SubResource("BoxMesh_42bvi")
-skeleton = NodePath("../../Lights")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
-cast_shadow = 3
-mesh = SubResource("BoxMesh_42bvi")
-skeleton = NodePath("../../Lights")
-
 [node name="Lights" type="Node" parent="."]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(-4.37114e-08, 1, 2.98023e-08, 0, -2.98023e-08, 1, 1, 4.37114e-08, 1.3027e-15, 0.95985, 4.71, 0.377173)
+transform = Transform3D(-4.37114e-08, 1, 2.98023e-08, 0, -2.98023e-08, 1, 1, 4.37114e-08, 1.3027e-15, 2, 3.54795, 0)
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 10.0
-spot_angle = 50.0
+spot_angle = 60.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(-4.37114e-08, 0.884271, -0.466973, 0, 0.466973, 0.884271, 1, 3.86527e-08, -2.0412e-08, -1.94586, 4.14, 0.983524)
+transform = Transform3D(-4.2222e-08, 0.965926, -0.258819, -1.13133e-08, 0.258819, 0.965926, 1, 4.37114e-08, 2.36828e-16, -1.5, 2.8, 0)
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 6.0
 spot_angle = 50.0
+
+[node name="Node3D" type="Node3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Lights/Node3D"]
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Lights/Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Lights/Node3D"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Lights/Node3D"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+cast_shadow = 3
+mesh = SubResource("BoxMesh_42bvi")
+skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "saveRoom"
@@ -145,6 +124,85 @@ libraries = {
 FLOOR_MAPS_DATA = ExtResource("9_1rjxq")
 
 [node name="Center" parent="RoomConfig" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999082, -0.0411243, 0.212128)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="PlayerNodes" type="Node" parent="."]
+
+[node name="Player2" parent="PlayerNodes" instance=ExtResource("3_ka1ri")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 1, 0)
+
+[node name="CameraController2" parent="PlayerNodes" node_paths=PackedStringArray("TARGET") instance=ExtResource("4_x7b7k")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1, 1, 0)
+TARGET = NodePath("../Player2")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="floor2" parent="Level" instance=ExtResource("8_huusw")]
+transform = Transform3D(4, 0, 0, 0, -1, 3.49691e-07, 0, -8.74228e-08, -4, 1, 3, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="floor" parent="Level/StaticBody3D" instance=ExtResource("8_huusw")]
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D"]
+shape = SubResource("BoxShape3D_pkik7")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+
+[node name="wall" parent="Level/StaticBody3D2" instance=ExtResource("9_xp03i")]
+
+[node name="wall2" parent="Level/StaticBody3D2" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="wall3" parent="Level/StaticBody3D2" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D2"]
+shape = SubResource("BoxShape3D_jk0g8")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Level"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 1, 3)
+
+[node name="wall" parent="Level/StaticBody3D3" instance=ExtResource("9_xp03i")]
+
+[node name="wall2" parent="Level/StaticBody3D3" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="wall3" parent="Level/StaticBody3D3" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D3"]
+shape = SubResource("BoxShape3D_jk0g8")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Level"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 1, 0)
+
+[node name="wall" parent="Level/StaticBody3D4" instance=ExtResource("9_xp03i")]
+
+[node name="wall2" parent="Level/StaticBody3D4" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="wall3" parent="Level/StaticBody3D4" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D4"]
+shape = SubResource("BoxShape3D_jk0g8")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Level"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1, 1, -3)
+
+[node name="wall" parent="Level/StaticBody3D5" instance=ExtResource("9_xp03i")]
+
+[node name="wall2" parent="Level/StaticBody3D5" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="wall3" parent="Level/StaticBody3D5" instance=ExtResource("9_xp03i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D5"]
+shape = SubResource("BoxShape3D_jk0g8")
 
 [editable path="RoomConfig"]

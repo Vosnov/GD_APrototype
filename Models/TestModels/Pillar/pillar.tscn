@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://mpp20i3kxkg6"]
+
+[ext_resource type="Texture2D" uid="uid://bmwn4tyxu00x4" path="res://Models/TestModels/Pillar/PillarC.png" id="1_357o3"]
+[ext_resource type="Texture2D" uid="uid://dvqu3r7pb346e" path="res://Models/TestModels/Pillar/PillarN.png" id="2_r85rx"]
+[ext_resource type="Texture2D" uid="uid://d1o2bpusqcyoe" path="res://Models/TestModels/Pillar/PillarRM.png" id="3_3rm5q"]
+[ext_resource type="ArrayMesh" uid="uid://bmlu0fktv3qd2" path="res://Models/TestModels/Pillar/pillar.obj" id="4_p3nw4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jii18"]
+albedo_texture = ExtResource("1_357o3")
+roughness = 0.7
+roughness_texture = ExtResource("3_3rm5q")
+normal_enabled = true
+normal_texture = ExtResource("2_r85rx")
+texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6acn8"]
+size = Vector3(0.8, 4, 0.8)
+
+[node name="Pillar" type="StaticBody3D"]
+
+[node name="Pillar" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0.75, 0)
+material_override = SubResource("StandardMaterial3D_jii18")
+mesh = ExtResource("4_p3nw4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_6acn8")

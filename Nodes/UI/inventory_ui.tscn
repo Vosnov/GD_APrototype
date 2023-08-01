@@ -40,11 +40,13 @@ var select_slot: SlotData
 
 func _ready():
 	visible = false
-	if Inventory.SLOTS.size() > 0:
-		_on_items_select(Inventory.SLOTS[0])
 
 func _on_items_select(slot: SlotData):
 	if is_node_ready() == false: return
+	
+	if slot == null:
+		visible = false
+		return
 	
 	select_slot = slot
 	

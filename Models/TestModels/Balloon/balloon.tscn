@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://5t3a140ogp80"]
+
+[ext_resource type="Texture2D" uid="uid://beqc2omwxjeby" path="res://Models/TestModels/Balloon/CylinderC.png" id="1_nty2r"]
+[ext_resource type="Texture2D" uid="uid://cs7pyf8yo6k5k" path="res://Models/TestModels/Balloon/CylinderN.png" id="2_63i0t"]
+[ext_resource type="Texture2D" uid="uid://dpxlgyr4so5kt" path="res://Models/TestModels/Balloon/CylinderRM.png" id="3_qr8ue"]
+[ext_resource type="ArrayMesh" uid="uid://ctn4148ldj65r" path="res://Models/TestModels/Balloon/cylinder.obj" id="4_ob3on"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kuruc"]
+albedo_texture = ExtResource("1_nty2r")
+roughness = 0.5
+roughness_texture = ExtResource("3_qr8ue")
+normal_enabled = true
+normal_texture = ExtResource("2_63i0t")
+texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l6rw7"]
+size = Vector3(0.4, 1.5, 0.4)
+
+[node name="Balloon" type="StaticBody3D"]
+
+[node name="Cylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.7, 0)
+material_override = SubResource("StandardMaterial3D_kuruc")
+mesh = ExtResource("4_ob3on")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_l6rw7")

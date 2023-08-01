@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ctn4148ldj65r"
+path="res://.godot/imported/cylinder.obj-8f50befdb20470dd42f3afafa79d3850.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cylinder.obj-8f50befdb20470dd42f3afafa79d3850.mesh"]
+
+source_file="res://Models/TestModels/Balloon/cylinder.obj"
+dest_files=["res://.godot/imported/cylinder.obj-8f50befdb20470dd42f3afafa79d3850.mesh", "res://.godot/imported/cylinder.obj-8f50befdb20470dd42f3afafa79d3850.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

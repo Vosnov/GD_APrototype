@@ -17,15 +17,24 @@ signal select(index: SlotData)
 
 var current_index = 0:
 	set(value):
-		current_index = clamp(value, 0, slots.size() - 1)
+		current_index = clamp(value, 0, max(slots.size() - 1, 0))
 		pos_x = -(current_index * get_item_size())
-		select.emit(slots[current_index])
+		
+		select_slot(current_index)
 
 var pos_x = 0
 var slots: Array[SlotData] = []
 
 func get_item_size():
 	return floor(size.x / container.COUNT)
+
+func select_slot(index: int):
+	if slots.size() == 0:
+		select.emit(null)
+		return
+	
+	await get_tree().process_frame
+	select.emit(slots[index])
 
 func _ready():
 	_on_inventory_update()
@@ -39,7 +48,7 @@ func _on_inventory_update():
 		current_index = slots.size() - 1
 		
 	fill()
-	select.emit(slots[current_index])
+	select_slot(current_index)
 
 func fill():
 	for child in container.get_children():
