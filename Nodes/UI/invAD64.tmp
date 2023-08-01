@@ -1,0 +1,161 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwhdypbxa1gl7"]
+
+[ext_resource type="PackedScene" uid="uid://4u66jdl33sow" path="res://Nodes/UI/inventory_items.tscn" id="2_4hto5"]
+[ext_resource type="PackedScene" uid="uid://dwq5ss75wb4w8" path="res://Nodes/UI/slot_gun_ui.tscn" id="2_wnedq"]
+[ext_resource type="PackedScene" uid="uid://c35n1fbi4mad4" path="res://Nodes/UI/custom_button_ui.tscn" id="3_tura4"]
+
+[sub_resource type="GDScript" id="GDScript_ovlbg"]
+script/source = "extends VBoxContainer
+
+@export var SLOT_GUN_UI: PackedScene
+
+@onready var slot_container_1 = $SlotContainer1
+@onready var slot_container_4 = $SlotContainer4
+@onready var slot_container_2 = $SlotContainer2
+@onready var slot_container_3 = $SlotContainer3
+
+func _ready():
+	var panels = {
+		0: slot_container_1,
+		1: slot_container_2,
+		2: slot_container_3,
+		3: slot_container_4
+	}
+	
+	for slot in Inventory.SLOTS:
+		if slot.ITEM_DATA is ItemGunData:
+			if not panels.has(slot.ITEM_DATA.INDEX): continue
+			var panel = panels[slot.ITEM_DATA.INDEX] as Control
+			var slot_ui = SLOT_GUN_UI.instantiate() as SlotGunUI
+			panel.add_child(slot_ui)
+			slot_ui.set_slot_data(slot.ITEM_DATA)
+"
+
+[sub_resource type="GDScript" id="GDScript_0w7jy"]
+script/source = "extends PanelContainer
+
+@onready var use = $MarginContainer/VBoxContainer/Use
+
+var select_slot: SlotData
+
+func _ready():
+	visible = false
+
+func _on_items_select(slot: SlotData):
+	if is_node_ready() == false: return
+	
+	if slot == null:
+		visible = false
+		return
+	
+	select_slot = slot
+	
+	if select_slot.ITEM_DATA.CAN_USE:
+		visible = true
+		use.visible = true
+		use.grab_focus()
+	else:
+		visible = false
+
+func _on_use_button_down():
+	if visible == false: return
+	
+	if select_slot == null: return
+	select_slot.ITEM_DATA.use()
+"
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Guns" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -134.0
+offset_right = 64.0
+offset_bottom = 134.0
+grow_vertical = 2
+script = SubResource("GDScript_ovlbg")
+SLOT_GUN_UI = ExtResource("2_wnedq")
+
+[node name="SlotContainer1" type="PanelContainer" parent="Guns"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Guns/SlotContainer1"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1
+"
+
+[node name="SlotContainer2" type="PanelContainer" parent="Guns"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Guns/SlotContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "2
+"
+
+[node name="SlotContainer3" type="PanelContainer" parent="Guns"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Guns/SlotContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "3"
+
+[node name="SlotContainer4" type="PanelContainer" parent="Guns"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Guns/SlotContainer4"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "4
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 207.0
+grow_horizontal = 2
+
+[node name="Items" parent="VBoxContainer" instance=ExtResource("2_4hto5")]
+layout_mode = 2
+
+[node name="ActionsMenu" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource("GDScript_0w7jy")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ActionsMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ActionsMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="Use" parent="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer" instance=ExtResource("3_tura4")]
+layout_mode = 2
+text = "inventoryUI.use"
+
+[connection signal="select" from="VBoxContainer/Items" to="VBoxContainer/ActionsMenu" method="_on_items_select"]
+[connection signal="button_down" from="VBoxContainer/ActionsMenu/MarginContainer/VBoxContainer/Use" to="VBoxContainer/ActionsMenu" method="_on_use_button_down"]

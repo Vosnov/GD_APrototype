@@ -42,7 +42,9 @@ func _on_take_damage(damage: float):
 func _input(_event):
 	var is_aim = Input.is_action_pressed("aim") and GlobalVariables.active_gun_index != -1
 	GlobalVariables.player_is_aim = is_aim
-	GlobalVariables.player_is_runing = Input.is_action_pressed("sprint")
+	
+	var input_dir = Input.get_vector("left", "right", "top", "bottom")
+	GlobalVariables.player_is_runing = Input.is_action_pressed("sprint") and input_dir.length() > 0.2
 
 func _on_take_health(hp: int):
 	HP = clamp(HP + hp, 0, MAX_HP)

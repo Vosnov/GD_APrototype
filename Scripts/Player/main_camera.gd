@@ -4,10 +4,11 @@ extends Node3D
 
 @onready var camera_3d = $SpringArm3D/Camera3D
 
-var screen_dpi = 100
+var screen_dpi = 96
+
 
 func _ready():
-	screen_dpi = DisplayServer.screen_get_dpi()
+	print(screen_dpi)
 	global_rotation.y = TARGET.global_rotation.y
 
 func _physics_process(_delta):

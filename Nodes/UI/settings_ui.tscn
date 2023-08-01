@@ -129,9 +129,9 @@ func _ready():
 	for key in resolutions:
 		resolution.add_item(resolutions[key].text, key)
 	
-	full_screen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+	full_screen.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	for key in resolutions:
-		if resolutions[key].value == DisplayServer.window_get_size():
+		if resolutions[key].value == get_tree().root.content_scale_size:
 			resolution.select(key)
 			break
 
@@ -150,7 +150,7 @@ func _on_full_screen_toggled(button_pressed):
 	
 	var config = SettingsSave.get_config()
 	if button_pressed:
-		config.set_value('Graphics', 'fullscreen', DisplayServer.WINDOW_MODE_FULLSCREEN)
+		config.set_value('Graphics', 'fullscreen', DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
 		config.set_value('Graphics', 'fullscreen', DisplayServer.WINDOW_MODE_WINDOWED)
 "
@@ -185,6 +185,7 @@ script = SubResource("GDScript_a5ph4")
 TAB_TITLES = Array[String](["settingsUI.game", "settingsUI.control", "settingsUI.audio", "settingsUI.display"])
 
 [node name="Game" type="Control" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Game" groups=["can_reset"]]
@@ -213,7 +214,6 @@ text = "settingsUI.language"
 layout_mode = 2
 
 [node name="Control" type="Control" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="RangeUI" parent="VBoxContainer/TabContainer/Control" instance=ExtResource("2_i64sh")]
@@ -232,9 +232,9 @@ offset_bottom = 13.0
 text = "settingsUI.mouseSensitivity"
 
 [node name="HSlider" parent="VBoxContainer/TabContainer/Control/RangeUI" index="1"]
-min_value = 0.01
-max_value = 4.0
-step = 0.01
+min_value = 0.001
+max_value = 2.0
+step = 0.001
 value = 1.0
 
 [node name="Audio" type="Control" parent="VBoxContainer/TabContainer"]
@@ -343,6 +343,7 @@ horizontal_alignment = 2
 
 [node name="FullScreen" type="CheckBox" parent="VBoxContainer/TabContainer/Display/Grid"]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
