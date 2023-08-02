@@ -3,7 +3,7 @@ extends Node2D
 class_name MapDoor
 
 @export var NAME: String = ''
-@export var STATE: DoorActiveNode.AcceptState = DoorActiveNode.AcceptState.NONE:
+@export var STATE: Door.AcceptState = Door.AcceptState.NONE:
 	set(value):
 		STATE = value
 		if is_node_ready():
@@ -17,17 +17,17 @@ class_name MapDoor
 func _ready():
 	visible_sprite(STATE)
 
-func visible_sprite(state: DoorActiveNode.AcceptState):
+func visible_sprite(state: Door.AcceptState):
 	open.visible = false
 	need_key.visible = false
 	close.visible = false
 	none.visible = false
 	
-	if state == DoorActiveNode.AcceptState.ACCEPT:
+	if state == Door.AcceptState.ACCEPT:
 		open.visible = true
-	if state == DoorActiveNode.AcceptState.NEED_ACCEPT:
+	if state == Door.AcceptState.NEED_ACCEPT:
 		need_key.visible = true
-	if state == DoorActiveNode.AcceptState.CLOSE:
+	if state == Door.AcceptState.CLOSE:
 		close.visible = true
-	if state == DoorActiveNode.AcceptState.NONE:
+	if state == Door.AcceptState.NONE:
 		none.visible = true

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dow031uxl5des"]
+
+[ext_resource type="Texture2D" uid="uid://bittall6dkcbl" path="res://Textures/Other/Action.svg" id="1_sy7y4"]
+
+[node name="ActiveSprite" type="Sprite3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("1_sy7y4")

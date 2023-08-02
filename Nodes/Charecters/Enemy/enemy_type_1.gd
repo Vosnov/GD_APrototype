@@ -12,7 +12,6 @@ signal take_damage()
 @onready var state_machine = $StateMachine as StateMachine
 @onready var state_label = $StateLabel
 @onready var animation_tree = $AnimationTree
-@onready var stering_behavior = $SteeringBehaviorComponent
 @onready var target_marker = $TargetMarker
 @onready var collision_shape_3d = $CollisionShape3D
 
@@ -51,7 +50,6 @@ func die():
 	is_dead = true
 	collision_shape_3d.disabled = true
 	animation_tree.set("parameters/main_trans/transition_request", 'dying')
-	stering_behavior.queue_free()
 	Events.emit_signal('enemy_die', self)
 	GlobalVariables.destroyed_objects.push_back(to_string())
 

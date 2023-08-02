@@ -5,7 +5,6 @@ script/source = "extends EnemyState
 
 @export_group(\"Required Nodes\", \"\")
 @export var NAV_AGENT: NavigationAgent3D
-@export var STEERING_BEHAVIOR: SteeringBehaviorComponent
 @export var ANIMATION_TREE: AnimationTree
 @export_group(\"Params\", \"\")
 @export var SPEED = 1.0
@@ -26,11 +25,7 @@ func exit():
 func update(_delta) -> StateTypes:
 	var path = (NAV_AGENT.get_next_path_position() - AGENT.global_position).normalized()
 	
-	if STEERING_BEHAVIOR.has_collision:
-		var new_velocity = (STEERING_BEHAVIOR.velocity + path).normalized()
-		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * SPEED_LERP)
-	else:
-		AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * SPEED_LERP)
+	AGENT.velocity = AGENT.velocity.lerp(path * SPEED, _delta * SPEED_LERP)
 	
 	var transform_velocity = AGENT.velocity * AGENT.global_transform.basis
 	var follow_iwr = Vector2(transform_velocity.x, transform_velocity.z) / SPEED

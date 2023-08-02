@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dlcvkcv24x2ro" path="res://Nodes/UI/save_ui.tscn" id="1_dakaw"]
 [ext_resource type="Script" path="res://Scripts/Helpers/active_node.gd" id="2_0hyy5"]
-[ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="2_pjif8"]
+[ext_resource type="PackedScene" uid="uid://dow031uxl5des" path="res://Nodes/Helpers/active_sprite.tscn" id="3_fxql4"]
 [ext_resource type="Texture2D" uid="uid://bdys0eqpecrig" path="res://Textures/prototype_512x512_blue1.png" id="3_ihryl"]
 [ext_resource type="AudioStream" uid="uid://d32ksk808t6lh" path="res://SFX/UI/Save.mp3" id="5_jrtqb"]
 
@@ -52,7 +52,7 @@ SAVE_UI = ExtResource("1_dakaw")
 [node name="ActiveNode" type="Node3D" parent="." node_paths=PackedStringArray("AREA")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.386963, 0)
 script = ExtResource("2_0hyy5")
-SPRITE = ExtResource("2_pjif8")
+SPRITE = ExtResource("3_fxql4")
 AREA = NodePath("../Area3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

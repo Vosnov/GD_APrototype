@@ -1,8 +1,15 @@
 extends StaticBody3D
 class_name Door
 
+enum AcceptState {
+	ACCEPT,
+	NEED_ACCEPT,
+	CLOSE,
+	NONE
+}
+
 @export var NAME = ''
-@export var ACCEPT_STATE = DoorActiveNode.AcceptState.ACCEPT
+@export var ACCEPT_STATE = AcceptState.ACCEPT
 @export_file("*.tscn") var NEXT_SCENE
 @export var NEED_KEY_DATA: ItemData
 @export var CLOSE_MESSAGE: String
@@ -14,7 +21,6 @@ class_name Door
 @export var BROKEN_AUDIO: AudioStream
 @export var KEY_OPEN_DOOR: AudioStream
 
-@onready var active_node = $DoorActiveNode as DoorActiveNode
 @onready var spawn_point = $SpawnPoint as Node3D
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
@@ -31,25 +37,23 @@ func _ready():
 	
 	if NEED_KEY_DATA:
 		door_opened_message = tr(OPENED_MESSAGE) % [NEED_KEY_DATA.NAME]
-	active_node.ACCEPT_STATE = ACCEPT_STATE
 
 func has_key():
 	var items = Inventory.SLOTS.map(func(slot: SlotData): return slot.ITEM_DATA)
 	return items.has(NEED_KEY_DATA)
 
 func _on_door_active_node_action_pressed():
-	if ACCEPT_STATE == DoorActiveNode.AcceptState.CLOSE:
+	if ACCEPT_STATE == AcceptState.CLOSE:
 		play_audio(BROKEN_AUDIO)
 		
 		Events.emit_signal('message_ui', CLOSE_MESSAGE)
 		touch_door()
 		return
 		
-	if ACCEPT_STATE == DoorActiveNode.AcceptState.NEED_ACCEPT and !is_accepted:
+	if ACCEPT_STATE == AcceptState.NEED_ACCEPT and !is_accepted:
 		if has_key():
 			play_audio(KEY_OPEN_DOOR)
 			
-			active_node.change_sprite(DoorActiveNode.AcceptState.ACCEPT)
 			Events.emit_signal('inventory_remove_item', NEED_KEY_DATA)
 			Events.emit_signal('message_ui', door_opened_message)
 			is_accepted = true

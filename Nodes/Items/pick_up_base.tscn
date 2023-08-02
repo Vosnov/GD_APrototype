@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Helpers/pick_up.gd" id="1_a5fgq"]
 [ext_resource type="Script" path="res://Scripts/Helpers/active_node.gd" id="1_yauyi"]
-[ext_resource type="PackedScene" uid="uid://rhxly5n72acf" path="res://Nodes/ActiveSprites/door_accept_sprite.tscn" id="2_nglsl"]
+[ext_resource type="PackedScene" uid="uid://dow031uxl5des" path="res://Nodes/Helpers/active_sprite.tscn" id="3_w6ylm"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1q38j"]
 
@@ -18,9 +18,9 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_1q38j")
 
 [node name="ActiveNode" type="Node3D" parent="." node_paths=PackedStringArray("AREA")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 script = ExtResource("1_yauyi")
-SPRITE = ExtResource("2_nglsl")
+SPRITE = ExtResource("3_w6ylm")
 AREA = NodePath("../Area3D")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

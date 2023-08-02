@@ -7,7 +7,6 @@ script/source = "extends EnemyState
 @onready var wait_timer = $WaitTimer
 
 @export_group(\"Required Nodes\", \"\")
-@export var STEERING_BEHAVIOR: SteeringBehaviorComponent
 @export var ANIMATION_TREE: AnimationTree
 @export var ATTACK_AREA: Area3D
 
@@ -61,11 +60,6 @@ func update(_delta: float) -> StateTypes:
 		to_player_direction = to_player_direction.lerp(Vector3(), _delta * 6)
 		dir_velocity += wait_direction * SPEED
 	AGENT.velocity = AGENT.velocity.lerp(dir_velocity, _delta * LERP_VELOCITY)
-	
-	if STEERING_BEHAVIOR.has_collision:
-		var behavior_velocity = STEERING_BEHAVIOR.velocity
-		var new_velocity = (AGENT.velocity + behavior_velocity).normalized()
-		AGENT.velocity = AGENT.velocity.lerp(new_velocity * SPEED, _delta * LERP_VELOCITY)
 	
 	if should_attack: return StateTypes.ATTACK
 	if AGENT.global_position.distance_to(AGENT.player.global_position) > DISTANCE_TO_FOLLOW:
